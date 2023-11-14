@@ -13,6 +13,7 @@ const verifyuser = async (req, res, next) => {
 const userExist = async (req, res, next) => {
   try {
     if (req.session.logged) {
+      //commed added
       res.redirect("/home");
     } else {
       next();
