@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ManageProduct</title>
+    <link rel="stylesheet" href="/css/admin/ManageProduct.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <%-include("./partials/side-bar.ejs")%>
+    <div class=" search-nav">
+        <div>
+            <!-- <img id="aplexlogosearch" src="/assets/aplexlogosearch.png" alt=""> -->
+        </div>
+        <div class="search-bars" style="margin-left: 26vw; margin-top: 20px;">
+            <input type="text" style="border:none;    height: 36px;" class="form-control rounded-pill shadow-none" placeholder="Search...">
+            <div class="search-icon" style="color: #4461F2;" >
+                <i class="fas fa-search"  ></i>
+            </div>
+        </div>
+    </div>
+    <div class="product-text-container container-fluid" style="display: flex; justify-content: space-between;">
+             <h4 style="    margin-top: 11px;" id="ManageProduct-text" >Manage Products</h4>
+             <button type="submit " value="submit" class="btn" id="login-btn" style="float: right;"><a style="text-decoration: none; color: #fff;" href="/admin/addproduct">Add Product +</a></button>
+    </div>
+    <div>
+        <div class="col-12 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                <h2 class="tm-block-title text-dark">Products</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Products</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Added</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row"><img class="p-img" style="float: left; ;" src="/assets/iphone.webp" alt="">
+                                <h5 class="category-text">Iphone</h5></th>
+                            <td>
+                                <div class="tm-status-circle moving">
+                                </div>Moving
+                            </td>
+                            <td><b>Oliver Trag</b></td>
+                            <td><b>London, UK</b></td>
+                            <td><b>485 km</b></td>
+                            <td>16:00, 12 NOV 2018</td>
+                            <td>08:00, 18 NOV 2018</td>
+                            <td class="edits" style="    width: 33px;">
+                                <span class="icon"><a class="text-decoration-none text-secondary" href="/admin/editUser>">&#9998;</a></span>
+                                <span class="icon ml-3 delete"><a class="text-decoration-none text-danger " href="/admin/deleteUser">&#128465;</a></span>
+                              </td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
+                            <td>
+                                <div class="tm-status-circle pending">
+                                </div>Pending
+                            </td>
+                            <td><b>Jacob Miller</b></td>
+                            <td><b>London, UK</b></td>
+                            <td><b>360 km</b></td>
+                            <td>11:00, 10 NOV 2018</td>
+                            <td>04:00, 14 NOV 2018</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
+                            <td>
+                                <div class="tm-status-circle cancelled">
+                                </div>Cancelled
+                            </td>
+                            <td><b>George Wilson</b></td>
+                            <td><b>London, UK</b></td>
+                            <td><b>340 km</b></td>
+                            <td>12:00, 22 NOV 2018</td>
+                            <td>06:00, 28 NOV 2018</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
+                            <td>
+                                <div class="tm-status-circle moving">
+                                </div>Moving
+                            </td>
+                            <td><b>William Aung</b></td>
+                            <td><b>London, UK</b></td>
+                            <td><b>218 km</b></td>
+                            <td>15:00, 10 NOV 2018</td>
+                            <td>09:00, 14 NOV 2018</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
+                            <td>
+                                <div class="tm-status-circle pending">
+                                </div>Pending
+                            </td>
+                            <td><b>Harry Ryan</b></td>
+                            <td><b>London, UK</b></td>
+                            <td><b>280 km</b></td>
+                            <td>15:00, 11 NOV 2018</td>
+                            <td>09:00, 17 NOV 2018</td>
+                        </tr>
+                        <tr>
+                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
+                            <td>
+                                <div class="tm-status-circle pending">
+                                </div>Pending
+                            </td>
+                            <td><b>Michael Jones</b></td>
+                            <td><b>London, UK</b></td>
+                            <td><b>218 km</b></td>
+                            <td>18:00, 12 OCT 2018</td>
+                            <td>06:00, 18 OCT 2018</td>
+                        </tr>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
