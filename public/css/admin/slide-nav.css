@@ -142,13 +142,6 @@ a {
   padding-left: calc(var(--nav-width) + 1rem);
 }
 
-.active {
-  
-  background-color:rgb(192, 225, 255);
-  box-shadow: 0px 2px 13px -8px #000000;
-
-
-}
 .nav_link{
   color: black;
   text-decoration: none;

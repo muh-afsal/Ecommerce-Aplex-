@@ -3,10 +3,9 @@ require('dotenv').config()
 
 
 
+const ProductSchema = new mongoose.Schema({
 
-const ProductSchema = new Schema({
-
-    isdeleted: {type: Boolean },
+    isdeleted: {type: Boolean,default:false },
     
     Name: {type: String, required: true, },
     
@@ -14,6 +13,7 @@ const ProductSchema = new Schema({
     
     variant: [{
     
+
     model: {type: String, required: true },
     memory: {type: String, required: true },
     color: {type: String, required: true },
@@ -21,21 +21,14 @@ const ProductSchema = new Schema({
     
     }],
     
-    Image: [{
+    Image: {
+        type:Array,
+    },
+    Category:{
+        type:String,
+    },
     
-    Child_four: { type: String },
-    
-    Child_one: { type: String },
-    
-    Child_three: { type: String },
-    
-    Child_two: {type: String },
-    
-    Main: {type: String },
-    
-    }],
-    
-    Status: {type: String, enum: ['draft', 'published', 'out_of_stock', 'low_quantity'] },
+    Status: {type: String, enum: ['Draft', 'Published', 'Out of Stock', 'Low Stock'] },
     
     Product_added: { type: Date },
     
@@ -56,7 +49,7 @@ const ProductSchema = new Schema({
     Price: { type: Number, required: true },
     
     Rating: {type: Number },
-    isActive:{type:Boolean},
+  
     
     }, { timestamps: true });
     
