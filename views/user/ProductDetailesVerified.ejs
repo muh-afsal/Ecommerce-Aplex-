@@ -47,12 +47,13 @@ img {
     display: block;
 }
 
-.img-display {
+/* .img-display {
     overflow: hidden;
-}
+} */
 
 .img-showcase {
     display: flex;
+    z-index: 99;
     width: 100%;
     transition: all 0.5s ease;
 }
@@ -302,39 +303,39 @@ img {
                     <div class="img-showcase" id="img-container">
                         <!-- <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
                             alt="shoe image"> -->
-                            <img src="<%=products.Image[0]%>" alt="">
-                        <img src="<%=products.Image[2]%>"
+                            <img src="<%=products.Image[0]%>" alt="" id="displayIng">
+                        <!-- <img src="<%=products.Image[2]%>"
                             alt="shoe image">
                         <img src="<%=products.Image[3]%>"
                             alt="shoe image">
                         <img src="<%=products.Image[4]%>"
                             alt="shoe image">
                         <img src="<%=products.Image[4]%>"
-                            alt="shoe image">
+                            alt="shoe image"> -->
                     </div>
                 </div>
                 <div class="img-select" id="image-sel">
-                    <div class="img-item">
+                    <div class="img-item" onclick="showPrviewinDetail('displayIng','img1')">
                         <a href="#" data-id="1">
-                            <img src="<%=products.Image[0]%>"
+                            <img src="<%=products.Image[0]%>" id="img1"
                                 alt="shoe image">
                         </a>
                     </div>
-                    <div class="img-item">
+                    <div class="img-item" onclick="showPrviewinDetail('displayIng','img2')">
                         <a href="#" data-id="2">
-                            <img src="<%=products.Image[2]%>"
+                            <img src="<%=products.Image[2]%>" id="img2"
                                 alt="shoe image">
                         </a>
                     </div>
-                    <div class="img-item">
+                    <div class="img-item" onclick="showPrviewinDetail('displayIng','img3')">
                         <a href="#" data-id="3">
-                            <img src="<%=products.Image[3]%>"
+                            <img src="<%=products.Image[3]%>" id="img3"
                                 alt="shoe image">
                         </a>
                     </div>
-                    <div class="img-item">
+                    <div class="img-item" onclick="showPrviewinDetail('displayIng','img4')">
                         <a href="#" data-id="4">
-                            <img src="<%=products.Image[4]%>"
+                            <img src="<%=products.Image[4]%>" id="img4"
                                 alt="shoe image">
                         </a>
                     </div>
@@ -367,37 +368,17 @@ img {
             </div>
         </div>
     </div>
+    <script>
+        var options = {
+        width: 400,
+        zoomWidth: 500,
+        offset: {vertical: 20, horizontal: 40}
+    };
+    new ImageZoom(document.getElementById("img-container"), options);
+    </script>
+    <script src="/scripts/productdetial.js"></script>
     <%-include("./partials/footer.ejs")%>
 
     <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
-    <script>
-    var options = {
-    width: 400,
-    zoomWidth: 500,
-    offset: {vertical: 0, horizontal: 10}
-};
-new ImageZoom(document.getElementById("img-container"), options);
-const imgs = document.querySelectorAll('#image-sel a');
-        const imgBtns = [...imgs];
-        let imgId = 1;
-
-        imgBtns.forEach((imgItem) => {
-            imgItem.addEventListener('click', (event) => {
-                event.preventDefault();
-                imgId = imgItem.dataset.id;
-                slideImage();
-            });
-        });
-
-        function slideImage() {
-            const displayWidth = document.querySelector('.img-showcase img:first-child').clientWidth;
-
-            document.querySelector('.img-showcase').style.transform = `translateX(${- (imgId - 1) * displayWidth}px)`;
-        }
-
-        window.addEventListener('resize', slideImage);
-
-
-    </script>
 </body>
 </html>
