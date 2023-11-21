@@ -105,7 +105,7 @@ body{
         color: #4461F2;
     }
 }
-.main-banner{
+/* .main-banner{
     width: 94%;
     height: 74vh;
     background-color: #7c7f812e;
@@ -117,7 +117,7 @@ body{
      border-radius: 19px;
      background-color: rgba(0, 0, 0, 0.5);
 
-}
+} */
 
 
 @media (max-width:1200px){
@@ -200,6 +200,7 @@ body{
       height: 42vh;
       object-fit: cover;
     }
+    
     
 
   @media (max-width:400px){

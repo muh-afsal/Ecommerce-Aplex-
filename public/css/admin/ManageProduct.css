@@ -275,7 +275,7 @@ html {
     color: #000000;
     vertical-align: top;
     /* border-color: #dee2e6; */
-    height: 100vh;
+    /* height: 100vh; */
     background-color: #ffff;
     border-radius: 17px;
 
@@ -794,6 +794,7 @@ html {
 /* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   */
 td{
     height: 70px;
+    font-weight: 600;
 }
 #category-name{
     width: 11vw;
@@ -803,4 +804,17 @@ td{
     margin-left: 1vw;
     margin-top: 14px;
 
+}
+.block-icon {
+  font-size: 20px; /* Adjust the font size as needed */
+  color: #FF0000;
+  border: none;
+  background: white;
+} /* Set the color to your preferred color */
+  /* Add more styles as needed */
+
+
+.block-icon:hover {
+  cursor: pointer; /* Change cursor on hover */
+  /* Add more styles for hover state */
 }

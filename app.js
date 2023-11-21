@@ -9,6 +9,7 @@ const connectdb=require('./config/connection')
 require('dotenv').config()
 
 app.use(express.static("public"));
+app.use(require('nocache')())
 
 app.use(session({
   secret:process.env.secretkey,

@@ -62,7 +62,7 @@
 }
 #product-des-input{
     font-size: smaller;
-    width: 96%;
+    width: 70%;
     /* margin-left: 2%; */
     height: 85px;
     border-radius: 10px;
@@ -75,7 +75,11 @@
 }
 #product-price-input{
     width: 94%;
-    border-radius: 13px;
+    border-radius: 10px;
+}
+#product-stock-input{
+    width: 94%;
+    border-radius: 10px;
 }
 .image-upload-container{
     /* background-color: brown; */
@@ -155,7 +159,7 @@
         background-color: #4461F2;
         color: white;
         font-weight: 600;
-        margin-left: 38vw;
+        margin-left: 33vw;
         box-shadow: 0px 0px 5px -1px #4461F2;
         margin-bottom: 34px;
 
@@ -163,6 +167,7 @@
 .prev-img{
     width: 70%;
     height: auto;
+    /* margin-left: -116px */
 }
 .img-con{
     justify-content: center;

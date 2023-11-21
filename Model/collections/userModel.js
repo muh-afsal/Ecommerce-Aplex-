@@ -37,6 +37,10 @@ const Schema= new mongoose.Schema({
         type:Boolean,
         default:true
     },
+    access:{
+        type:Boolean,
+        default:true
+    }
 })
 
 const Users=mongoose.model(process.env.USER_COLLECTION,Schema)

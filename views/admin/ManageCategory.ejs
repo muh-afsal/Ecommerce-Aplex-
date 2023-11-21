@@ -23,7 +23,7 @@
     </div>
     <div class="product-text-container container-fluid" style="display: flex; justify-content: space-between;">
              <h4 style="    margin-top: 11px;" id="ManageProduct-text" >Manage Category</h4>
-             <button type="submit " value="submit" class="btn" id="login-btn" style="float: right;"><a style="text-decoration: none; color: #fff;" href="/admin/addproduct">Add Category +</a></button>
+             <button type="submit " value="submit" class="btn" id="login-btn" style="float: right;"><a style="text-decoration: none; color: #fff;" href="/admin/addCategory">Add Category +</a></button>
     </div>
     <div>
         <div class="col-12 tm-block-col">
@@ -32,113 +32,39 @@
                 <table class="table">
                     <thead>
                         <tr>
+                            <th scope="col">No.</th>
                             <th scope="col">Category Name</th>
-                            <th scope="col">Sold</th>
-                            <th scope="col">Stock</th> 
-                            <th scope="col">Added</th>
-                            <th scope="col">Action</th>
+                            <th scope="col">Added Date</th>
+                            <th scope="col" style="        text-align: right;">Edit</th>
+                            <th scope="col" style="       text-align: right;">Delete</th>
                         
                         </tr>
                     </thead>
                     <tbody>
-                        <tr >
-                            <th  scope="row"><img style="    float: left;" class="p-img" src="/assets/iphone.webp" alt="">
-                            <h5 class="category-text">Iphone</h5></th>
-                            <td>
-                                <div class="tm-status-circle moving">
-                                </div>Moving
-                            </td>
-                            <td><b>Oliver Trag</b></td>
-                            <td><b>London, UK</b></td>
-                           
-                           
-                            <td class="edits" style="    width: 33px;">
-                                <span class="icon"><a class="text-decoration-none text-secondary" href="/admin/editUser>">&#9998;</a></span>
-                             
-                             
-                                <span class="icon ml-3 delete"><a class="text-decoration-none text-danger " href="/admin/deleteUser">&#128465;</a></span>
+                        <%category.forEach((data,index)=>{%>
+                            <tr>
+                              <th scope="row">
+                                <%=index+1%>
+                                </th>
+                                <td><%=data.name%></td>
+                              <!-- <td>
+                                <%if(data.Status){%>
+                                    <%="Allowed"%>
+                                        <%}else{%>
+                                            <%="Blocked"%>
+                                                <%}%>
+                            </td> -->
+                              
+                                <td> <%let Date1=new Date(data.date)%>
+                                    <%-Date1.getDate()%>/<%-Date1.getMonth()%>/<%-Date1.getFullYear()%></td>
+                              <td class="edits">
+                                <span class="icon"  style="    float: right;"><a class="text-decoration-none text-secondary" href="/admin/editCategory?id=<%=data._id%>">&#9998;</a></span>
                               </td>
-                        </tr>
-                        <tr >
-                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
-                            <td>
-                                <div class="tm-status-circle pending">
-                                </div>Pending
-                            </td>
-                            <td><b>Jacob Miller</b></td>
-                            <td><b>London, UK</b></td>
-                            <td class="edits" style="    width: 33px;">
-                                <span class="icon"><a class="text-decoration-none text-secondary" href="/admin/editUser>">&#9998;</a></span>
-                             
-                             
-                                <span class="icon ml-3 delete"><a class="text-decoration-none text-danger " href="/admin/deleteUser">&#128465;</a></span>
+                              <td class="edits">
+                                <span class="icon ml-3 delete"  style="    float: right;"><a class="text-decoration-none text-danger " href="/admin/deleteCategory?id=<%=data._id%>" onclick="return confirm('Are you sure')">&#128465;</a></span>
                               </td>
-                           
-                        </tr>
-                        <tr>
-                            <th id="category-name" scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
-                            <td>
-                                <div class="tm-status-circle cancelled">
-                                </div>Cancelled
-                            </td>
-                            <td><b>George Wilson</b></td>
-                            <td><b>London, UK</b></td>
-                            <td class="edits" style="    width: 33px;">
-                                <span class="icon"><a class="text-decoration-none text-secondary" href="/admin/editUser>">&#9998;</a></span>
-                             
-                             
-                                <span class="icon ml-3 delete"><a class="text-decoration-none text-danger " href="/admin/deleteUser">&#128465;</a></span>
-                              </td>
-                            
-                        </tr>
-                        <tr>
-                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
-                            <td>
-                                <div class="tm-status-circle moving">
-                                </div>Moving
-                            </td>
-                            <td><b>William Aung</b></td>
-                            <td><b>London, UK</b></td>
-                            <td class="edits" style="    width: 33px;">
-                                <span class="icon"><a class="text-decoration-none text-secondary" href="/admin/editUser>">&#9998;</a></span>
-                             
-                             
-                                <span class="icon ml-3 delete"><a class="text-decoration-none text-danger " href="/admin/deleteUser">&#128465;</a></span>
-                              </td>
-                            
-                        </tr>
-                        <tr>
-                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
-                            <td>
-                                <div class="tm-status-circle pending">
-                                </div>Pending
-                            </td>
-                            <td><b>Harry Ryan</b></td>
-                            <td><b>London, UK</b></td>
-                            <td class="edits" style="    width: 33px;">
-                                <span class="icon"><a class="text-decoration-none text-secondary" href="/admin/editUser>">&#9998;</a></span>
-                             
-                             
-                                <span class="icon ml-3 delete"><a class="text-decoration-none text-danger " href="/admin/deleteUser">&#128465;</a></span>
-                              </td>
-                            
-                        </tr>
-                        <tr>
-                            <th scope="row"><img class="p-img" src="/assets/iphone.webp" alt=""></th>
-                            <td>
-                                <div class="tm-status-circle pending">
-                                </div>Pending
-                            </td>
-                            <td><b>Michael Jones</b></td>
-                            <td><b>London, UK</b></td>
-                            <td class="edits" style="    width: 33px;">
-                                <span class="icon"><a class="text-decoration-none text-secondary" href="/admin/editUser>">&#9998;</a></span>
-                             
-                             
-                                <span class="icon ml-3 delete"><a class="text-decoration-none text-danger " href="/admin/deleteUser">&#128465;</a></span>
-                              </td>
-                            
-                        </tr>
+                            </tr>
+                              <%})%>
                         
                     </tbody>
                 </table>

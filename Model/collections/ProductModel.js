@@ -7,7 +7,7 @@ const ProductSchema = new mongoose.Schema({
 
     isdeleted: {type: Boolean,default:false },
     
-    Name: {type: String, required: true, },
+    Name: {type: String, required: true, unique:true},
     
     Description: { type: String, required: true },
     
@@ -23,6 +23,9 @@ const ProductSchema = new mongoose.Schema({
     
     Image: {
         type:Array,
+    },
+    Stock:{
+        type: Number, required: true
     },
     Category:{
         type:String,
