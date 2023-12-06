@@ -45,7 +45,7 @@
                                 <th scope="col">Added Date</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Action</th>
-                               
+
                             </tr>
                         </thead>
                         <tbody>
@@ -62,7 +62,7 @@
                                 <td>
                                     <%=data.email%>
                                 </td>
-                              
+
 
                                 <td>
                                     <%let date=new Date(data.date)%>
@@ -82,16 +82,18 @@
                                     </span>
                                 </td>
                                  -->
-                                 <td class="edits">
+                                <td class="edits">
                                     <span class="icon" id="editIcon_<%= data._id %>">
                                         <form action="/admin/blockUnblockUser" method="POST">
                                             <input type="hidden" name="id" value="<%= data._id %>">
                                             <input type="hidden" name="access" value="<%= data.access %>">
-                                            <button type="submit" class="text-decoration-none block-icon text-secondary" id="disIcon" onclick="event.preventDefault(); changeIcon(this.form)">&#128683;</button>
+                                            <button type="submit" class="text-decoration-none block-icon text-secondary"
+                                                id="disIcon"
+                                                onclick="event.preventDefault(); changeIcon(this.form)">&#128683;</button>
                                         </form>
                                     </span>
                                 </td>
-                                
+
                                 <%})%>
 
                         </tbody>
@@ -114,23 +116,32 @@
         </script> -->
         <script>
             function changeIcon(form) {
-    const disicon = form.querySelector(".text-secondary");
-    
-    // Toggle the access state (block or grant)
-    const newAccess = !(form.access.value === 'true');
+                const disicon = form.querySelector(".text-secondary");
 
-    // Update the icon
-    disicon.innerHTML = newAccess ? '🟢' : '🔴';
 
-    // Update the user's access state in the form
-    form.access.value = newAccess;
+                const currentAccess = form.access.value === 'true';
 
-    // Submit the form
-    form.submit();
-}
+
+                const newAccess = !currentAccess;
+
+
+                disicon.innerHTML = newAccess ? '🔴' : '🟢';
+
+
+                form.access.value = newAccess.toString();
+
+                // Submit the form
+                form.submit();
+            }
+
+
+
+  
+
 
         </script>
-        
+
+
 </body>
 
 </html>

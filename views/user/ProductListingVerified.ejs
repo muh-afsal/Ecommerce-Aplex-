@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/user/login.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
 
 <style>
       @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;700;800;900&display=swap');
@@ -71,7 +73,7 @@ html{
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    background-color: var(--card-main-color);
+    /* background-color: var(--card-main-color); */
     margin: 2.9em;
     box-sizing: border-box;
     border-radius: 15px;
@@ -457,10 +459,17 @@ html{
 }
 
 
+.fa-heart{
+    color: black;
+}
+.heart-fill{
+    color: red;
+}
+
 </style>
 <body>
     <!-- Nav bar -->
-    <%-include("./partials/navbar.ejs")%>
+    <%-include("./partials/nav-after-login.ejs")%>
 <!-- Add this button inside the filter-div -->
 
 
@@ -485,8 +494,8 @@ html{
         <!-- <div class="card-divv"> -->
     <div class="container-fluid card-container">
         <%products.forEach((data,index)=>{%>
-            <a href="/ProductDetailverified?id=<%=data._id%>" style="text-decoration: none;">
-      <div class="card-1 card-div">
+            <!-- <a href="/ProductDetailverified?id=<%=data._id%>" style="text-decoration: none;"> -->
+      <div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=<%=data._id%>')" style="cursor: pointer;">
           <div class="like-icon-div">
               <label for="card-1-like" class="like-icon-div-child">
                   <input style="    display: none;" type="checkbox" id="card-1-like">
@@ -509,7 +518,7 @@ html{
                       <p class="previous-price">₹<%=data.Price-1000%>/-</p>
                       <p class="current-price">₹<%=data.Price%>/-</p>
                   </div>
-                  <i class="fas fa-shopping-cart"></i>
+                  <a href="/cart" style="margin-top: 30px ;"><i class="fas fa-shopping-cart"></i></a>
               </div>
           </div>
       </div>
@@ -536,7 +545,10 @@ html{
         });
     });
     
-                
+          
+    function goDetail(link){
+            window.location.href=link
+        }
     </script>
 </body>
 </html>

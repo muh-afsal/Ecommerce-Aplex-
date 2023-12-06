@@ -116,13 +116,12 @@ console.log(error);
 //Load Login
 const loadLogin=async (req,res)=>{
     try {
-      if(req.session.adminAuth){
+      if(req.session && req.session.adminAuth){
         res.redirect('/admin/admin')
       }else{
-        console.log('reachde       _______',req.session.logged);
-        if(req.session.logged){
+        if(req.session && req.session.logged){
           const dt=await User.findOne({email:req.session.email})
-          console.log(dt);
+          // console.log(dt,' dt ');
           if(dt.access){
             res.redirect("/home")
           }else{
@@ -148,14 +147,17 @@ const loginUser=async (req,res)=>{
     // console.log(req.body)
 
     const emailexists=await User.findOne({email:email})
-console.log(emailexists);
+console.log(emailexists,' this is email exist');
     if(emailexists){
       if(emailexists.isAdmin){
         // console.log('reached');
         const admpasswordMatch = await bcrypt.compare(password,emailexists.password)
-        req.session.adminAuth=true
+        // console.log(admpasswordMatch,'hashed pass')
+        // console.log(password,' og pass');
         if(admpasswordMatch){
-          res.render("../views/admin/adminDash")
+          req.session.adminAuth=true
+          // console.log(' rached in /admin/');
+          res.redirect("/admin/admin")
         }
       }
       // console.log(emailexists.access,"staus:---")
@@ -168,7 +170,7 @@ console.log(emailexists);
 
           req.session.logged=true;
           req.session.email=email
-          console.log('helo___________________________  ',req.session.logged);
+          // console.log('helo___________________________  ',req.session.logged);
           res.redirect("/home")
           
         }else{
@@ -243,58 +245,7 @@ const otpverify=async (req,res)=>{
   }
 }
 
-//load product detail
-const LoadproductDetail=async (req,res)=>{
-  try {
-    const id=req.query.id;
-    // console.log(id);
-    const products = await Product.findById(id)
-    res.render("../views/user/ProductDetail",{products})
-    // console.log(products);
-  } catch (error) {
-  console.log(error.message);
-    
-  }
-}
 
-//product details after login
-const LoadproductDetailVerified=async (req,res)=>{
-  try {
-    const id=req.query.id;
-    // console.log(id);
-    const products = await Product.findById(id)
-    res.render("../views/user/ProductDetailesVerified",{products})
-    // console.log(products);
-  } catch (error) {
-  console.log(error.message);
-    
-  }
-}
-
-
-//product listing
-const ProductListing=async(req,res)=>{
-  try {
-    const products = await Product.find({isdeleted:false})
-    res.render("../views/user/ProductListing",{products})
-  } catch (error) {
-  console.log(error.message);
-    
-  }
-}
-
-
-//product details verified
-
-const ProductListingverified=async (req,res)=>{
-  try {
-    const products = await Product.find({isdeleted:false})
-    res.render("../views/user/ProductListingVerified",{products})
-  } catch (error) {
-  console.log(error.message);
-    
-  }
-}
  
 
 //LogoutUser
@@ -321,10 +272,6 @@ module.exports = {
     otpverify,
     LoadOTP,
     otpSender,
-    LoadproductDetail,
-    ProductListing,
-    ProductListingverified,
-    LoadproductDetailVerified,
     LogoutUser
   };
   

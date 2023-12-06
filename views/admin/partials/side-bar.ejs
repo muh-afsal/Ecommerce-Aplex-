@@ -7,7 +7,39 @@
     <link rel="stylesheet" href="/css/admin/slide-nav.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+             .l-navbar {
+            width: 70px;
+            transition: 0.3s;
+        }
+
+        .l-navbar:hover {
+            width: 250px;
+        }
+
+        .nav_list {
+            width: 100%;
+        }
+
+        .l-navbar:hover .nav_list {
+            width: 250px;
+        }
+
+        /* Add this style for hovering color for links */
+        .nav_link:hover {
+            background-color: #c7d5ff;
+            margin-left: 10px;
+
+        }
+        @media (min-width:768px){
+               #header{
+                display: none;
+               } 
+        }
+        </style>
 
     <title>Document</title>
 </head>
@@ -50,7 +82,7 @@
                             <i title="Banner" class='fa-regular fa-image nav_icon'></i>
                             <span class="nav_name">Banner</span>
                         </a>
-                        <a href="#" class="nav_link" >
+                        <a href="#" class="nav_link">
                             <i title="Transactions" class='fa-regular fa-credit-card nav_icon'></i>
                             <span class="nav_name">Transactions</span>
                         </a>
@@ -58,17 +90,17 @@
                             <i title="Settings" class='fa fa-solid fa-gear nav_icon'></i>
                             <span class="nav_name">Settings</span>
                         </a>
-                        <a href="/admin/logout" class="nav_link"> 
+                        <a href="/admin/logout" class="nav_link">
                             <i title="Logout" class='bx bx-log-out nav_icon'></i>
-                             <span class="nav_name">Logout</span> </a>
-                            
+                            <span class="nav_name">Logout</span> </a>
+
                     </div>
                 </div>
-            </div> 
-                                
-                    </div>
-            </nav>
         </div>
+
+    </div>
+    </nav>
+    </div>
 
     </div>
 

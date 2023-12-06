@@ -360,8 +360,13 @@ img {
                 
                 <div class="purchase-info" style="display: flex;">
                     <input type="number" min="0" value="1" class="increment-input">
-                    <a href="#"><button type="submit " value="submit" class="btn" >Add to Whishlist</button></a>
-                    <a href="#"> <button type="submit " value="submit" class="btn" style="margin-left: 10px;" >Add to Cart</button></a>
+                    <a href="/wishlist"><button type="submit " value="submit" class="btn" >Add to Whishlist</button></a>
+                    <%if(alreadyexist){%>
+                        <a href="/cart"> <button type="submit " value="submit" class="btn" style="margin-left: 10px;" >Go to Cart</button></a>
+
+                    <%}else{%>
+                        <a onclick="addToCart(event,'<%=products._id%>')"> <button type="submit " value="submit" class="btn" style="margin-left: 10px;" >Add to Cart</button></a>
+                    <%}%>
                    
                 </div>
 
@@ -377,6 +382,7 @@ img {
     new ImageZoom(document.getElementById("img-container"), options);
     </script>
     <script src="/scripts/productdetial.js"></script>
+    <script src="/scripts/cart.js"></script>
     <%-include("./partials/footer.ejs")%>
 
     <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->

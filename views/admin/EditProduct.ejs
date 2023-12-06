@@ -166,6 +166,13 @@
         }
       }
 
+
+      function isValid(value){
+        if(value>0){
+          return true
+        }
+      }
+
       //  //to validate imagez
       //  function imagevalidate(value){
       //   if(!value.files && !value.files[0]){
@@ -237,6 +244,18 @@
           StockError.textContent = "Stock cannot be empty";
           event.preventDefault();
         }
+
+
+
+        if(!isValid(priceValue)){
+        priceError.textContent = "Please enter a positive value";
+        event.preventDefault();
+       }
+       if(!isValid(StockValue)){
+        StockError.textContent = "Please enter a positive value";
+        event.preventDefault();
+       }
+
 
 
         if (emptyselect(categoryValue) === true) {

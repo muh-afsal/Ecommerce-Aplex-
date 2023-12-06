@@ -71,7 +71,7 @@ html{
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    background-color: var(--card-main-color);
+    /* background-color: var(--card-main-color);  */
     margin: 2.9em;
     box-sizing: border-box;
     border-radius: 15px;
@@ -457,6 +457,13 @@ html{
 }
 
 
+.fa-heart{
+    color: black;
+}
+.heart-fill{
+    color: red;
+}
+
 </style>
 <body>
     <!-- Nav bar -->
@@ -485,9 +492,9 @@ html{
         <!-- <div class="card-divv"> -->
     <div class="container-fluid card-container">
         <%products.forEach((data,index)=>{%>
-            <a href="/ProductDetail?id=<%=data._id%>" style="text-decoration: none;">
+            <!-- <a href="/ProductDetail?id=<%=data._id%>" style="text-decoration: none;"> -->
       <div class="card-1 card-div">
-          <div class="like-icon-div">
+          <div class="like-icon-div" onclick="goDetail('/ProductDetail?id=<%=data._id%>')" style="cursor: pointer;">
               <label for="card-1-like" class="like-icon-div-child">
                   <input style="    display: none;" type="checkbox" id="card-1-like">
                   <i class="far fa-heart heart-empty"></i>
@@ -509,7 +516,7 @@ html{
                       <p class="previous-price">₹<%=data.Price-1000%>/-</p>
                       <p class="current-price">₹<%=data.Price%>/-</p>
                   </div>
-                  <i class="fas fa-shopping-cart"></i>
+                  <a href="/login" style="margin-top: 30px ;"><i class="fas fa-shopping-cart"></i></a>
               </div>
           </div>
       </div>
@@ -536,7 +543,10 @@ html{
         });
     });
     
-                
+            
+    function goDetail(link){
+            window.location.href=link
+        }
     </script>
 </body>
 </html>

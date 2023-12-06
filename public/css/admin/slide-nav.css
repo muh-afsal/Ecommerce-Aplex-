@@ -31,6 +31,7 @@ a {
 }
 
 .header {
+  
   width: 100%;
   height: var(--header-height);
   position: fixed;
@@ -121,6 +122,7 @@ a {
   transition: .3s;
   border-radius: 8px;
   height: 57px;
+  width: 220px;
 }
 
 .nav_link:hover {
