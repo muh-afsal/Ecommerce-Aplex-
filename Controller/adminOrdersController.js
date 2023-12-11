@@ -19,13 +19,13 @@ const orderData=await Order.find()
     }
 }
 
-const Ordersdetails=async(req,res)=>{
-try {
+// const Ordersdetails=async(req,res)=>{
+// try {
     
-} catch (error) {
+// } catch (error) {
   
-}
-}
+// }
+// }
 
 
 
@@ -37,7 +37,7 @@ try {
 
 module.exports = {
     LoadOrders,
-    Ordersdetails
+    // Ordersdetails
     
   };
   
