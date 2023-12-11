@@ -36,7 +36,7 @@ router.post("/editCategory",categoryController.UpdateCategory)
 router.get("/deleteCategory",categoryController.softDeleteCategory)
 router.get("/orders",orderController.LoadOrders)
 router.get("/orders",checkAdminAuth,orderController.LoadOrders)
-router.post("/orderdetails",checkAdminAuth,orderController.Ordersdetails)
+router.get("/orderdetails",checkAdminAuth,orderController.Orderdetails)
 
 
 

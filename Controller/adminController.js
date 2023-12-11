@@ -44,6 +44,7 @@ const loginAdmin = async (req, res) => {
   
       if (passwordMatch) {
         req.session.adminAuth = true;
+        req.session.email=email;
         res.redirect("/admin/admin");  // Redirect to the admin dashboard
       } else {
         res.render("../views/admin/Adminlogin", {
