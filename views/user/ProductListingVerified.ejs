@@ -425,14 +425,21 @@ html{
     margin-left: 5px;
 }
 .filter-div{
-    height: 62vh;
-    width: 17vw;
-    background-color: crimson;
+    height: auto;
+    width: 268px;
+    background-color: #eaf5ff;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     position: absolute;
     z-index: 10;
-    margin-top: -48px;
+    margin-top: -27px;
+    padding: 25px;
+    padding-top: 33px;
+    font-size: larger;
+    border-radius: 14px;
+    /* margin-left: 17px; */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 28px 5px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
 }
 
 
@@ -470,14 +477,12 @@ html{
 <body>
     <!-- Nav bar -->
     <%-include("./partials/nav-after-login.ejs")%>
-<!-- Add this button inside the filter-div -->
+
 
 
     <div class=" search-nav" style="    margin-bottom: 23px;margin-top: 15px;">
         <button id="filterButton" style="width: 101px; border: 0; border-radius: 5px;">Filter</button>
-        <!-- <div>
-            <img id="aplexlogosearch" src="/assets/aplexlogosearch.png" alt="">
-        </div> -->
+        
         <div class="search-bars" >
             
             <input type="text" class="form-control rounded-pill shadow-none" placeholder="Search...">
@@ -488,8 +493,16 @@ html{
     </div>
     <div class="main-contaner">
         <div class="filter-div">
-
-            
+            <h6 style="font-weight: 600;">Select Category for Filter</h6>
+            <%categoryData.forEach((data)=>{%>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                  <%=data.name%>
+                </label>
+              </div>
+              <%})%>
+              
         </div>
         <!-- <div class="card-divv"> -->
     <div class="container-fluid card-container">

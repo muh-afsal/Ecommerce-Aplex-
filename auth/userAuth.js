@@ -37,8 +37,35 @@ const checkUserAuthentication=async(req,res,next)=>{
     res.redirect("/login")
   }
 }
+
+const Orderplaced=async (req,res,next)=>{
+  try {
+    if(req.session.orderplaced){
+      res.redirect("/home")
+    }else{
+      next()
+    }
+  } catch (error) {
+    
+  }
+}
+const preventOrderplaced=async (req,res,next)=>{
+  try {
+    if(!req.session.orderplaced){
+      res.redirect("/home")
+    }else{
+      next()
+    }
+  } catch (error) {
+    
+  }
+}
+
+
 module.exports = {
   userExist,
   verifyuser,
-  checkUserAuthentication
+  checkUserAuthentication,
+  Orderplaced,
+  preventOrderplaced
 };

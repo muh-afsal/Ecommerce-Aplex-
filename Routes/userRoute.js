@@ -4,6 +4,7 @@ const userController=require("../Controller/userController")
 const productController=require("../Controller/productController")
 const OTPController=require("../Controller/OTPcontroller")
 const cartController=require("../Controller/CartController")
+const OrderController=require("../Controller/OrderController")
 const userAuth=require('../auth/userAuth')
 // const {checkSession}=require('../auth/userandadmin')
 const {checkUserAuthentication}=require('../auth/userAuth')
@@ -26,8 +27,11 @@ router.get("/cart",userAuth.checkUserAuthentication,cartController.LoadCart)
 router.post('/addtocart',userAuth.checkUserAuthentication,cartController.addtoCart)
 router.post("/updatequantity/:id",userAuth.checkUserAuthentication,cartController.updateQuantity)
 router.delete('/removeproduct/:Id', userAuth.checkUserAuthentication, cartController.removeProduct);
-router.get("/checkout", userAuth.checkUserAuthentication, cartController.LoadCheckout)
-
+router.get("/checkout",userAuth.Orderplaced, userAuth.checkUserAuthentication, cartController.LoadCheckout)
+router.post("/addAddress",userAuth.checkUserAuthentication, cartController.AddAdress)
+router.post("/placeorder",userAuth.checkUserAuthentication, cartController.LoadOrderPlaced)
+router.get("/placeOrder",userAuth.preventOrderplaced,userAuth.checkUserAuthentication, cartController.LoadorderPlaced)
+router.get("/orderDetails",userAuth.checkUserAuthentication,OrderController.LoadOrderDetails)
 
 
 

@@ -1,44 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-   <link rel="stylesheet" href="/css/user/signup.css">
-   <script src="/scripts/cart.js"></script>
-   <link rel="stylesheet" href="/css/user/login.css">
-   <title>Cheakout</title>
-
+<%-include("./partials/header.ejs")%>
 
     <style>
         .cart-total-container {
             height: auto;
-    width: 25vw;
-    float: right;
-    margin-top: -89vh;
-    margin-right: 62px;
-    border-radius: 13px;
-    margin-bottom: 50px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-}
-        
+            width: 22vw;
+            float: right;
+            margin-top: -95vh;
+            margin-right: 94px;
+            border-radius: 13px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+            font-size: small;
+        }
+
 
         .coupon-input {
-            height: 10vh;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-            border-radius: 13px;
-            margin-top: 31px;
+            height: 9vh;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+    border-radius: 13px;
+    margin-top: -217px;
+
+    width: 281px;
+    float: right;
+    margin-right: 154PX;
+
         }
+
 
         .cart-products-listing {
             height: auto;
             /* width: 30vw; */
             border-radius: 12px;
             box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+            padding-bottom: 88px;
+            overflow: scroll;
+        }
+
+        .cart-products-listing::-webkit-scrollbar {
+            width: 0;
+            /* Remove scrollbar space on Webkit browsers */
+        }
+
+        .cart-products-listing {
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         .cart-products-container {
@@ -48,7 +52,7 @@
             padding-bottom: 10vh;
             margin-left: 179px;
         }
-        
+
 
         .cart-container {
             height: auto;
@@ -93,11 +97,10 @@
         }
 
         .total-values {
-            height: 69px;
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: .1px solid rgba(0, 0, 0, 0.599)
         }
 
         .total-values-container {
@@ -124,11 +127,11 @@
             color: white;
             background-color: #4461F2;
             box-shadow: 0px 0px 5px -1px #4461F2;
-            width: 18vw;
-            height: 48px;
-            margin-top: 39px;
-            margin-left: 65px;
-            margin-bottom: 20px;
+            width: 13vw;
+            height: 36px;
+            margin-top: 1px;
+            margin-left: 74px;
+            margin-bottom: 16px;
         }
 
         @media (max-width:1200px) {
@@ -235,186 +238,536 @@
             color: #ddd;
         }
 
-        .preview-products{
-            height: 10vw;
+        .preview-products {
+            height: auto    ;
             width: 100%;
             /* background-color: rgb(238, 238, 238); */
             border-radius: 10px;
             padding-top: 10px;
             border: .5px solid;
         }
-        .display_product{
+
+        .display_product {
             height: 62px;
             margin-top: -10px;
             /* background-color: aquamarine; */
             /* border-bottom: 0.5px solid; */
             border-top: 0.5px solid;
         }
+
         .preview-products {
-    overflow: hidden; /* Hide the scrollbar */
-}
+            overflow: hidden;
+            /* Hide the scrollbar */
+        }
 
-.display_product {
-    margin-bottom: 10px;
-}
+        .display_product {
+            margin-bottom: 10px;
+        }
 
-.preview-products::-webkit-scrollbar {
-    width: 0; /* Remove scrollbar space on Webkit browsers */
-}
+        .preview-products::-webkit-scrollbar {
+            width: 0;
+            /* Remove scrollbar space on Webkit browsers */
+        }
 
-.preview-products {
-    scrollbar-width: none; /* Firefox */
-}
-.selectPayment{
-    /* background-color: aliceblue; */
-    width: 14vw;
+        .preview-products {
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .selectPayment {
+
+            width: 14vw;
     float: right;
-    margin-top: -21vh;
-    margin-right: 14.8vw;
     border-radius: 13px;
     padding: 16px;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-}
+    
+    float: left;
 
+        }
 
+        .selectAddresscontainer {
+            height: 68vh;
+            /* background: aquamarine; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 44px;
+        }
+
+        .selectAddress {
+            cursor: pointer;
+            width: 21vw;
+            background-color: #eff6ff;
+            height: 31vh;
+            border-style: dashed;
+            border-radius: 12px;
+            border-color: #C7C7C7;
+            display: table-cell;
+            vertical-align: middle;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .DisplayAddress {
+            cursor: pointer;
+            width: 21vw;
+            background-color: #eff6ff;
+            height: 31vh;
+            border-radius: 12px;
+            border-color: #C7C7C7;
+            vertical-align: middle;
+            align-items: center;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        #addAddressbtn {
+            border: none;
+            background: none;
+            color: inherit;
+            padding: 0;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+
+        #coupon-code-div {
+            font-weight: 600;
+            margin-top: 15px;
+            margin-right: 10px;
+            margin-left: 10px;
+            font-size: larger;
+        }
+
+        .coupon-entry {
+            width: 78%;
+            height: 50px;
+            float: right;
+        }
+
+        .applycoupon {
+            background: #2E51FF;
+            float: right;
+            position: relative;
+            width: 140px;
+            text-align: center;
+            border-radius: 50px;
+            margin-left: -50px;
+        }
     </style>
-</head>
+    </head>
 
-<body>
-    <!-- Nav bar -->
-    <%-include("./partials/nav-after-login.ejs")%>
-        <h2 style="text-align: center; font-weight:800 ; margin-top: 20px;">Checkout</h2>
-        <div class="container-fluid cart-container">
-            <div class="cart-products-container">
-                <div class="cart-products-listing" style=" padding-top: 13px;">
-                    <h4 style=" margin-left: 20px;  font-weight:600;">Add Address</h4>
-                    <form action="/" method="POST" style=" margin-top: 25px;" id="form">
-                        <div class="form-group  mb-4">
-                            <input id="shippingName" type="text" class="form-control entry shadow-none" placeholder="Shipping name"
-                                name="shippingName">
-                            <div class="text-danger " style="font-size: small; margin-left: 20px;" id="shippingNameError"></div>
+    <body>
 
-                            <small class="form-text text-muted "></small>
+        <!-- Nav bar -->
+        <%-include("./partials/nav-after-login.ejs")%>
+            <h2 style="text-align: center; font-weight:800 ; margin-top: 20px;">Checkout</h2>
+            <div class="container-fluid cart-container">
+                <div class="cart-products-container">
+                    <div class="cart-products-listing" style=" padding-top: 13px;">
+
+                        <div class="selectAddresscontainer">
+                            <div role="button" class="selectAddress">
+                                <button id="addAddressbtn" data-toggle="modal" data-target="#exampleModal"><i
+                                        class="fa-solid fa-plus" style="   font-size: 49px;"></i></button>
+                                <h4>Add Address</h4>
+                                <!-- add address modal -->
+                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h4 style=" margin-left: 20px;  font-weight:600;">Add Address</h4>
+                                                <form action="/addAddress" method="POST" style=" margin-top: 25px;"
+                                                    id="form">
+                                                    <div class="form-group  mb-4">
+                                                        <input id="shippingName" type="text"
+                                                            class="form-control entry shadow-none"
+                                                            placeholder="Shipping name" name="shippingName">
+                                                        <div class="text-danger "
+                                                            style="font-size: small; margin-left: 20px;"
+                                                            id="shippingNameError"></div>
+
+                                                        <small class="form-text text-muted "></small>
+                                                    </div>
+                                                    <div class="form-group  mb-4">
+
+                                                        <input id="phone" type="number"
+                                                            class="form-control entry shadow-none"
+                                                            placeholder="Phone Number" name="phone">
+                                                        <div class="text-danger "
+                                                            style="font-size: small; margin-left: 20px;"
+                                                            id="phoneError">
+                                                        </div>
+
+
+                                                    </div>
+                                                    <div class="form-group mt-4">
+                                                        <input id="city" type="text"
+                                                            class="form-control entry shadow-none" name="city"
+                                                            placeholder="City">
+                                                        <div class="text-danger "
+                                                            style="font-size: small; margin-left: 20px;" id="cityError">
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group mt-4">
+                                                        <input id="state" type="text"
+                                                            class="form-control entry shadow-none" name="state"
+                                                            placeholder="State">
+                                                        <div class="text-danger "
+                                                            style="font-size: small; margin-left: 20px;"
+                                                            id="stateError"></div>
+                                                    </div>
+                                                    <div class="form-group mt-4">
+                                                        <input id="country" type="text"
+                                                            class="form-control entry shadow-none" name="country"
+                                                            placeholder="Country">
+                                                        <div class="text-danger "
+                                                            style="font-size: small; margin-left: 20px;"
+                                                            id="countryError"></div>
+                                                    </div>
+                                                    <div class="form-group mt-4">
+                                                        <input id="pincode" type="number"
+                                                            class="form-control entry shadow-none" name="pincode"
+                                                            placeholder="Pincode">
+                                                        <div class="text-danger "
+                                                            style="font-size: small; margin-left: 20px;"
+                                                            id="pincodeError"></div>
+                                                    </div>
+
+
+
+                                                    <button type="submit " class="btn" value="submit"
+                                                        style="margin-top: 48px;     margin-left: 64px ;"
+                                                        id="signup-btn">Add Address</button>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <%userData.address.forEach((value)=>{%>
+                                <div class="DisplayAddress">
+                                    <div class="form-check" style="margin-bottom: 20px;">
+                                        <input class="form-check-input" type="radio" name="selectAddressRadio"
+                                            id="selectaddress_<%=value._id%>" value="<%=value._id%>">
+                                        <label style="font-weight: 600;" class="form-check-label" for="<%=value._id%>">
+                                            <%=value.shippingName%>
+                                        </label>
+                                    </div>
+                                    <div class="addressTexts" style="color: gray;">
+                                        <span>Shipping Name : </span><span>
+                                            <%=value.shippingName%>
+                                        </span><br>
+                                        <span>Phone No : </span><span>
+                                            <%=value.phone%>
+                                        </span><br>
+                                        <span>City : </span><span>
+                                            <%=value.city%>
+                                        </span><br>
+                                        <span>State : </span><span>
+                                            <%=value.state%>
+                                        </span><br>
+                                        <span>Country : </span><span>
+                                            <%=value.country%>
+                                        </span><br>
+                                        <span>Pincode : </span><span>
+                                            <%=value.pincode%>
+                                        </span>
+                                    </div>
+                                </div>
+                                <%})%>
+
                         </div>
-                        <div class="form-group  mb-4">
+
+                    </div>
+
+                </div>
+
+                <div class="cart-total-container">
+                    <h4 style=" margin-left: 10px;  font-weight:600;margin-top: 10px;">Order Summary</h4>
+                    <div class="total-values-container">
+                        <div class="preview-products" style="overflow:scroll;">
+                            <%cartData.Items.forEach((value)=>{%>
+                                <div class="display_product"
+                                    style="display: flex; justify-content: space-between; align-items: center;">
+                                    <img style="width: 60px;" src="<%=value.Products.Image[0]%>" alt="">
+                                    <p style="overflow: hidden;">
+                                        <%=value.Products.Name%>
+                                    </p>
+                                    <p style="margin-right: 10px;">
+                                        <%=value.Products.Price%>/-
+                                    </p>
+                                </div>
+                                <%})%>
+                        </div>
+                        <div class="total-values">
+                            <p class="total-texts">Subtotal :</p>
+                            <p class="cart-prices" id="cartTotal-Subtotal"><%-cartData.TotalAmount%><span>/-</span></p>
+                        </div>
+                        <div class="total-values">
+                            <p class="total-texts">Discount Price :</p>
+                            <p class="cart-prices">-0/-</p>
+                        </div>
+                        <div class="total-values">
+                            <p class="total-texts" style="font-size: x-large; color: black ;">Total :</p>
+                            <p style="font-size: x-large; font-weight: 600; " class="cart-prices"><span id="total">
+                                    <%=cartData.TotalAmount%>
+                                </span>/-</p>
+                        </div>
+                    </div>
+                    <div class="selectPayment ">
+                        <h4 style=" margin-left: 10px; font-size: medium;  font-weight:600;margin-top: 10px;">Select Payment
+                        </h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentRadios" id="cod" value="COD">
+                            <label class="form-check-label" for="cod">
+                                Cash on Delivery
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentRadios" id="upi" value="Online" disabled>
+                            <label class="form-check-label" for="upi">
+                                UPI Payment
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="paymentRadios" id="wallet" value="wallet"
+                                disabled>
+                            <label class="form-check-label" for="wallet">
+                                Wallet
+                            </label>
+                        </div>
+                    </div>
+                    <button onclick="placeOrder()" type="submit " value="submit" class="btn">Place Order</button>
+                </div>
+                <!-- cheakbox -->
+               
+                <div class="coupon-input" style="display: flex;">
+                    <div class=" search-nav" style="       margin-bottom: 23px;margin-top: 9px; ">
+
+                        <div class="search-bars" style=" height: 6vh;    height: 6vh;display: flex;">
                             
-                            <input id="phone" type="number" class="form-control entry shadow-none"
-                                placeholder="Phone Number" name="phone">
-                            <div class="text-danger " style="font-size: small; margin-left: 20px;" id="phoneError">
+                            <input type="text" class="form-control rounded-pill coupon-entry shadow-none "
+                                style="float: right;" placeholder="Coupon code">
+                            <div class="search-icon applycoupon"
+                                style="     background: #2E51FF;float: right;position: relative;width: 8vw; text-align: center; border-radius: 50px;margin-left: -66px;height: 49px; ">
+                                <p style="color: aliceblue; margin-top: 12px;">Apply Coupon</p>
                             </div>
-                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <p class="text-danger">aflu is bad boy </p> -->
+            <%-include("./partials/footer.ejs")%>
+
+
+                <script>
+
+
+
+
+                    function placeOrder() {
+
+                        // document.getElementById(`selectaddress_${selectAddressId}`)
+                        const selectAddressRadio = document.querySelector('input[name="selectAddressRadio"]:checked');
+                        const selectAddressRadioValue = selectAddressRadio ? selectAddressRadio.value : null;
+
+                        const selectPaymentRadio = document.querySelector('input[name="paymentRadios"]:checked');
+                        const selectPaymentRadioValue = selectPaymentRadio ? selectPaymentRadio.value : null;
+
+                        if (!selectPaymentRadioValue) {
+                            (function () {
+                                Toastify({
+                                    text: "Select a Payment Option",
+                                    duration: 3000,
+                                    destination: "https://github.com/apvarun/toastify-js",
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "center", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "#FF0000",
+                                        // border-radius: 10px;
+
+                                    },
+                                    onClick: function () { } // Callback after click
+                                }).showToast();
+                            })();
+                        }
+                        if (!selectAddressRadioValue) {
+
+                            (function () {
+                                Toastify({
+                                    text: "Select The Address",
+                                    duration: 3000,
+                                    destination: "https://github.com/apvarun/toastify-js",
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "center", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "#FF0000",
+                                        // border-radius: 10px;
+
+                                    },
+                                    onClick: function () { } // Callback after click
+                                }).showToast();
+                            })();
+
+                        }
+
+
+                        if (selectAddressRadioValue && selectPaymentRadioValue) {
+                            // alert("reached")
+                            fetch('/placeorder', {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ selectPaymentRadioValue, selectAddressRadioValue })
+                            })
+                                .then(response => response.json())
+                                .then(res => {
+                                    if (res.status) {
+                                        window.location.href = "/placeOrder";
+                                    } else {
+                                        alert("error in order place")
+
+                                    }
+
+                                })
+
+                        }
+                    }
+
                     
-                        </div>
-                        <div class="form-group mt-4">
-                            <input id="city" type="text" class="form-control entry shadow-none"
-                                name="city" placeholder="City">
-                            <div class="text-danger " style="font-size: small; margin-left: 20px;"
-                                id="cityError"></div>
-                        </div>
-                        <div class="form-group mt-4">
-                            <input id="state" type="password" class="form-control entry shadow-none"
-                                name="state" placeholder="State">
-                            <div class="text-danger " style="font-size: small; margin-left: 20px;"
-                                id="stateError"></div>
-                        </div>
-                        <div class="form-group mt-4">
-                            <input id="country" type="password" class="form-control entry shadow-none"
-                                name="country" placeholder="Country">
-                            <div class="text-danger " style="font-size: small; margin-left: 20px;"
-                                id="countryError"></div>
-                        </div>
-                        <div class="form-group mt-4">
-                            <input id="pincode" type="password" class="form-control entry shadow-none"
-                                name="pincode" placeholder="Pincode">
-                            <div class="text-danger " style="font-size: small; margin-left: 20px;"
-                                id="pincodeError"></div>
-                        </div>
-                        
-                        
-
-                        <button type="submit " class="btn" value="submit" style="margin-top: 48px;" id="signup-btn">Add Address</button>
-                    </form>
-
-                </div>
-
-            </div>
-
-            <div class="cart-total-container">
-                <h4 style=" margin-left: 10px;  font-weight:600;margin-top: 10px;">Order Summary</h4>
-                <div class="total-values-container">
-                    <div class="preview-products" style="overflow:scroll;">
-                        <%cartData.Items.forEach((value)=>{%>
-                            <div class="display_product" style="display: flex; justify-content: space-between; align-items: center;">
-                                <img style="width: 60px;" src="<%=value.Products.Image[0]%>" alt="">
-                                <p style="overflow: hidden;" ><%=value.Products.Name%></p>
-                                <p style="margin-right: 10px;"><%=value.Products.Price%>/-</p>
-                            </div>
-                            <%})%>
-                    </div>
-                    <div class="total-values">
-                        <p class="total-texts">Subtotal :</p>
-                        <p class="cart-prices" id="cartTotal-Subtotal"><%-cartData.TotalAmount%><span>/-</span></p>
-                    </div>
-                    <div class="total-values">
-                        <p class="total-texts">Discount Price :</p>
-                        <p class="cart-prices">-0/-</p>
-                    </div>
-                    <div class="total-values">
-                        <p class="total-texts" style="font-size: x-large; color: black ;">Total :</p>
-                        <p style="font-size: x-large; font-weight: 600; " class="cart-prices"><span
-                                id="total"><%=cartData.TotalAmount%></span>/-</p>
-                    </div>
-                </div>
-                <a href="/cheakout" style="text-decoration: none;"> <button type="submit " value="submit"
-                        class="btn">Place Order</button></a>
-            </div>
-            <!-- cheakbox -->
-             <div class="selectPayment ">
-                <h4 style=" margin-left: 10px; font-size: medium;  font-weight:600;margin-top: 10px;">Select Payment</h4>
-                 <div class="form-check">
-                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" >
-                     <label class="form-check-label" for="exampleRadios1">
-                       Cash on Delivery
-                     </label>
-                   </div>
-                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2" disabled  >
-                     <label class="form-check-label" for="exampleRadios2">
-                       UPI Payment
-                     </label>
-                   </div>
-                   <div class="form-check">
-                     <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3" disabled>
-                     <label class="form-check-label" for="exampleRadios3">
-                       Wallet
-                     </label>
-                   </div>
-             </div>             
-        </div>
-
-
-        <!-- <p class="text-danger">aflu is bad boy </p> -->
-        <%-include("./partials/footer.ejs")%>
 
 
 
 
 
 
-            <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
-                integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
-                crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-                integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-                crossorigin="anonymous"></script>
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
-                integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-                crossorigin="anonymous"></script>
 
-            <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+
+
+                    function isEmpty(value) {
+                        const trimmedValue = value.trim();
+                        return trimmedValue === "";
+                    }
+
+
+                    document.querySelector("form").addEventListener("submit", function (event) {
+
+                        const shippingNameInput = document.querySelector("#shippingName");
+                        const shippingNameValue = shippingNameInput.value;
+                        const shippingNameError = document.querySelector("#shippingNameError");
+
+
+                        const phoneInput = document.querySelector("#phone");
+                        const phoneValue = phoneInput.value;
+                        const phoneError = document.querySelector("#phoneError");
+
+                        const cityInput = document.querySelector("#city");
+                        const cityValue = cityInput.value;
+                        const cityError = document.querySelector("#cityError");
+
+                        const stateInput = document.querySelector("#state");
+                        const stateValue = stateInput.value;
+                        const stateError = document.querySelector("#stateError");
+
+                        const countryInput = document.querySelector("#country");
+                        const countryValue = countryInput.value;
+                        const countryError = document.querySelector("#countryError");
+
+                        const pincodeInput = document.querySelector("#pincode");
+                        const pincodeValue = pincodeInput.value;
+                        const pincodeError = document.querySelector("#pincodeError");
+
+
+                        shippingNameError.textContent = "";
+                        phoneError.textContent = "";
+                        cityError.textContent = "";
+                        stateError.textContent = "";
+                        countryError.textContent = "";
+                        pincodeError.textContent = "";
+
+
+
+
+                        if (isEmpty(shippingNameValue)) {
+                            shippingNameError.textContent = "Shipping Name is required";
+                            event.preventDefault();
+                        }
+                        if (isEmpty(phoneValue)) {
+                            phoneError.textContent = "Phone number is required";
+                            event.preventDefault();
+                        }
+                        if (isEmpty(cityValue)) {
+                            cityError.textContent = "City name is required";
+                            event.preventDefault();
+                        }
+                        if (isEmpty(stateValue)) {
+                            stateError.textContent = "State name is required";
+                            event.preventDefault();
+                        }
+                        if (isEmpty(countryValue)) {
+                            countryError.textContent = "Country is required";
+                            event.preventDefault();
+                        }
+                        if (isEmpty(pincodeValue)) {
+                            pincodeError.textContent = "Pincode is required";
+                            event.preventDefault();
+                        }
+
+                    })
+
+
+
+                    function navigateaddAddress() {
+                        window.location.href = "";
+                    }
+                </script>
+
+
+
+                <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+                    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+                    crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+                    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+                    crossorigin="anonymous"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+                    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+                    crossorigin="anonymous"></script>
+
+                <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+                <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
-</body>
+    </body>
 
-</html>
+    </html>

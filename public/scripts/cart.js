@@ -1,6 +1,4 @@
-// Add this part to the end of your existing cart.js file
 
-// const { calculateTotalPrice } = require("../helper/cartHelper");
 
 
 
@@ -105,7 +103,6 @@ function removeProduct(productId,rowId) {
                         Toastify({
                           text: "Product removed From Cart",
                           duration: 2000,
-                          destination: "https://github.com/apvarun/toastify-js",
                           newWindow: true,
                           close: true,
                           gravity: "bottom", // `top` or `bottom`
@@ -143,7 +140,6 @@ function removeProduct(productId,rowId) {
                         Toastify({
                           text: "Error while removing Product...!",
                           duration: 2000,
-                          destination: "https://github.com/apvarun/toastify-js",
                           newWindow: true,
                           close: true,
                           gravity: "bottom", // `top` or `bottom`

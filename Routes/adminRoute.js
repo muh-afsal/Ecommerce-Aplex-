@@ -7,6 +7,7 @@ const router = express.Router();
 const adminController = require("../Controller/adminController");
 const productController=require("../Controller/productController")
 const categoryController=require("../Controller/categoryController")
+const orderController=require("../Controller/adminOrdersController")
 
 const adminAuth = require("../auth/adminAuth");
 
@@ -16,7 +17,8 @@ const uploadObj = [
 ];
 
 
-
+router.get("/adminlogin",adminController.loadAdminLogin)
+router.post("/adminlogin",adminController.loginAdmin)
 router.get("/admin",checkAdminAuth,adminController.LoadAdminDash);
 router.get("/manageProduct",checkAdminAuth, productController.LoadmanageProduct);
 router.get("/addproduct",checkAdminAuth, productController.LoadaddProduct);
@@ -32,10 +34,17 @@ router.post("/addCategory",categoryController.addCategory)
 router.get("/editCategory",checkAdminAuth,categoryController.LoadEditCategory)
 router.post("/editCategory",categoryController.UpdateCategory)
 router.get("/deleteCategory",categoryController.softDeleteCategory)
-router.get('/logout',(req,res)=>{
-  req.session.adminAuth=false
-  res.redirect('/login')
-})
+router.get("/orders",orderController.LoadOrders)
+router.get("/orders",checkAdminAuth,orderController.LoadOrders)
+router.post("/orderdetails",checkAdminAuth,orderController.Ordersdetails)
+
+
+
+router.get('/adminlogout', (req, res) => {
+  req.session.adminAuth = false;
+  res.redirect('/admin/adminlogin');
+});
+
 
 
 module.exports = router;

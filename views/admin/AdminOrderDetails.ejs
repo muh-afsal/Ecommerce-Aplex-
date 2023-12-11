@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderDetails</title>
+    <link rel="stylesheet" href="/css/admin/ManageProduct.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+<body>
+    <%-include("./partials/side-bar.ejs")%>
+  
+    <div class="product-text-container container-fluid" style="display: flex; justify-content: space-between;">
+             <h4 style="    margin-top: 11px;" id="ManageProduct-text" >Order Details</h4><h5>ksajdfbkb</h5>
+           
+    </div>
+    <div>
+        <div class="col-12 tm-block-col">
+            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                <h2 class="tm-block-title text-dark">Orders</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No.</th>
+                            <th scope="col">Order ID</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Payment Status</th>
+                            <th scope="col">Order Status</th>
+                            <th scope="col">Details</th>
+                         
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%orderData.forEach((data,index)=>{%>
+                            <tr>
+                              <th scope="row">
+                                <%=index+1%>
+                                </th>
+                                <td><%=data.orderNumber%></td> 
+                                <td><%=data.OrderDate.toLocaleDateString()%></td>
+                                <td><%=data.paymentStatus%></td>
+                                <td><%=data.orderStatus%></td>
+                                <td><a href="">View Details</a></td>
+             
+                            </tr>
+                              <%})%>
+                        
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

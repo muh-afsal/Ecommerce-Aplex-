@@ -1,0 +1,382 @@
+<%-include("./partials/header.ejs")%>
+
+    <style>
+        .orderplacedcontainer {
+            height: auto;
+            width: 70%;
+            border-radius: 12px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+            margin-top: 10vh;
+            margin-bottom: 13vh;
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+            flex-direction: column;
+            padding-bottom: 34px;
+
+
+        }
+
+        .addressTexts {
+            color: gray;
+            display: flex;
+            /* flex-direction: column; */
+            align-items: center;
+            justify-content: space-between;
+            width: 85%;
+        }
+
+        .btn {
+            border-radius: 50px;
+            text-align: center;
+            padding: 0.45rem 0.8rem;
+            outline: 0;
+            color: white;
+            background-color: #4461F2;
+            box-shadow: 0px 0px 5px -1px #4461F2;
+            width: 13vw;
+            height: 39px;
+            margin-top: 1px;
+            /* margin-left: 74px; */
+            margin-bottom: 16px;
+        }
+
+        #order_date_id {
+            height: 97px;
+            background-color: rgb(216, 234, 255);
+            width: 95%;
+            margin-top: 20px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 23px;
+        }
+
+        .product_listing {
+            height: 428px;
+            /* background-color: rgb(181 215 255); */
+            width: 95%;
+            margin-top: 20px;
+            border-radius: 10px;
+            display: flex;
+            /* justify-content: center; */
+            /* align-items: center; */
+            padding: 23px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+            flex-direction: column;
+
+        }
+
+        .orderdetails {
+            height: auto;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            /* border: 1px solid; */
+            border-radius: 9px;
+            padding-bottom: 23px;
+
+        }
+
+        .product_listing_head {
+            height: 31px;
+            /* background-color: rgb(216, 234, 255); */
+            width: 99%;
+            margin-top: -1px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 11px;
+            padding-top: 23px;
+            width: 95%;
+            box-shadow: rgba(255, 255, 255, 0.1) 0px -4px 16px 0px, rgba(255, 255, 255, 0.05) 0px 4px 6px -2px;
+
+
+        }
+
+        .product_listing_container {
+            height: auto;
+            /* background-color: aquamarine; */
+            margin-top: 10px;
+            overflow: scroll;
+        }
+
+        .product_listing_container::-webkit-scrollbar {
+            width: 0;
+        }
+
+        .product_listing_container {
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        .products_div {
+            height: 91px;
+            /* background-color: rgb(216, 234, 255); */
+            width: 99%;
+            margin-top: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px;
+            border: 0.1px solid darkgrey;
+        }
+
+        #line {
+            width: 97%;
+            background-color: black;
+            border-bottom: 0.1px solid;
+            margin-top: 13px;
+        }
+
+        .order_summary {
+            /* background-color: bisque; */
+            height: 34vh;
+            width: 60%;
+            padding: 10px;
+            margin-top: 36px;
+            border-radius: 11px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+        }
+
+        .total-values-container {
+            display: grid;
+            margin-top: 31px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .total-values {
+            height: 69px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .total-values-container {
+            display: grid;
+            margin-top: 31px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .total-texts {
+            font-weight: 600;
+            color: rgba(85, 85, 85, 0.682)
+        }
+
+        .cart-prices {
+            margin-right: 20px;
+        }
+
+        #ordersummary_address {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-direction: row;
+            width: 100%;
+            gap: 38px;
+        }
+
+        #address_container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: larger;
+            margin-top: 23px;
+        }
+
+        #product_img_name {
+            display: flex;
+            /* justify-content: center; */
+            align-items: center;
+            width: 44%;
+            /* background-color: aqua; */
+            margin-right: -14%;
+        }
+
+        .address_values {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            gap: 10px;
+
+
+
+        }
+
+        @media (max-width:1600px) {
+            .orderplacedcontainer {
+                width: 90%;
+            }
+        }
+
+        @media (max-width:1500px) {
+            .orderplacedcontainer {
+                width: 90%;
+            }
+        }
+
+        @media (max-width:1000px) {
+            .orderplacedcontainer {
+                width: 95%;
+            }
+
+            .product_listing {
+                width: 100%;
+                width: 95%;
+                box-shadow: rgba(255, 255, 255, 0.1) 0px -4px 16px 0px, rgba(255, 255, 255, 0.05) 0px 4px 6px -2px;
+                padding-top: 10px;
+                padding: 0px;
+            }
+
+        }
+
+        @media (max-width:900px) {
+            #ordersummary_address {
+                flex-wrap: wrap;
+            }
+
+            .order_summary {
+                width: 100%;
+            }
+
+        }
+
+        @media (max-width:800px) {
+            .orderplacedcontainer {
+                width: 95%;
+            }
+
+            #product-price {
+                display: none;
+            }
+
+            .product_img_name {
+                margin-right: 0%;
+            }
+
+            .order_summary {
+                width: 100%;
+            }
+        }
+    </style>
+
+    </head>
+
+    <body>
+
+        <%-include("./partials/nav-after-login.ejs")%>
+
+            <div class="orderplacedcontainer container-fluid">
+                <h3 style="font-weight: 700; margin-top: 20px;">Order Details</h3>
+                <div class="orderdetails">
+                    <div id="order_date_id">
+                        <h4 style="font-weight: 600;" id="orderid">#<%=OrderProduct.orderNumber%>
+                        </h4>
+                        <h4 style="font-weight: 600;" id="Totalprice">₹<%=OrderProduct.TotalPrice%>/-</h4>
+                    </div>
+                </div>
+    <h3 style="    margin-left: -59vw; font-weight: 600 ;">Products</h3>
+                <div class="product_listing">
+                    <div class="product_listing_head">
+                        <p style="    margin-right: 26%;">Products</p>
+                        <p id="product-price">Price</p>
+                        <p>Quantity</p>
+                        <p>Sub Total</p>
+                    </div>
+                    <div class="product_listing_container">
+                        <%OrderProduct.Items.forEach((value,index)=>{%>
+                            <div class="products_div">
+                                <div id="product_img_name">
+                                    <img style="    width: 70px;" src="<%=value.productId.Image[0]%>" alt="">
+                                    <p style="margin-left: 10px;">
+                                        <%=value.productId.Name%>
+                                    </p>
+                                </div>
+                                <p id="product-price">₹<%=value.Price%>/-</p>
+                                <p>
+                                    <%=value.quantity%>
+                                </p>
+                                <p>₹<%=value.Price*value.quantity%>/-</p>
+                            </div>
+                            <%})%>
+
+                    </div>
+
+                </div>
+                <div id="ordersummary_address">
+                    <div class="order_summary">
+                        <h5 style="font-weight: 600;">Order Summary</h5>
+                        <div class="total-values-container">
+                            <div class="total-values">
+                                <p class="total-texts">Subtotal :</p>
+                                <p class="cart-prices" id="cartTotal-Subtotal">₹<%=OrderProduct.TotalPrice%>/-</p>
+                            </div>
+
+                            <div class="total-values">
+                                <p class="total-texts">Discount Price :</p>
+                                <p class="cart-prices">-0/-</p>
+                            </div>
+                            <div class="total-values">
+                                <p class="total-texts" style="font-size: x-large; color: rgb(77, 77, 77) ;">Total :</p>
+                                <p style="font-size: x-large; font-weight: 600; color: #6b6b6b; " class="cart-prices">
+                                    <span id="total">₹<%=OrderProduct.TotalPrice%></span>/-</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="order_summary">
+                        <h5 style="font-weight: 600;">Selected Address</h5>
+                        <div id="address_container">
+                            <div class="addressTexts" style="color: gray;">
+                                <div class="address_values">
+                                    <span>Shipping Name : </span>
+                                    <span>Phone No :</span>
+                                    <span>City :</span>
+                                    <span>State :</span>
+                                    <span>Country :</span>
+                                    <span>Pincode :</span>
+
+                                </div>
+                                <div class="address_values">
+                                    <span>
+                                        <%=OrderProduct.Address.shippingName%>
+                                    </span>
+                                    <span>
+                                        <%=OrderProduct.Address.phone%>
+                                    </span>
+                                    <span>
+                                        <%=OrderProduct.Address.city%>
+                                    </span>
+                                    <span>
+                                        <%=OrderProduct.Address.state%>
+                                    </span>
+                                    <span>
+                                        <%=OrderProduct.Address.country%>
+                                    </span>
+                                    <span>
+                                        <%=OrderProduct.Address.pincode%>
+                                    </span>
+
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            <script>
+
+
+            </script>
+
+            <%-include("./partials/footer.ejs")%>
+                <%-include("./partials/footerlinks.ejs")%>

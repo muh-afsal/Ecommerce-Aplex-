@@ -3,10 +3,10 @@ const Products = require("../Model/collections/ProductModel");
 
 async function productAddtocart(productId, userId) {
   try {
-    console.log(productId, userId);
+    // console.log(productId, userId);
     const cartExist = await Cart.findOne({ User: userId });
 
-    console.log(cartExist);
+    // console.log(cartExist);
     if (!cartExist) {
       const newCart = new Cart({
         User: userId,
@@ -47,29 +47,22 @@ function calculateTotalPrice(userId) {
   return new Promise(async (resolve, reject) => {
     try {
       let cartData = await Cart.findOne({ User: userId });
-      // console.log(cartData, " data of cart");
+
       let Total = 0;
 
-      // Use Promise.all to wait for all asynchronous operations to complete
-      await Promise.all(cartData.Items.map(async (data) => {
-        let productData = await Products.findOne({ _id: data.Products });
-        let subtotal = productData.Price * data.Quantity;
-        Total += subtotal;
-        // log
-        // console.log(Total, "  total  ");
-      }));
+      await Promise.all(
+        cartData.Items.map(async (data) => {
+          let productData = await Products.findOne({ _id: data.Products });
+          let subtotal = productData.Price * data.Quantity;
+          Total += subtotal;
+        })
+      );
 
-      // console.log(Total, " * total * ");
       resolve(Total);
-
-      
-    
-
     } catch (error) {
       reject(error);
     }
   });
 }
-
 
 module.exports = { productAddtocart, calculateTotalPrice };

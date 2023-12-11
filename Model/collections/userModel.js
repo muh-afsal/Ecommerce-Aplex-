@@ -22,6 +22,14 @@ const Schema= new mongoose.Schema({
         type:String,
         
     },
+    address:[{
+        shippingName:{type:String},
+        phone:{type:Number},
+        city:{type:String},
+        state:{type:String},
+        country:{type:String},
+        pincode:{type:Number},
+    }],
     emailAuth:{
         type:Boolean,
         default:false

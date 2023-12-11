@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css"> -->
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -14,9 +11,6 @@
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
-    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
 
     <script src="/scripts/cart.js"></script>
     <link rel="stylesheet" href="/css/user/login.css">
@@ -40,11 +34,27 @@
             border-radius: 13px;
             margin-top: 31px;
         }
+        #returntoshopbtn{
+            margin-left: 56%;
+    margin-top: 18px;
+        }
 
         .cart-products-listing {
-            height: 52vh;
+            overflow: scroll;
+            height: 62vh;
             border-radius: 12px;
             box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+        }
+
+
+        .cart-products-listing::-webkit-scrollbar {
+            width: 0;
+            /* Remove scrollbar space on Webkit browsers */
+        }
+
+        .cart-products-listing {
+            scrollbar-width: none;
+            /* Firefox */
         }
 
         .cart-products-container {
@@ -57,6 +67,13 @@
         .cart-container {
             height: auto;
         }
+        .cartemptyimg{
+            width: 57%;
+    margin-left: 26vw;
+    margin-top: -2vh;
+    margin-bottom: 29px;
+}
+        
 
         @media(max-width:1200px) {
             .cart-total-container {
@@ -80,6 +97,10 @@
             #coupon-code-div {
                 display: none;
             }
+            #returntoshopbtn{
+            margin-left: 56%;
+    margin-top: 18px;
+        }
 
             .search-bars {
                 justify-content: center;
@@ -94,6 +115,10 @@
             th {
                 font-size: smaller;
             }
+            #returntoshopbtn{
+            margin-left: 56%;
+    margin-top: 18px;
+        }
         }
 
         .total-values {
@@ -140,12 +165,27 @@
                 width: 27vw;
                 margin-left: 270px;
             }
+            .cartemptyimg {
+                width: 57%;
+    margin-left: 26vw;
+    margin-top: -2vh;
+    margin-bottom: 29px
+            }
+            #returntoshopbtn{
+                margin-left: 37%;
+   
+        }
         }
 
         @media (max-width:900px) {
             .btn {
                 width: 27vw;
                 margin-left: 200px;
+            }
+            .cartemptyimg {
+                
+                margin-left: 13vw;
+                 margin-top: 5vh;
             }
         }
 
@@ -154,6 +194,14 @@
                 width: 42vw;
                 margin-left: 97px;
             }
+            .cartemptyimg {
+                width: 100%;
+    margin-left: 0vw;
+    
+            }
+            #returntoshopbtn{
+                margin-left: 26%;
+        }
         }
 
         @media (max-width:500px) {
@@ -161,7 +209,14 @@
                 width: 48vw;
                 margin-left: 52px;
             }
+
+            .cartemptyimg {
+                width: 100%;
+    margin-left: 0vw;
+    margin-top: 10vh;
+            }
         }
+
 
         @media (max-width:380px) {
             .btn {
@@ -210,7 +265,10 @@
             margin: 0px;
             padding: 0px;
         }
-
+.closebutton{
+    border: none;
+    background-color: unset;
+}
         input.number {
             text-align: center;
             border: none;
@@ -238,6 +296,15 @@
             text-decoration: none;
             color: #ddd;
         }
+        
+.cart-products-listing ::-webkit-scrollbar {
+    width: 0; /* Remove scrollbar space on Webkit browsers */
+}
+
+.cart-products-listing  {
+    scrollbar-width: none; /* Firefox */
+}
+        
     </style>
 </head>
 
@@ -247,115 +314,107 @@
         <h2 style="text-align: center; font-weight:800 ; margin-top: 20px;">My Shopping Cart</h2>
         <div class="container-fluid cart-container">
             <div class="cart-products-container">
-                <div class="cart-products-listing" style=" padding-top: 13px;">
-                    <div class="table-container">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">IMAGE</th>
-                                    <th scope="col">PRODUCT</th>
-                                    <th scope="col">PRICE</th>
-                                    <th scope="col">QUANTITY</th>
-                                    <th scope="col">SUBTOTAL</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                <%if(cartProduct.Items.length>0){%>
 
-                                <%cartProduct.Items.forEach((value,index)=>{%>
+                    <div class="cart-products-listing" style=" padding-top: 13px;">
+                        <div class="table-container">
+                            <table class="table" id="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">IMAGE</th>
+                                        <th scope="col">PRODUCT</th>
+                                        <th scope="col">PRICE</th>
+                                        <th scope="col">QUANTITY</th>
+                                        <th scope="col">SUBTOTAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                    <tr id="Product_<%=value.Products._id%><%-index%>">
-                                        <th scope="row"><img class="p-img" style="float: left;  width: 60px;"
-                                                src="<%=value.Products.Image[0]%>" alt="">
-                                        </th>
-                                        <td>
-                                            <%=value.Products._id%><%-index%>
-                                        </td>
-                                        <td id="Price_<%=value.Products._id%>">
-                                            <%=value.Products.Price%>/-
-                                        </td>
-                                        <td>
-                                            <form>
-                                                <div class="value-button decrease"
-                                                    onclick="updatequantity('<%=value.Products._id%>', '<%=value.Products.Stock%>', -1)"
-                                                    value="Decrease Value">-</div>
-                                                <input type="number" class="number" id="number_<%=value.Products._id%>"
-                                                    style="font-size: smaller;" value="<%=value.Quantity%>" readonly />
-                                                <div class="value-button increase"
-                                                    onclick="updatequantity('<%=value.Products._id%>', '<%=value.Products.Stock%>', 1)"
-                                                    value="Increase Value">+</div>
-                                            </form>
+                                    <%cartProduct.Items.forEach((value,index)=>{%>
+
+                                        <tr id="Product_<%=value.Products._id%><%-index%>">
+                                            <th scope="row"><img class="p-img" style="float: left;  width: 60px;"
+                                                    src="<%=value.Products.Image[0]%>" alt="">
+                                            </th>
+                                            <td>
+                                                <%=value.Products.Name%>
+                                            </td>x
+                                            <td id="Price_<%=value.Products._id%>">
+                                                <%=value.Products.Price%>/-
+                                            </td>
+                                            <td>
+                                                <form>
+                                                    <div class="value-button decrease"
+                                                        onclick="updatequantity('<%=value.Products._id%>', '<%=value.Products.Stock%>', -1)"
+                                                        value="Decrease Value">-</div>
+                                                    <input type="number" class="number"
+                                                        id="number_<%=value.Products._id%>" style="font-size: smaller;"
+                                                        value="<%=value.Quantity%>" readonly />
+                                                    <div class="value-button increase"
+                                                        onclick="updatequantity('<%=value.Products._id%>', '<%=value.Products.Stock%>', 1)"
+                                                        value="Increase Value">+</div>
+                                                </form>
 
 
-                                        </td>
-                                        <td id="Subtotal_<%=value.Products._id%>" style="font-weight: 700;">
-                                            <%=value.Products.Price*value.Quantity%>/-
-                                        </td>
-                                        <!-- Update the relevant part of your EJS file -->
-                                        <td style="font-weight: 700;">
-                                            <button type="button" data-toggle="modal" data-target="#logoutModal<%=value.Products._id%><%-index%>">
-                                                <i class="fas fa-times-circle"></i>
-                                            </button>
+                                            </td>
+                                            <td id="Subtotal_<%=value.Products._id%>" style="font-weight: 700;">
+                                                <%=value.Products.Price*value.Quantity%>/-
+                                            </td>
+                                            <!-- Update the relevant part of your EJS file -->
+                                            <td style="font-weight: 700;">
+                                                <button type="button" class="closebutton" data-toggle="modal"
+                                                    data-target="#logoutModal<%=value.Products._id%><%-index%>">
+                                                    <i class="fas fa-times-circle"></i>
+                                                </button>
 
-                                        </td>
+                                            </td>
 
-                                        <!-- are you sure modal -->
-                                        <div class="modal fade" id="logoutModal<%=value.Products._id%><%-index%>" tabindex="-1" role="dialog"
-                                            aria-labelledby="logoutModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="logoutModalLabel">
-                                                        </h5>
-                                                        <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="modal-body">Are you sure you want to remove this
-                                                        Product?</div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class=" btn-secondary "
-                                                            data-dismiss="modal" style="border-radius: 7px;"
-                                                            aria-label="close">
-                                                            Cancel
-                                                        </button>
-                                                        <a onclick="removeProduct('<%=value.Products._id%>','Product_<%=value.Products._id%><%-index%>','cart-empty-msg')"
-                                                            class="confirm-button btn-danger " data-dismiss="modal"
-                                                            aria-label="close">Confirm</a>
+                                            <!-- are you sure modal -->
+                                            <div class="modal fade" id="logoutModal<%=value.Products._id%><%-index%>"
+                                                tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
+                                                aria-hidden="true">
+                                                <div class="modal-dialog" role="document">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="logoutModalLabel">
+                                                            </h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">Are you sure you want to remove this
+                                                            Product?</div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class=" btn-secondary "
+                                                                data-dismiss="modal" style="border-radius: 7px;"
+                                                                aria-label="close">
+                                                                Cancel
+                                                            </button>
+                                                            <a onclick="removeProduct('<%=value.Products._id%>','Product_<%=value.Products._id%><%-index%>','cart-empty-msg')"
+                                                                class="confirm-button btn-danger " data-dismiss="modal"
+                                                                aria-label="close">Confirm</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
 
-                                        
-                                        <%})%>
-                                        
-                                            <%if(cartProduct.Items.length===0){%>
-                                                    <p style="text-align: center;color: red;" id="cart-empty-msg">Your Cart is Empty</p>
-                                                <%}%>
-                                            
-                                    </tr>
 
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="coupon-input" style="display: flex;">
-                    <div class=" search-nav" style="    margin-bottom: 23px;margin-top: 15px; ">
+                                            <%})%>
 
-                        <div class="search-bars" style=" height: 6vh;    height: 6vh;display: flex;">
-                            <h5 style="font-weight: 500; margin-top: 15px;margin-right: 7%; margin-left: 25px; "
-                                id="coupon-code-div">Coupon Code</h5>
-                            <input type="text" class="form-control rounded-pill shadow-none "
-                                style="    width: 60%;height: 50px;float: right;" placeholder="Coupon code">
-                            <div class="search-icon"
-                                style=" background: #2E51FF; float: right;position: relative; width: 7vw; text-align: center; border-radius: 50px; margin-left: -50px; ">
-                                <p style="color: aliceblue; margin-top: 12px;">Apply Coupon</p>
-                            </div>
+
+
+                                        </tr>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div>
+                   
+
+
             </div>
+
 
             <div class="cart-total-container">
                 <h4 style=" margin-left: 10px;  font-weight:600;margin-top: 10px;">Cart Total</h4>
@@ -374,9 +433,15 @@
                                 id="total"><%-total%></span>/-</p>
                     </div>
                 </div>
-                <a href="/checkout" style="text-decoration: none;"> <button type="submit " value="submit"
-                        class="btn">Proceed To Checkout</button></a>
+                <button onclick="navigatetocheckout()" type="submit " value="submit" class="btn">Proceed To
+                    Checkout</button disabled>
             </div>
+            <%}else{%>
+
+                <img src="/assets/cartempty.png"  class="cartemptyimg" alt=" cart-empty-image">
+                <button onclick="navigatetoproductlisting()" type="submit " value="submit" class="btn" id="returntoshopbtn">Return To Shop</button >
+                
+                <%}%>
         </div>
 
 
@@ -385,19 +450,35 @@
 
 
 
-         
-<script>
-    window.addEventListener("load",()=>{
-        localStorage.setItem("cartcount",'<%-cartProduct.Items.length%>')
-    })
-    document.addEventListener("DOMContentLoaded", function () {
-        // alert(cartProduct.Items.length);
-        if (cartProduct.Items.length === 0) {
-            window.location.reload();
-        }
-    });
-</script>
-        
+
+            <script>
+                window.addEventListener("load", () => {
+                    localStorage.setItem("cartcount", '<%-cartProduct.Items.length%>')
+                })
+                document.addEventListener("DOMContentLoaded", function () {
+                    // alert(cartProduct.Items.length);
+                    if (cartProduct.Items.length === 0) {
+                        window.location.reload();
+
+                    }
+                });
+
+
+                function navigatetocheckout() {
+                    window.location.href = "/checkout";
+                }
+                function navigatetoproductlisting() {
+                    window.location.href = "/productlistingverified";
+                }
+
+
+
+
+
+
+
+            </script>
+
             <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
                 integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
                 crossorigin="anonymous"></script>
@@ -411,7 +492,7 @@
             <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
                 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
             <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-            
+
 </body>
 
 </html>
