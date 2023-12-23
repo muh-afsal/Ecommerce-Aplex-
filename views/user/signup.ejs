@@ -40,6 +40,13 @@
                                     <%- message %> </p>
                                 <% }%>
                         </div>
+                        <div class="form-group  mb-4">
+                            <input id="phone" type="phone" class="form-control entry shadow-none" placeholder="Phone Number"
+                                name="phone">
+                            <div class="text-danger " style="font-size: small; margin-left: 20px;" id="phoneError"></div>
+
+                            <small class="form-text text-muted "></small>
+                        </div>
                         <div class="form-group mt-4">
                             <input id="createpassword" type="password" class="form-control entry shadow-none"
                                 name="createpassword" placeholder="Create Password">
@@ -74,6 +81,9 @@
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+/;
                     return emailRegex.test(email);
                 }
+                function validatephone(phone) {
+                    return phone.length===10;
+                }
 
                 function isEmpty(value) {
                     const trimmedValue = value.trim();
@@ -95,6 +105,11 @@
                     const emailInput = document.querySelector("#email");
                     const emailValue = emailInput.value;
                     const emailError = document.querySelector("#emailError");
+
+
+                    const phoneInput = document.querySelector("#phone");
+                    const phoneValue = phoneInput.value;
+                    const phoneError = document.querySelector("#phoneError");
 
                     const createpasswordInput = document.querySelector("#createpassword");
                     const createpasswordValue = createpasswordInput.value;
@@ -120,6 +135,10 @@
                         emailError.textContent = "Email cant be empty";
                         event.preventDefault();
                     }
+                    if (isEmpty(phoneValue)) {
+                        phoneError.textContent = "Phone Number cant be empty";
+                        event.preventDefault();
+                    }
                     if (isEmpty(createpasswordValue)) {
                         createpasswordError.textContent = "Create Password cant be empty";
                         event.preventDefault();
@@ -132,6 +151,10 @@
                     //validating email
                     if (!validateEmail(emailValue)) {
                         emailError.textContent = "Email is not valid";
+                        event.preventDefault();
+                    }
+                    if (!validatephone(phoneValue)) {
+                        phoneError.textContent = "Phone number is not valid,please enter a 10 digit phone number";
                         event.preventDefault();
                     }
                     //validate password

@@ -1,12 +1,12 @@
 const Cart = require("../Model/collections/CartModel");
 const Products = require("../Model/collections/ProductModel");
 
+
+
 async function productAddtocart(productId, userId) {
   try {
-    // console.log(productId, userId);
     const cartExist = await Cart.findOne({ User: userId });
 
-    // console.log(cartExist);
     if (!cartExist) {
       const newCart = new Cart({
         User: userId,
@@ -16,7 +16,9 @@ async function productAddtocart(productId, userId) {
             Quantity: 1,
           },
         ],
+        TotalAmount: 0, // Initialize TotalAmount to 0
         createdAt: Date.now(),
+        UpdatedAt: Date.now(),
       });
 
       await newCart.save();
@@ -29,19 +31,37 @@ async function productAddtocart(productId, userId) {
       if (!productExist) {
         await Cart.updateOne(
           { User: userId },
-          { $push: { Items: { Products: productId, Quantity: 1 } } }
+          { 
+            $push: { Items: { Products: productId, Quantity: 1 } },
+            $set: { UpdatedAt: Date.now() } 
+          }
         );
       } else {
         await Cart.updateOne(
           { User: userId, "Items.Products": productId },
-          { $inc: { "Items.$.Quantity": 1 } }
+          { 
+            $inc: { "Items.$.Quantity": 1 },
+            $set: { UpdatedAt: Date.now() } 
+          }
         );
       }
     }
+
+   
+    const totalAmount = await calculateTotalPrice(userId);
+
+
+    await Cart.updateOne({ User: userId }, { $set: { TotalAmount: totalAmount } });
+
+    console.log("Total Amount:", totalAmount);
   } catch (error) {
     console.log(error);
   }
 }
+
+
+
+
 
 function calculateTotalPrice(userId) {
   return new Promise(async (resolve, reject) => {

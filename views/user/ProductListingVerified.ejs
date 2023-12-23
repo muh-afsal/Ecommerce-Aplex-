@@ -496,7 +496,7 @@ html{
             <h6 style="font-weight: 600;">Select Category for Filter</h6>
             <%categoryData.forEach((data)=>{%>
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <input class="form-check-input" type="checkbox" value="<%=data.name%>" name="category">
                 <label class="form-check-label" for="flexCheckDefault">
                   <%=data.name%>
                 </label>
@@ -505,7 +505,7 @@ html{
               
         </div>
         <!-- <div class="card-divv"> -->
-    <div class="container-fluid card-container">
+    <div class="container-fluid card-container" id="card_parent" >
         <%products.forEach((data,index)=>{%>
             <!-- <a href="/ProductDetailverified?id=<%=data._id%>" style="text-decoration: none;"> -->
       <div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=<%=data._id%>')" style="cursor: pointer;">
@@ -548,6 +548,7 @@ html{
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
+        
     
     document.addEventListener('DOMContentLoaded', function () {
         const filterButton = document.getElementById('filterButton');
@@ -558,6 +559,78 @@ html{
         });
     });
     
+    </script>
+    <script>
+  let category=[]
+      const categoriescheckbox=document.querySelectorAll("input[name=category]")
+        
+      categoriescheckbox.forEach((input)=>{
+        {input.addEventListener('change',updateProductList)}
+      })
+
+
+
+      function updateProductList(){
+        category=Array.from(document.querySelectorAll("input[name=category]:checked")).map((data)=>data.value)
+        category=category.join(",")
+        console.log(category);
+        let allproducts=[]
+
+        fetch(`/productsfilter?category=${category}`)
+        .then(response=>response.json())
+        .then(res=>{
+            console.log(res);
+            res.forEach((x)=>{
+
+                const card=`<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${x._id}')" style="cursor: pointer;">
+          <div class="like-icon-div">
+              <label for="card-1-like" class="like-icon-div-child">
+                  <input style="    display: none;" type="checkbox" id="card-1-like">
+                  <i class="far fa-heart heart-empty"></i>
+                  <i class="fas fa-heart heart-fill"></i>
+              </label>
+          </div>
+          <div class="gow-img-div img-div">
+                            <img style="width: 195px;" src="${x.Image[0]}" alt="god-of-war-figurine">
+
+          </div>
+      
+          <div class="text-container">
+            
+           
+              <h2 class="item-name">${x.Name}</h2>
+             
+              <div class="pricing-and-cart">
+                  <div class="pricing">
+                      <p class="previous-price">₹${x.Price}/-</p>
+                      <p class="current-price">₹${x.Price}/-</p>
+                  </div>
+                  <a href="/cart" style="margin-top: 30px ;"><i class="fas fa-shopping-cart"></i></a>
+              </div>
+          </div>
+      </div>
+    </a>`
+
+    allproducts.push(card)
+
+
+                
+            })
+            let data=allproducts.join("")
+            if(allproducts.length>=1){
+               document.getElementById("card_parent").innerHTML=data;
+            }else{
+
+                document.getElementById("card_parent").innerHTML="No Product Found";
+            }
+        }
+            
+        )
+      }
+
+     
+
+
           
     function goDetail(link){
             window.location.href=link

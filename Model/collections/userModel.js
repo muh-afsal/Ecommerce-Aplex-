@@ -18,6 +18,14 @@ const Schema= new mongoose.Schema({
         type:String,
         required:true
     },
+    phone:{
+        type:Number,
+        required:true
+    },
+    profileImage:{
+        type:String,
+    },
+    
     profileImage:{
         type:String,
         

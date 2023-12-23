@@ -5,6 +5,7 @@ const { ObjectId } = require("mongodb");
 const Product = require("../Model/collections/ProductModel");
 const category = require("../Model/collections/categoryModel");
 const cart = require("../Model/collections/CartModel");
+const Products = require("../Model/collections/ProductModel");
 
 //load product detail
 const LoadproductDetail = async (req, res) => {
@@ -48,7 +49,10 @@ const ProductListingverified = async (req, res) => {
   try {
     const products = await Product.find({ isdeleted: false });
     const categoryData = await category.find({ Status: true });
-    res.render("../views/user/ProductListingVerified", { products,categoryData });
+    res.render("../views/user/ProductListingVerified", {
+      products,
+      categoryData,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -170,7 +174,7 @@ const UpdateProduct = async (req, res) => {
       }
     }
     const productdata = await Product.findById(id);
-    const Product = await Product.findByIdAndUpdate(id, {
+    const Products = await Product.findByIdAndUpdate(id, {
       $set: {
         Name: req.body.name,
         Price: req.body.price,
@@ -180,11 +184,11 @@ const UpdateProduct = async (req, res) => {
         Stock: req.body.Stock,
       },
     });
-    if (Product) {
-      // If the update is successful, redirect to the appropriate page
+    if (Products) {
+   
       res.redirect("/admin/manageProduct");
     } else {
-      // If the update fails, render an error message
+     
       res.render("../views/admin/EditProduct", {
         message: "Update failed",
         productdata,
@@ -192,8 +196,7 @@ const UpdateProduct = async (req, res) => {
     }
   } catch (error) {
     console.log(error.message);
-    // Handle the error and render an error message
-    // res.render("../views/admin/EditProduct", { message: "An error occurred",productdata });
+   
     res.send("Error in edit product", error);
   }
 };
@@ -210,6 +213,26 @@ const softDeleteProduct = async (req, res) => {
   }
 };
 
+
+
+const ProductFilter=async(req,res)=>{
+  try {
+    const categoryValue=req.query.category?req.query.category.split(","):[]
+    let filterQuery={}
+    if(categoryValue.length>0){
+      filterQuery.Category={$in:categoryValue}
+    }
+    const productdata=await Products.find(filterQuery)
+
+    
+    res.json(productdata)
+    
+    
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   LoadproductDetail,
   LoadproductDetailVerified,
@@ -221,4 +244,5 @@ module.exports = {
   softDeleteProduct,
   editProductLoad,
   UpdateProduct,
+  ProductFilter
 };

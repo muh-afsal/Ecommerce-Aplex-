@@ -5,7 +5,13 @@ const session = require("express-session");
 const { ObjectId } = require("mongodb");
 const { sentOTP } = require("./OTPcontroller");
 const Product = require("../Model/collections/ProductModel");
+const Cart = require("../Model/collections/CartModel");
 // const Products = require('../Model/collections/ProductModel');
+
+const multer = require("multer");
+const storage = require("../auth/profilepicUpload");
+
+const upload = multer({ storage: storage });
 
 //securing password
 const securePassword = async (password) => {
@@ -17,14 +23,11 @@ const securePassword = async (password) => {
   }
 };
 
-
 //load landingload
 const landingload = async (req, res) => {
   try {
     const products = await Product.find({}).limit(8);
-    // if (req.session.adminAuth) {
-    //   return res.redirect("/admin/admin");
-    // }
+
     res.render("../views/user/landing", { products });
   } catch (error) {
     console.log(error.message);
@@ -47,6 +50,7 @@ const signupUser = async (req, res) => {
     const userinfo = {
       name: req.body.name.trim(),
       email: req.body.email.toLowerCase(),
+      phone: req.body.phone,
       password: await securePassword(req.body.password),
     };
 
@@ -58,6 +62,7 @@ const signupUser = async (req, res) => {
       const user = {
         username: userinfo.name,
         email: userinfo.email,
+        phone: userinfo.phone,
         password: userinfo.password,
         date: Date.now(),
       };
@@ -91,18 +96,16 @@ const LoadOTP = async (req, res) => {
 //Load Login
 const loadLogin = async (req, res) => {
   try {
-    
-      if (req.session && req.session.logged) {
-        const dt = await User.findOne({ email: req.session.email });
-        if (dt.access) {
-          res.redirect("/home");
-        } else {
-          res.render("../views/user/login", { message: "Permission Denied" });
-        }
+    if (req.session && req.session.logged) {
+      const dt = await User.findOne({ email: req.session.email });
+      if (dt.access) {
+        res.redirect("/home");
       } else {
-        res.render("../views/user/login");
+        res.render("../views/user/login", { message: "Permission Denied" });
       }
-    
+    } else {
+      res.render("../views/user/login");
+    }
   } catch (error) {
     console.log(error.message);
   }
@@ -117,7 +120,6 @@ const loginUser = async (req, res) => {
 
     const emailexists = await User.findOne({ email: email });
     if (emailexists) {
-      
       if (emailexists.access) {
         const passwordMatch = await bcrypt.compare(
           password,
@@ -145,14 +147,12 @@ const loginUser = async (req, res) => {
   }
 };
 
-
-
 //load Home
 
 const loadHome = async (req, res) => {
   try {
-    if(req.session.orderplaced){
-      req.session.orderplaced=false;
+    if (req.session.orderplaced) {
+      req.session.orderplaced = false;
     }
     if (req.session.logged) {
       const products = await Product.find({}).limit(8);
@@ -183,7 +183,9 @@ const otpverify = async (req, res) => {
         const newUser = new User({
           username: data.username,
           email: data.email,
+          phone: data.phone,
           password: data.password,
+          profileImage: "usericons.png",
           date: Date.now(),
         });
         await newUser.save();
@@ -198,6 +200,138 @@ const otpverify = async (req, res) => {
     console.log(error.message);
   }
 };
+
+//Load user Profile
+const LoadUserProfile = async (req, res) => {
+  try {
+    const email = req.session.email;
+    const userData = await User.findOne({ email: email });
+    // console.log(userData,"userdata-------------");
+    res.render("../views/user/UserProfile", { userData });
+  } catch (error) {
+    console.log(error);
+  }
+};
+const LoadeditProfile = async (req, res) => {
+  const email = req.session.email;
+  const userData = await User.findOne({ email: email });
+  try {
+    res.render("../views/user/editUserProfile", { userData });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editUserProfile = async (req, res) => {
+  try {
+    const { username, phone } = req.body;
+
+    const profileImage = req.file;
+
+    const userData = await User.findOne({ email: req.session.email });
+
+    const updateFields = {
+      $set: {
+        username: username,
+        phone: phone,
+      },
+    };
+
+    if (profileImage) {
+      updateFields.$set.profileImage = profileImage.filename;
+    }
+
+    const updatedUser = await User.findOneAndUpdate(
+      { email: req.session.email },
+      updateFields,
+      { new: true }
+    );
+
+    res.redirect("/profile");
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+
+
+const LoadAdress=async(req,res)=>{
+  try {
+    const user = await User.findOne({ email: req.session.email });
+    const userId = user._id;
+
+    const cartData = await Cart.findOne({ User: userId }).populate(
+      "Items.Products"
+    );
+    const userData = await User.findOne({ _id: userId });
+
+    res.render("../views/user/Address", { cartData, userData });
+  } catch (error) {
+    console.log(error);
+  }
+  
+}
+
+
+
+const AddAdress = async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.session.email });
+    const userId = user._id;
+
+    const shippingName = req.body.shippingName;
+    const Phone = req.body.phone;
+    const City = req.body.city;
+    const State = req.body.state;
+    const Country = req.body.country;
+    const Pincode = req.body.pincode;
+
+    await User.updateOne(
+      { _id: userId },
+      {
+        $push: {
+          address: {
+            shippingName: shippingName,
+            phone: Phone,
+            city: City,
+            state: State,
+            country: Country,
+            pincode: Pincode,
+          },
+        },
+      }
+    );
+    res.redirect("/address");
+  } catch (error) {
+    console.log(error);
+    
+  }
+};
+
+
+const editAdress=async (req,res)=>{
+  try {
+    const addressid=req.query.id
+    const shippingname=req.body.shippingName;
+    const phone=req.body.phone;
+    const city=req.body.city;
+    const state=req.body.state;
+    const country=req.body.country;
+    const pincode=req.body.pincode;
+
+ 
+
+    const userData = await User.findOne({ email: req.session.email });
+
+  
+
+    res.redirect("/profile");
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+
 
 
 //LogoutUser
@@ -222,5 +356,10 @@ module.exports = {
   LoadOTP,
   otpSender,
   LogoutUser,
-  
+  LoadUserProfile,
+  LoadeditProfile,
+  editUserProfile,
+  LoadAdress,
+  AddAdress,
+  editAdress
 };

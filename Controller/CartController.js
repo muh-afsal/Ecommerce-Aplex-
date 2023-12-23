@@ -1,4 +1,4 @@
-const Order=require("../Model/collections/orderModel") 
+const Order = require("../Model/collections/orderModel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
 const category = require("../Model/collections/categoryModel");
@@ -9,20 +9,23 @@ const {
 } = require("../helper/cartHelper");
 const Products = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
+const Razorpay = require("razorpay");
+const { RAZORPAY_KEY_ID, RAZORPAY_SECRET_ID } = process.env;
+const { createRazorpayOrder } = require("../service/razorpay");
 
+// Load add to cart----------------------------------
 const LoadCart = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
-
+    
     const cartProduct = await Cart.findOne({ User: user._id }).populate(
       "Items.Products"
-    );
-    //  console.log(cartProduct);
-    let Total = 0;
+      );
+    
+    
+    
     calculateTotalPrice(user._id).then((total) => {
-      // console.log(total, " in promise");
-      // console.log(Total, " total ___________");
-      req.session.orderplaced=false;
+      req.session.orderplaced = false;
       res.render("../views/user/cart", { cartProduct: cartProduct, total });
     });
   } catch (error) {
@@ -33,11 +36,10 @@ const LoadCart = async (req, res) => {
 const addtoCart = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
-    // console.log(user,"user data----");
 
     const productId = req.body.productId;
     const userId = user._id;
-    // console.log(productId,"bhgffx",userId);
+  
     await productAddtocart(productId, userId);
 
     res.json({ status: true });
@@ -73,15 +75,15 @@ const updateQuantity = async (req, res) => {
       });
     }
 
-    // Update the quantity of the product
+    
     userCart.Items[productIndex].Quantity = newQuantity;
 
-    // Save the updated cart
+   
     await userCart.save();
 
     const updatedTotal = await calculateTotalPrice(userId);
 
-    // Update the TotalAmount field in the Cart collection
+ 
     userCart.TotalAmount = updatedTotal;
 
     await userCart.save();
@@ -89,7 +91,6 @@ const updateQuantity = async (req, res) => {
     return res.json({
       status: true,
       message: "Quantity updated successfully",
-      
     });
   } catch (error) {
     console.log(error);
@@ -101,23 +102,19 @@ const removeProduct = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
     const userId = user._id;
-    // console.log(userId);
-    const productId = req.params.Id;
-    // console.log(productId);
 
-    // Find the user's cart
+    const productId = req.params.Id;
+
     const userCart = await Cart.findOne({ User: userId });
 
     if (!userCart) {
       return res.json({ status: false, message: "User's cart not found" });
     }
 
-    // Find the index of the product in the cart's Items array
     const productIndex = userCart.Items.findIndex(
       (item) => item.Products.toString() === productId
     );
 
-    // console.log(productIndex,"product index==================")
     if (!productIndex === -1) {
       return res.json({
         status: false,
@@ -125,18 +122,13 @@ const removeProduct = async (req, res) => {
       });
     }
 
-    // Remove the product from the Items array
     userCart.Items.splice(productIndex, 1);
     const updatedTotal = await calculateTotalPrice(userId);
 
-    // Save the updated cart
     await userCart.save();
 
-    // Recalculate the total after removing the product
-
-    // Update the TotalAmount field in the Cart collection
     userCart.TotalAmount = updatedTotal;
-   
+
     await userCart.save();
 
     return res.json({
@@ -154,19 +146,12 @@ const LoadCheckout = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
     const userId = user._id;
-    // console.log(userId)
 
     const cartData = await Cart.findOne({ User: userId }).populate(
       "Items.Products"
     );
     const userData = await User.findOne({ _id: userId });
-    // console.log(userData)
 
-    // if (!cartData) {
-    //   return res.json({ status: false, message: "User's cart not found" });
-    // }
-
-    // console.log(cartData)
     res.render("../views/user/checkout", { cartData, userData });
   } catch (error) {
     console.log(error);
@@ -209,32 +194,48 @@ const AddAdress = async (req, res) => {
 };
 
 
+   // Generate a random string for orderNumber
+   const generateOrderNumber = () => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let orderNumber = "";
+    for (let i = 0; i < 8; i++) {
+      const randomIndex = Math.floor(Math.random() * characters.length);
+      orderNumber += characters.charAt(randomIndex);
+    }
+    return orderNumber;
+  };
 
+
+  //placing order and saving order details
 const LoadOrderPlaced = async (req, res) => {
   try {
+    console.log("reached");
     const addressId = req.body.selectAddressRadioValue;
     const payment = req.body.selectPaymentRadioValue;
     const user = await User.findOne({ email: req.session.email });
     const userId = user._id;
 
-    const cartData = await Cart.findOne({ User: userId }).populate("Items.Products");
-    const addressData = user.address.find((address) => address._id == addressId);
+    let paymentsts
 
-    // Generate a random string for orderNumber
-    const generateOrderNumber = () => {
-      const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-      let orderNumber = "";
-      for (let i = 0; i < 8; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        orderNumber += characters.charAt(randomIndex);
-      }
-      return orderNumber;
-    };
+    if(payment==="Online" || payment==="wallet"){
+      paymentsts="Paid"
+    }else{
+      paymentsts="Pending"
+    }
+
+    const cartData = await Cart.findOne({ User: userId }).populate(
+      "Items.Products"
+    );
+    const addressData = user.address.find(
+      (address) => address._id == addressId
+    );
+
+    const orderid = generateOrderNumber();
 
     const newOrder = new Order({
       Status: "Ordered",
       UserID: userId,
-      orderNumber: generateOrderNumber(),
+      orderNumber: orderid,
       TotalPrice: cartData.TotalAmount,
       Items: cartData.Items.map((item) => ({
         productId: item.Products._id,
@@ -250,49 +251,83 @@ const LoadOrderPlaced = async (req, res) => {
         pincode: addressData.pincode,
       },
       paymentMethod: payment,
-      paymentStatus: "Paid", 
+      paymentStatus: paymentsts,
       CoupenID: null,
       OrderDate: new Date(),
       PaymentId: null,
     });
+    req.session.TotalPrice = cartData.TotalAmount;
 
-    // Save the new order
-    await newOrder.save();
+ 
+      const ordersaved = await newOrder.save();
+      
+      if (ordersaved) {
+        // Decrease the stock in the Product collection
+        for (const item of newOrder.Items) {
+          const product = await Products.findById(item.productId);
+          if (product) {
+            product.Stock -= item.quantity;
+            await product.save();
+          }
+        }
 
-    // Decrease the stock in the Product collection
-    for (const item of newOrder.Items) {
-      const product = await Products.findById(item.productId);
-      if (product) {
-        product.Stock -= item.quantity;
-        await product.save();
+        // Reset the user's cart
+        const userCart = await Cart.findOne({ User: userId });
+        userCart.Items = [];
+        userCart.TotalAmount = 0;
+        await userCart.save();
+
+        res.json({success:true});
       }
-    }
+    
 
-    // Reset the user's cart
-    const userCart = await Cart.findOne({ User: userId });
-    userCart.Items = [];
-    userCart.TotalAmount = 0;
-    await userCart.save();
-
-    req.session.orderplaced = true;
-    return res.json({ status: true });
   } catch (error) {
-    console.log(error);
+    console.log(error, "error in place order");
     return res.json({ status: false, message: "Error placing order" });
   }
 };
 
 
+
+
+const generateRazorpay=async (req,res)=>{
+  try {
+    const orderid = generateOrderNumber();
+    const user = await User.findOne({ email: req.session.email });
+    const userId = user._id;
+    const cartData = await Cart.findOne({ User: userId }).populate(
+      "Items.Products"
+    );
+
+    const totalinrupees = Math.round(cartData.TotalAmount * 100);
+      var order = {
+        amount: totalinrupees,
+        currency: "INR",
+        receipt: orderid,
+      };
+      await createRazorpayOrder(order)
+        .then((createdOrder) => {
+          res.json({ paymentMethod: "Online", createdOrder, order ,online:true});
+        })
+        .catch((err) => {
+          console.log("error in creating order");
+        });
+  } catch (error) {
+    
+  }
+}
+
+
+
+
 const LoadorderPlaced = async (req, res) => {
   try {
-    res.render("../views/user/orderPlaced")
+    req.session.orderplaced = true;
+    res.render("../views/user/orderPlaced");
   } catch (error) {
     console.log(error);
   }
 };
-
-
-
 
 module.exports = {
   LoadCart,
@@ -302,5 +337,7 @@ module.exports = {
   LoadCheckout,
   AddAdress,
   LoadOrderPlaced,
-  LoadorderPlaced
+  LoadorderPlaced,
+  // VerifyPayment,
+  generateRazorpay
 };

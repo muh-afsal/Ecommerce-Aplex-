@@ -19,10 +19,7 @@ const orders = new mongoose.Schema({
         country:{type:String},
         pincode:{type:Number},
     },
-    orderStatus: {
-        type: String,
-        default: "Ordered"
-    },
+  
     paymentMethod: { type: String },
     paymentStatus: { type: String },
     CoupenID: { type: mongoose.Schema.Types.ObjectId, },

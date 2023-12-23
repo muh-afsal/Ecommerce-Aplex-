@@ -16,7 +16,7 @@ mailTranspoter.verify((error,success)=>{
 if(error){
     console.log(error);
 }else{
-    console.log("email ready to send");
+    // console.log("email ready to send");
 }
 
 })

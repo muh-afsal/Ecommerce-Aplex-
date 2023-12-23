@@ -1,0 +1,161 @@
+<%-include("./partials/header.ejs")%>
+<title>User Profile</title>
+    <style>
+        .profile_container {
+            height: 77vh;
+            /* background-color: antiquewhite; */
+            display: flex;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        
+
+        .side_nav_container {
+            width: 40%;
+            height: auto;
+            /* background-color: blueviolet; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .userDetails_container {
+            margin-left: 53px;
+            width: 56vw;
+            /* background-color: brown; */
+            height: auto;
+            margin-bottom: 21px;
+            margin-top: 23px;
+            border-radius: 11px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+        }
+
+        .profile_img_container {
+            height: 28vh;
+            /* background-color: darkgray; */
+            padding: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom: 0.5px solid;
+        }
+
+        .profile_info_container {
+            height: 40vh;
+            /* background-color: coral; */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+
+        }
+
+        #profile_image {
+            height: 12vw;
+            width: 24vh;
+            /* background-color: aquamarine; */
+            border-radius: 50%;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+
+        }
+
+        .input_text {
+            width: 23vw;
+    height: 45px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
+}
+.edit_btn{
+    width: 13vw;
+    height: 36px;
+    border-radius: 12px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color:#4461F2 ;
+}
+
+        
+    </style>
+
+    </head>
+
+    <body>
+
+        <%-include("./partials/nav-after-login.ejs")%>
+            <div class="profile_container container-fluid">
+
+                <div class="userDetails_container ">
+                    <div class="profile_img_container">
+                        <div id="profile_image" style="background-size: contain; background-position: center; background-image: url(/profile-images/<%=userData.profileImage%>);">
+                               
+                        </div>
+                        <h3 style="margin-top: 100px;font-weight: 700;">Muhammed Afsal <br>
+                            <p style="font-size: smaller;margin-top: 10px; color: #0000006b;"> Your account is ready, you can now apply for advice.</p>
+                        </h3>
+
+                    </div>
+                    <div class="profile_info_container">
+                        <div style="display: flex; gap: 40px;">
+                            <input type="text" class="input_text " style="padding-left: 20px;" value="<%=userData.username%>" readonly>
+                            <input type="text" class="input_text" style="padding-left: 20px;" value="<%=userData.email%>" readonly>
+
+                        </div>
+                        <div style="display: flex; gap: 40px;" >
+                            <input type="text" class="input_text" style="padding-left: 20px;" value="<%=userData.phone%>" readonly>
+                      
+                            <input type="text" class="input_text" style="padding-left: 20px;" value="<%=userData.date%>." readonly>
+
+                        </div>
+                          <button onclick="navigateToeditprofile()" class="edit_btn" >Edit</button>
+                    </div>
+                    <%-include("./partials/side-bar.ejs")%>
+
+
+                </div>
+
+            </div>
+            <script>
+                function navigateToeditprofile(){
+                    
+                    window.location.href="/editprofile"
+                }
+
+
+
+                
+                function previewImage(inputid, imgID) {
+        const input = document.getElementById(inputid)
+        const img = document.getElementById(imgID)
+
+        // alert('dd')
+        //cheaking if a file was delected
+        if (input.files && input.files[0]) {
+          const reader = new FileReader();
+
+          //set up a function to run when the image is loaded
+          reader.onload = function (e) {
+            img.src = e.target.result;
+          }
+          //read the selsected file as a data URL and load it into the image tag
+          reader.readAsDataURL(input.files[0]);
+        } else {
+          //if no file selected or browser dont suppot the file,clear the image 
+          img.src = "";
+        }
+      }
+            </script>
+
+            <%-include("./partials/footer.ejs")%>
+                <%-include("./partials/footerlinks.ejs")%>

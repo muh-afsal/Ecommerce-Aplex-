@@ -1,5 +1,5 @@
 <%-include("./partials/header.ejs")%>
-
+    <title>checkout</title>
     <style>
         .cart-total-container {
             height: auto;
@@ -15,13 +15,13 @@
 
         .coupon-input {
             height: 9vh;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    border-radius: 13px;
-    margin-top: -217px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+            border-radius: 13px;
+            margin-top: -217px;
 
-    width: 281px;
-    float: right;
-    margin-right: 154PX;
+            width: 281px;
+            float: right;
+            margin-right: 154PX;
 
         }
 
@@ -239,7 +239,7 @@
         }
 
         .preview-products {
-            height: auto    ;
+            height: auto;
             width: 100%;
             /* background-color: rgb(238, 238, 238); */
             border-radius: 10px;
@@ -277,11 +277,11 @@
         .selectPayment {
 
             width: 14vw;
-    float: right;
-    border-radius: 13px;
-    padding: 16px;
-    
-    float: left;
+            float: right;
+            border-radius: 13px;
+            padding: 16px;
+
+            float: left;
 
         }
 
@@ -536,7 +536,8 @@
                         </div>
                     </div>
                     <div class="selectPayment ">
-                        <h4 style=" margin-left: 10px; font-size: medium;  font-weight:600;margin-top: 10px;">Select Payment
+                        <h4 style=" margin-left: 10px; font-size: medium;  font-weight:600;margin-top: 10px;">Select
+                            Payment
                         </h4>
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="paymentRadios" id="cod" value="COD">
@@ -545,9 +546,9 @@
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="paymentRadios" id="upi" value="Online" disabled>
+                            <input class="form-check-input" type="radio" name="paymentRadios" id="upi" value="Online">
                             <label class="form-check-label" for="upi">
-                                UPI Payment
+                                Online Payment
                             </label>
                         </div>
                         <div class="form-check">
@@ -561,12 +562,12 @@
                     <button onclick="placeOrder()" type="submit " value="submit" class="btn">Place Order</button>
                 </div>
                 <!-- cheakbox -->
-               
+
                 <div class="coupon-input" style="display: flex;">
                     <div class=" search-nav" style="       margin-bottom: 23px;margin-top: 9px; ">
 
                         <div class="search-bars" style=" height: 6vh;    height: 6vh;display: flex;">
-                            
+
                             <input type="text" class="form-control rounded-pill coupon-entry shadow-none "
                                 style="float: right;" placeholder="Coupon code">
                             <div class="search-icon applycoupon"
@@ -597,6 +598,7 @@
                         const selectPaymentRadio = document.querySelector('input[name="paymentRadios"]:checked');
                         const selectPaymentRadioValue = selectPaymentRadio ? selectPaymentRadio.value : null;
 
+
                         if (!selectPaymentRadioValue) {
                             (function () {
                                 Toastify({
@@ -605,15 +607,15 @@
                                     destination: "https://github.com/apvarun/toastify-js",
                                     newWindow: true,
                                     close: true,
-                                    gravity: "top", // `top` or `bottom`
-                                    position: "center", // `left`, `center` or `right`
-                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    gravity: "top", 
+                                    position: "center", 
+                                    stopOnFocus: true, 
                                     style: {
                                         background: "#FF0000",
                                         // border-radius: 10px;
 
                                     },
-                                    onClick: function () { } // Callback after click
+                                    onClick: function () { }
                                 }).showToast();
                             })();
                         }
@@ -626,9 +628,9 @@
                                     destination: "https://github.com/apvarun/toastify-js",
                                     newWindow: true,
                                     close: true,
-                                    gravity: "top", // `top` or `bottom`
-                                    position: "center", // `left`, `center` or `right`
-                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    gravity: "top",
+                                    position: "center",
+                                    stopOnFocus: true,
                                     style: {
                                         background: "#FF0000",
                                         // border-radius: 10px;
@@ -641,38 +643,75 @@
                         }
 
 
-                        if (selectAddressRadioValue && selectPaymentRadioValue) {
-                            // alert("reached")
-                            fetch('/placeorder', {
+                        if (selectAddressRadioValue && selectPaymentRadioValue === "COD") {
+                         
+                           const orderplaced= fetch('/placeorder', {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({ selectPaymentRadioValue, selectAddressRadioValue })
                             })
                                 .then(response => response.json())
                                 .then(res => {
-                                    if (res.status) {
-                                        window.location.href = "/placeOrder";
-                                    } else {
-                                        alert("error in order place")
-
+                                    if(res.success=true){
+                                       window.location.href = "/placeOrder";
                                     }
-
+                                  
                                 })
 
+                        }else{
+                       
+                            fetch('/generateRazorpay', {
+                                            method: "POST",
+                                            headers: { "Content-Type": "application/json" },
+                                            body: JSON.stringify({  })
+                                        }).then((response) => response.json()).then((res)=>{
+                                            if(res.online){
+                                               razorpay(res)
+                                            }
+                                        })
                         }
+
+                        function razorpay(orderResponse) {
+                        
+                            var options = {
+                                "key": "rzp_test_TZZu8xFsdUnCp9",
+                                "amount": orderResponse.order.amount,
+                                "currency": "INR",
+                                "name": "Aplex",
+                                "description": "Test Transaction",
+                                "image": "https://example.com/your_logo",
+                                "order_id": orderResponse.id,
+                                "handler": function (response) {
+                                    alert("load placedorde")
+                                     fetch('/placeorder', {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ selectPaymentRadioValue, selectAddressRadioValue })
+                            })
+                                .then(response => response.json())
+                                .then(res => {
+                                    if(res.success=true){
+                                       window.location.href = "/placeOrder";
+                                    }
+                                  
+                                })
+                                },
+                                "notes": {
+                                    "address": "Razorpay Corporate Office"
+                                },
+                                "theme": {
+                                    "color": "#2E51FF"
+                                }
+                            };
+                            var rzp1 = new Razorpay(options);
+                            rzp1.open();
+                            rzp1.on('payment.failed', function (response) {
+
+                            });
+                            // e.preventDefault();
+                        }
+                      
                     }
-
-                    
-
-
-
-
-
-
-
-
-
-
 
                     function isEmpty(value) {
                         const trimmedValue = value.trim();
@@ -752,6 +791,8 @@
                     }
                 </script>
 
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
 
 
                 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -764,8 +805,7 @@
                     integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
                     crossorigin="anonymous"></script>
 
-                <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
-                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+
                 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
     </body>

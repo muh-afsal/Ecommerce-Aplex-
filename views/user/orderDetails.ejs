@@ -54,7 +54,7 @@
         }
 
         .product_listing {
-            height: 428px;
+            height: auto;
             /* background-color: rgb(181 215 255); */
             width: 95%;
             margin-top: 20px;
@@ -274,11 +274,14 @@
 
             <div class="orderplacedcontainer container-fluid">
                 <h3 style="font-weight: 700; margin-top: 20px;">Order Details</h3>
+                <%if(orderData.Status!=="Cancelled"){%>
+                    <a href="/cancelOrder/<%=orderData._id%>" style="text-decoration: none;     margin-right: -151vh; color: red;">Cancel Order</a>
+                <%}%>
                 <div class="orderdetails">
                     <div id="order_date_id">
-                        <h4 style="font-weight: 600;" id="orderid">#<%=OrderProduct.orderNumber%>
-                        </h4>
-                        <h4 style="font-weight: 600;" id="Totalprice">₹<%=OrderProduct.TotalPrice%>/-</h4>
+                        <h4 style="font-weight: 600;" id="orderid">#<%=orderData.orderNumber%></h4>
+                        <h4 style="font-weight: 600;" id="orderid"><span style="color: rgba(0, 0, 0, 0.483);">Status:</span><%=orderData.Status%></h4>
+                        <h4 style="font-weight: 600;" id="Totalprice">₹<%=orderData.TotalPrice%>/-</h4>
                     </div>
                 </div>
     <h3 style="    margin-left: -59vw; font-weight: 600 ;">Products</h3>
@@ -290,7 +293,7 @@
                         <p>Sub Total</p>
                     </div>
                     <div class="product_listing_container">
-                        <%OrderProduct.Items.forEach((value,index)=>{%>
+                        <%orderData.Items.forEach((value,index)=>{%>
                             <div class="products_div">
                                 <div id="product_img_name">
                                     <img style="    width: 70px;" src="<%=value.productId.Image[0]%>" alt="">
@@ -315,7 +318,7 @@
                         <div class="total-values-container">
                             <div class="total-values">
                                 <p class="total-texts">Subtotal :</p>
-                                <p class="cart-prices" id="cartTotal-Subtotal">₹<%=OrderProduct.TotalPrice%>/-</p>
+                                <p class="cart-prices" id="cartTotal-Subtotal">₹<%=orderData.TotalPrice%>/-</p>
                             </div>
 
                             <div class="total-values">
@@ -325,7 +328,7 @@
                             <div class="total-values">
                                 <p class="total-texts" style="font-size: x-large; color: rgb(77, 77, 77) ;">Total :</p>
                                 <p style="font-size: x-large; font-weight: 600; color: #6b6b6b; " class="cart-prices">
-                                    <span id="total">₹<%=OrderProduct.TotalPrice%></span>/-</p>
+                                    <span id="total">₹<%=orderData.TotalPrice%></span>/-</p>
                             </div>
                         </div>
                     </div>
@@ -344,22 +347,22 @@
                                 </div>
                                 <div class="address_values">
                                     <span>
-                                        <%=OrderProduct.Address.shippingName%>
+                                        <%=orderData.Address.shippingName%>
                                     </span>
                                     <span>
-                                        <%=OrderProduct.Address.phone%>
+                                        <%=orderData.Address.phone%>
                                     </span>
                                     <span>
-                                        <%=OrderProduct.Address.city%>
+                                        <%=orderData.Address.city%>
                                     </span>
                                     <span>
-                                        <%=OrderProduct.Address.state%>
+                                        <%=orderData.Address.state%>
                                     </span>
                                     <span>
-                                        <%=OrderProduct.Address.country%>
+                                        <%=orderData.Address.country%>
                                     </span>
                                     <span>
-                                        <%=OrderProduct.Address.pincode%>
+                                        <%=orderData.Address.pincode%>
                                     </span>
 
 

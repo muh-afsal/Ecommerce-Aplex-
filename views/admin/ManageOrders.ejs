@@ -1,56 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ManageOrder</title>
     <link rel="stylesheet" href="/css/admin/ManageProduct.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
 </head>
+
 <body>
     <%-include("./partials/side-bar.ejs")%>
-  
-    <div class="product-text-container container-fluid" style="display: flex; justify-content: space-between;">
-             <h4 style="    margin-top: 11px;" id="ManageProduct-text" >Manage Orders</h4>
-           
-    </div>
-    <div>
-        <div class="col-12 tm-block-col">
-            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
-                <h2 class="tm-block-title text-dark">Orders</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">No.</th>
-                            <th scope="col">Order ID</th>
-                            <th scope="col">Date</th>
-                            <th scope="col">Payment Status</th>
-                            <th scope="col">Order Status</th>
-                            <th scope="col">Details</th>
-                         
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <%orderData.forEach((data,index)=>{%>
+
+        <div class="product-text-container container-fluid" style="display: flex; justify-content: space-between;">
+            <h4 style="    margin-top: 11px;" id="ManageProduct-text">Manage Orders</h4>
+
+        </div>
+        <div>
+            <div class="col-12 tm-block-col">
+                <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
+                    <h2 class="tm-block-title text-dark">Orders</h2>
+                    <table class="table" id="orders">
+                        <thead>
                             <tr>
-                              <th scope="row">
-                                <%=index+1%>
-                                </th>
-                                <td><%=data.orderNumber%></td> 
-                                <td><%=data.OrderDate.toLocaleDateString()%></td>
-                                <td><%=data.paymentStatus%></td>
-                                <td><%=data.orderStatus%></td>
-                                <td><a href="">View Details</a></td>
-             
+                                <th scope="col">No.</th>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Payment Status</th>
+                                <th scope="col">Order Status</th>
+                                <th scope="col">Details</th>
+
+
                             </tr>
-                              <%})%>
-                        
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <%orderData.forEach((data,index)=>{%>
+                                <tr> 
+                                    <th scope="row">
+                                        <%=index+1%>
+                                    </th>
+                                    <td>
+                                        <%=data.orderNumber%>
+                                    </td>
+                                    <td>
+                                        <%=data.OrderDate.toLocaleDateString()%>
+                                    </td>
+                                    <td>
+                                        <%=data.paymentStatus%>
+                                    </td>
+                                    <td>
+                                        <%=data.Status%>
+                                    </td>
+                                    <td><a href="/admin/orderdetails?id=<%=data._id%>">View Details</a></td>
+
+                                </tr>
+                                <%})%>
+
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+            new DataTable('#orders');
+        </script>
 </body>
+
+
 </html>
