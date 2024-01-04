@@ -12,11 +12,15 @@ const CartSchema = new Schema({
     },
   ],
   TotalAmount: { type: Number},
+  DiscountAmount:{type :Number,default:0},
+  couponUsed:{type:Boolean,default:false},
   createdAt:{type:Date},
-  UpdatedAt:{type:Date}
+  UpdatedAt:{type:Date},
+  usedCoupon:{type:String},
+
 });
 
 const Cart = mongoose.model(process.env.CART_COLLECTION, CartSchema);
 
 module.exports = Cart;
- 
+

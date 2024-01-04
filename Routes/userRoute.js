@@ -9,6 +9,7 @@ const OTPController = require("../Controller/OTPcontroller");
 const cartController = require("../Controller/CartController");
 const OrderController = require("../Controller/OrderController");
 const userAuth = require("../auth/userAuth");
+const couponController = require("../Controller/couponController");
 // const {checkSession}=require('../auth/userandadmin')
 const { checkUserAuthentication } = require("../auth/userAuth");
 
@@ -29,7 +30,7 @@ router.get("/productlistingverified", userAuth.checkUserAuthentication, productC
 router.get("/cart", userAuth.checkUserAuthentication, cartController.LoadCart);
 router.post("/addtocart", userAuth.checkUserAuthentication, cartController.addtoCart);
 router.post("/updatequantity/:id", userAuth.checkUserAuthentication, cartController.updateQuantity);
-router.delete("/removeproduct/:Id", userAuth.checkUserAuthentication, cartController.removeProduct);
+router.delete("/removeproduct/:Id/:rId/:removed", userAuth.checkUserAuthentication, cartController.removeProduct);
 router.get("/checkout", userAuth.Orderplaced, userAuth.checkUserAuthentication, cartController.LoadCheckout);
 router.post("/addAddress", userAuth.checkUserAuthentication, cartController.AddAdress);
 router.post("/placeorder", userAuth.checkUserAuthentication, cartController.LoadOrderPlaced);
@@ -45,6 +46,9 @@ router.get("/address", userAuth.checkUserAuthentication, userController.LoadAdre
 router.post("/adduserAddress", userAuth.checkUserAuthentication, userController.AddAdress);
 router.post("/edituserAddress", userAuth.checkUserAuthentication, userController.editAdress);
 router.post("/generateRazorpay",userAuth.checkUserAuthentication,cartController.generateRazorpay)
+router.post("/deleteUserAddress/:id",userAuth.checkUserAuthentication,userController.DeleteuserAddress)
+router.get("/coupon",userAuth.checkUserAuthentication,couponController.LoadUserCoupons)
+router.post("/applycoupon",userAuth.checkUserAuthentication,couponController.ApplyCoupons)
 
 
 

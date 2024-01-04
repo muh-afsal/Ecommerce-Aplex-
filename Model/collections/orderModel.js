@@ -8,7 +8,7 @@ const orders = new mongoose.Schema({
         Price: { type: Number },
         quantity: { type: Number },
     }],
-    UserID: { type: mongoose.Schema.Types.ObjectId, },
+    UserID: { type: mongoose.Schema.Types.ObjectId},
     orderNumber: { type: String },
     TotalPrice: { type: Number },
     Address: {
@@ -19,10 +19,9 @@ const orders = new mongoose.Schema({
         country:{type:String},
         pincode:{type:Number},
     },
-  
     paymentMethod: { type: String },
     paymentStatus: { type: String },
-    CoupenID: { type: mongoose.Schema.Types.ObjectId, },
+    CoupenDiscount: { type: Number },
     OrderDate: { type: Date },
     PaymentId: { type: Number },
 

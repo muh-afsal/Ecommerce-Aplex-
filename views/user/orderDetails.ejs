@@ -316,17 +316,17 @@
                     <div class="order_summary">
                         <h5 style="font-weight: 600;">Order Summary</h5>
                         <div class="total-values-container">
-                            <div class="total-values">
+                            <!-- <div class="total-values">
                                 <p class="total-texts">Subtotal :</p>
                                 <p class="cart-prices" id="cartTotal-Subtotal">₹<%=orderData.TotalPrice%>/-</p>
-                            </div>
+                            </div> -->
 
                             <div class="total-values">
-                                <p class="total-texts">Discount Price :</p>
-                                <p class="cart-prices">-0/-</p>
+                                <p class="total-texts">Coupon Discount Price :</p>
+                                <p class="cart-prices">-₹<%=orderData.CoupenDiscount%>/-</p>
                             </div>
                             <div class="total-values">
-                                <p class="total-texts" style="font-size: x-large; color: rgb(77, 77, 77) ;">Total :</p>
+                                <p class="total-texts" style="font-size: x-large; color: rgb(77, 77, 77) ;">Grand Total :</p>
                                 <p style="font-size: x-large; font-weight: 600; color: #6b6b6b; " class="cart-prices">
                                     <span id="total">₹<%=orderData.TotalPrice%></span>/-</p>
                             </div>

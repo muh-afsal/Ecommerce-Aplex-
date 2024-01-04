@@ -77,83 +77,51 @@ function updatequantity(productId, stock, change) {
     }
 }
 
-function removeProduct(productId,rowId) {
-    // alert(userId)
-    // const confirmation = confirm("Are you sure you want to remove this product from the cart?");
-
+function removeProduct(productId,rowId,rowtoremove) {    
    
-        fetch(`/removeproduct/${productId}`, {
+        fetch(`/removeproduct/${productId}/${rowId}/${rowtoremove}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }
         })
             .then(response => response.json())
             .then(res => {
                 if (res.status) {
-                    // alert("")
-                    //tostify  product removed from cart
-                    // alert("Status true")
-                    document.getElementById(rowId).style.display = 'none';
+                    document.getElementById(rowtoremove).style.display = 'none';
                     let currentCount=localStorage.getItem("cartcount")
                     localStorage.setItem("cartcount",currentCount-1)
 
                     if(localStorage.getItem("cartcount")<=0){
                         window.location.reload()
                     }
-                    (function() {
-                        Toastify({
-                          text: "Product removed From Cart",
-                          duration: 2000,
-                          newWindow: true,
-                          close: true,
-                          gravity: "bottom", // `top` or `bottom`
-                          position: "center", // `left`, `center` or `right`
-                          stopOnFocus: true, // Prevents dismissing of toast on hover
-                          style: {
-                            background: "linear-gradient(to right, #43a047, #43a097)",
-                            
-                          },
-                          onClick: function(){} // Callback after click
-                        }).showToast();
-                      })();
-                    // Reload the page or update the UI as needed
-                    // window.location.reload()
-
-
-                     
+                
                      const productPrice=parseInt( document.getElementById(`Subtotal_${productId}`).textContent)
                      let totalamount=parseInt(document.getElementById(`total`).textContent)
                      let totalamountelement=document.getElementById(`total`)
                      let totalAmountChange=totalamount-productPrice
                      totalamountelement.textContent=totalAmountChange
-                     
-
-
-                     
-
-                    // calculateTotalPrice(userId)
-                    
 
 
                 } else {
-                    // alert('dkkkkkk')
+                   
                     (function() {
                         Toastify({
                           text: "Error while removing Product...!",
                           duration: 2000,
                           newWindow: true,
                           close: true,
-                          gravity: "bottom", // `top` or `bottom`
-                          position: "center", // `left`, `center` or `right`
-                          stopOnFocus: true, // Prevents dismissing of toast on hover
+                          gravity: "bottom",
+                          position: "center", 
+                          stopOnFocus: true,
                           style: {
-                            background: "linear-gradient(to right, #43a047, #96c93d)",
+                            background: "#DC143C",
                             
                           },
                           onClick: function(){} // Callback after click
                         }).showToast();
                       })();
                 }
-            });
+            })
+              
     
 }
 

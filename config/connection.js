@@ -3,8 +3,10 @@ require('dotenv').config()
 
 
 mongoose
-  .connect(process.env.DB_URI)
+  .connect(process.env.DB_URI,{
+  })
   .then(() => {
+    
     console.log("db conneted");
   })
   .catch((error) => {

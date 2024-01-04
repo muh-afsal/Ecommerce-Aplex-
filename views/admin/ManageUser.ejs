@@ -75,13 +75,7 @@
                                                 <%="Blocked"%>
                                                     <%}%>
                                 </td>
-                                <!-- <td class="edits">
-                                    <span class="icon" id="editIcon" >
-                                        <a class="text-decoration-none text-secondary" id="disIcon" href="/admin/blockUnblockUser?id=<%=data._id%>"
-                                            onclick="changeIcon()">&#128683;</a>
-                                    </span>
-                                </td>
-                                 -->
+                               
                                 <td class="edits">
                                     <span class="icon" id="editIcon_<%= data._id %>">
                                         <form action="/admin/blockUnblockUser" method="POST">
@@ -101,19 +95,7 @@
                 </div>
             </div>
         </div>
-        <!-- <script>
-            function changeIcon() {
-             
-                const disicon=document.getElementById("disIcon")
-                if (disicon.innerHTML === '&#128473;') {
-           
-                    disicon.innerHTML = '&#10004;'; 
-        } else {
-            
-            disicon.innerHTML = '&#128473;';
-        }
-            }
-        </script> -->
+        
         <script>
             function changeIcon(form) {
                 const disicon = form.querySelector(".text-secondary");

@@ -253,9 +253,7 @@ const editUserProfile = async (req, res) => {
   }
 };
 
-
-
-const LoadAdress=async(req,res)=>{
+const LoadAdress = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
     const userId = user._id;
@@ -269,10 +267,7 @@ const LoadAdress=async(req,res)=>{
   } catch (error) {
     console.log(error);
   }
-  
-}
-
-
+};
 
 const AddAdress = async (req, res) => {
   try {
@@ -304,35 +299,75 @@ const AddAdress = async (req, res) => {
     res.redirect("/address");
   } catch (error) {
     console.log(error);
-    
   }
 };
 
-
-const editAdress=async (req,res)=>{
+const editAdress = async (req, res) => {
   try {
-    const addressid=req.query.id
-    const shippingname=req.body.shippingName;
-    const phone=req.body.phone;
-    const city=req.body.city;
-    const state=req.body.state;
-    const country=req.body.country;
-    const pincode=req.body.pincode;
-
- 
+    const addressId = req.query._id;
+    const shippingName = req.body.shippingName;
+    const phone = req.body.phone;
+    const city = req.body.city;
+    const state = req.body.state;
+    const country = req.body.country;
+    const pincode = req.body.pincode;
 
     const userData = await User.findOne({ email: req.session.email });
 
-  
+    // console.log(addressId, ":id---------");
+    // console.log(shippingName, ":s name---------");
+    // console.log(phone, ":pjone----------");
+    // console.log(city, ":ctrt----------");
+    // console.log(state, "state-----------");
+    // console.log(country, "cyrvetyt---------");
+    // console.log(pincode, "ytvctder--------------");
+    if (
+      !addressId ||
+      !shippingName ||
+      !phone ||
+      !city ||
+      !state ||
+      !country ||
+      !pincode
+    ) {
+      return res.redirect("/address");
+    }
+    const address = userData.address.id(addressId);
 
-    res.redirect("/profile");
+    address.shippingName = shippingName;
+    address.phone = phone;
+    address.city = city;
+    address.state = state;
+    address.country = country;
+    address.pincode = pincode;
+
+    await userData.save();
+
+    res.redirect("/address");
   } catch (error) {
     console.log(error.message);
   }
-}
+};
 
+const DeleteuserAddress = async (req, res) => {
+  try {
+    const useremail = await User.findOne({ email: req.session.email });
+    const userId = useremail._id;
 
+    const addressId = req.params.id;
 
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { address: { _id: addressId } } },
+      { new: true }
+    );
+
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
 //LogoutUser
 
@@ -361,5 +396,6 @@ module.exports = {
   editUserProfile,
   LoadAdress,
   AddAdress,
-  editAdress
+  editAdress,
+  DeleteuserAddress,
 };

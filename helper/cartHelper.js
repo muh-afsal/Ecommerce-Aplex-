@@ -16,7 +16,7 @@ async function productAddtocart(productId, userId) {
             Quantity: 1,
           },
         ],
-        TotalAmount: 0, // Initialize TotalAmount to 0
+        TotalAmount: 0,
         createdAt: Date.now(),
         UpdatedAt: Date.now(),
       });
@@ -47,13 +47,14 @@ async function productAddtocart(productId, userId) {
       }
     }
 
-   
-    const totalAmount = await calculateTotalPrice(userId);
-
+   const discount=cartExist.DiscountAmount
+    const totals = await calculateTotalPrice(userId);
+    const totalAmount = totals-discount;
+      
 
     await Cart.updateOne({ User: userId }, { $set: { TotalAmount: totalAmount } });
 
-    console.log("Total Amount:", totalAmount);
+   
   } catch (error) {
     console.log(error);
   }

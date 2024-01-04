@@ -12,16 +12,28 @@
             font-size: small;
         }
 
+        #applyCouponBtn {
+            background: #2E51FF;
+            float: right;
+            position: relative;
+            width: 8vw;
+            color: #eff6ff;
+            text-align: center;
+            border-radius: 50px;
+            margin-left: -66px;
+            height: 49px;
+            border: none;
+            outline: none;
+        }
 
         .coupon-input {
             height: 9vh;
             box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
             border-radius: 13px;
-            margin-top: -217px;
-
-            width: 281px;
+            margin-top: -170px;
+            width: 255px;
             float: right;
-            margin-right: 154PX;
+            margin-right: 130PX;
 
         }
 
@@ -522,16 +534,20 @@
                         </div>
                         <div class="total-values">
                             <p class="total-texts">Subtotal :</p>
-                            <p class="cart-prices" id="cartTotal-Subtotal"><%-cartData.TotalAmount%><span>/-</span></p>
+                            <p class="cart-prices" id="cartTotal-Subtotal"><%-subtotal%><span>/-</span></p>
                         </div>
                         <div class="total-values">
                             <p class="total-texts">Discount Price :</p>
-                            <p class="cart-prices">-0/-</p>
+                            <p class="cart-prices">-<%=cartData.DiscountAmount%>/-</p>
                         </div>
                         <div class="total-values">
                             <p class="total-texts" style="font-size: x-large; color: black ;">Total :</p>
                             <p style="font-size: x-large; font-weight: 600; " class="cart-prices"><span id="total">
-                                    <%=cartData.TotalAmount%>
+                                    <%if(cartData.DiscountAmount===0){%>
+                                        <%-subtotal%>
+                                            <%}else{%>
+                                                <%=cartData.TotalAmount%>
+                                                    <%}%>
                                 </span>/-</p>
                         </div>
                     </div>
@@ -568,12 +584,13 @@
 
                         <div class="search-bars" style=" height: 6vh;    height: 6vh;display: flex;">
 
-                            <input type="text" class="form-control rounded-pill coupon-entry shadow-none "
-                                style="float: right;" placeholder="Coupon code">
-                            <div class="search-icon applycoupon"
-                                style="     background: #2E51FF;float: right;position: relative;width: 8vw; text-align: center; border-radius: 50px;margin-left: -66px;height: 49px; ">
-                                <p style="color: aliceblue; margin-top: 12px;">Apply Coupon</p>
-                            </div>
+                            <input type="text" id="Coupon_entry"
+                                class="form-control rounded-pill coupon-entry shadow-none " style="float: right;"
+                                placeholder="Coupon code">
+
+                            <button id="applyCouponBtn" onclick="ApplyCoupon()">
+                                Apply Coupon
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -583,12 +600,74 @@
             <!-- <p class="text-danger">aflu is bad boy </p> -->
             <%-include("./partials/footer.ejs")%>
 
-
                 <script>
 
 
 
 
+                    function ApplyCoupon() {
+                        var couponCode = document.getElementById("Coupon_entry").value;
+                        // alert(couponCode)
+
+                        fetch('/applycoupon', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ couponCode: couponCode, orderid: "<%-cartData._id%>" }),
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                               
+                                if (data.success) {
+                                    var discountValue = data.discountValue;
+                                    var minamount = data.minpurchase;
+                                    var TotalAmount = data.totalAmount; // Corrected variable name
+                                    var isused = data.isused;
+                                    var maxamount = data.maxpurchase;
+                                    console.log('Total amount:', TotalAmount);
+
+                                    var currentDate = new Date();
+                                    if (TotalAmount >= minamount && TotalAmount <= maxamount) {
+
+                                        const newtotalamount = TotalAmount - discountValue;
+                                        document.getElementById("total").innerText = newtotalamount.toFixed(2);
+                                             
+                                    } else {
+                                      
+                                    }
+
+                                    console.log('Discount Value:', discountValue);
+                                }
+
+                                if (data.success === false) {
+                                    (function () {
+                                        Toastify({
+                                            text: data.message,
+                                            duration: 3000,
+                                            newWindow: true,
+                                            close: true,
+                                            gravity: "top",
+                                            position: "center",
+                                            stopOnFocus: true,
+                                            style: {
+                                                background: "#FF0000",
+
+                                            },
+                                            onClick: function () { }
+                                        }).showToast();
+                                    })();
+                                }
+                            })
+                           
+
+                            .catch(error => {
+                                console.error('Error applying coupon:', error);
+                            });
+                    }
+
+                </script>
+                <script>
                     function placeOrder() {
 
                         // document.getElementById(`selectaddress_${selectAddressId}`)
@@ -607,9 +686,9 @@
                                     destination: "https://github.com/apvarun/toastify-js",
                                     newWindow: true,
                                     close: true,
-                                    gravity: "top", 
-                                    position: "center", 
-                                    stopOnFocus: true, 
+                                    gravity: "top",
+                                    position: "center",
+                                    stopOnFocus: true,
                                     style: {
                                         background: "#FF0000",
                                         // border-radius: 10px;
@@ -644,35 +723,54 @@
 
 
                         if (selectAddressRadioValue && selectPaymentRadioValue === "COD") {
-                         
-                           const orderplaced= fetch('/placeorder', {
+
+                            const orderplaced = fetch('/placeorder', {
                                 method: "POST",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({ selectPaymentRadioValue, selectAddressRadioValue })
                             })
                                 .then(response => response.json())
                                 .then(res => {
-                                    if(res.success=true){
-                                       window.location.href = "/placeOrder";
+                                    if (res.success = true) {
+                                        window.location.href = "/placeOrder";
                                     }
-                                  
+                                    if(res.success=false){
+                                        (function () {
+                                Toastify({
+                                    text: res.messageww,
+                                    duration: 3000,
+                                    newWindow: true,
+                                    close: true,
+                                    gravity: "top",
+                                    position: "center",
+                                    stopOnFocus: true,
+                                    style: {
+                                        background: "#FF0000",
+                                        // border-radius: 10px;
+
+                                    },
+                                    onClick: function () { } // Callback after click
+                                }).showToast();
+                            })();
+                                    }
+
                                 })
 
-                        }else{
-                       
+                        } else {
+
                             fetch('/generateRazorpay', {
-                                            method: "POST",
-                                            headers: { "Content-Type": "application/json" },
-                                            body: JSON.stringify({  })
-                                        }).then((response) => response.json()).then((res)=>{
-                                            if(res.online){
-                                               razorpay(res)
-                                            }
-                                        })
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({})
+                            }).then((response) => response.json()).then((res) => {
+                                if (res.online) {
+                                    razorpay(res)
+                                }
+                            })
                         }
 
                         function razorpay(orderResponse) {
-                        
+
                             var options = {
                                 "key": "rzp_test_TZZu8xFsdUnCp9",
                                 "amount": orderResponse.order.amount,
@@ -683,18 +781,18 @@
                                 "order_id": orderResponse.id,
                                 "handler": function (response) {
                                     alert("load placedorde")
-                                     fetch('/placeorder', {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ selectPaymentRadioValue, selectAddressRadioValue })
-                            })
-                                .then(response => response.json())
-                                .then(res => {
-                                    if(res.success=true){
-                                       window.location.href = "/placeOrder";
-                                    }
-                                  
-                                })
+                                    fetch('/placeorder', {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({ selectPaymentRadioValue, selectAddressRadioValue })
+                                    })
+                                        .then(response => response.json())
+                                        .then(res => {
+                                            if (res.success = true) {
+                                                window.location.href = "/placeOrder";
+                                            }
+
+                                        })
                                 },
                                 "notes": {
                                     "address": "Razorpay Corporate Office"
@@ -710,7 +808,7 @@
                             });
                             // e.preventDefault();
                         }
-                      
+
                     }
 
                     function isEmpty(value) {

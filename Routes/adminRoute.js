@@ -40,5 +40,8 @@ router.post("/updateOrderStatus/:orderId", checkAdminAuth, orderController.Updat
 router.post("/updatePaymentStatus/:orderId", checkAdminAuth, orderController.UpdatePaymentStatus);
 router.get("/adminlogout", (req, res) => { req.session.adminAuth = false; res.redirect("/admin/adminlogin"); });
 router.get("/Managecoupon",checkAdminAuth,couponController.LoadManageCoupons)
+router.post("/addCoupon",checkAdminAuth, couponController.addCoupon);
+router.post("/deleteCoupon/:id",checkAdminAuth, couponController.deleteCoupon);
+router.post("/editCoupon",checkAdminAuth, couponController.editCoupon);
 
 module.exports = router;
