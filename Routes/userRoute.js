@@ -49,6 +49,8 @@ router.post("/generateRazorpay",userAuth.checkUserAuthentication,cartController.
 router.post("/deleteUserAddress/:id",userAuth.checkUserAuthentication,userController.DeleteuserAddress)
 router.get("/coupon",userAuth.checkUserAuthentication,couponController.LoadUserCoupons)
 router.post("/applycoupon",userAuth.checkUserAuthentication,couponController.ApplyCoupons)
+router.post("/cancelcoupon",userAuth.checkUserAuthentication,couponController.CancelCoupon)
+router.get("/wallet",userAuth.checkUserAuthentication,userController.LoadWallet)
 
 
 

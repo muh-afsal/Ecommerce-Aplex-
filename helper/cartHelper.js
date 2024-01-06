@@ -48,6 +48,7 @@ async function productAddtocart(productId, userId) {
     }
 
    const discount=cartExist.DiscountAmount
+   
     const totals = await calculateTotalPrice(userId);
     const totalAmount = totals-discount;
       

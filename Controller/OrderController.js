@@ -31,7 +31,9 @@ const LoadOrderDetails = async (req, res) => {
 
 const LoadOrders = async (req, res) => {
   try {
-    const orderData = await Order.find().sort({ OrderDate: -1 });
+    const user = await User.findOne({ email: req.session.email });
+    const userId = user._id;
+    const orderData = await Order.find({ UserID: userId}).sort({ OrderDate: -1 });
     res.render("../views/user/orders", { orderData });
   } catch (error) {
     console.log(error);

@@ -246,6 +246,50 @@ const ApplyCoupons = async (req, res) => {
 };
 
 
+// cancelling the coupon---------------------------------------------------------------------
+const CancelCoupon = async (req, res) => {
+  try {
+    const orderID = req.body.orderid;
+    // const couponCode = req.body.couponCode;
+    const cart = await Cart.findOne({ _id: orderID });
+    // const coupon = await Coupon.findOne({ CouponCode: couponCode });
+
+
+  //  const  discountValue= coupon.DiscountValue
+  //  const  totalAmount= cart.TotalAmount
+
+  //  console.log(discountValue,"discound value")
+  //  console.log(totalAmount,"total amount ")
+
+    if (!cart) {
+      return res.status(404).json({ success: false, message: "Cart not found!" });
+    }
+
+    if (cart.couponUsed) {
+      cart.TotalAmount += cart.DiscountAmount;
+      cart.DiscountAmount = 0;
+      cart.couponUsed = false;
+      cart.UpdatedAt = new Date();
+
+      await cart.save();
+
+
+      return res.status(200).json({
+        success: true,
+        message: "Coupon canceled successfully!",
+      });
+
+    } else {
+      return res.status(400).json({ success: false, message: "No coupon used for this order!" });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ success: false, message: "Something went wrong while canceling the coupon!" });
+  }
+};
+
+
+
 
 
 
@@ -256,5 +300,6 @@ module.exports = {
   deleteCoupon,
   editCoupon,
   LoadUserCoupons,
-  ApplyCoupons
+  ApplyCoupons,
+  CancelCoupon
 };

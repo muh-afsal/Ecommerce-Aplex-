@@ -6,14 +6,13 @@ const { ObjectId } = require("mongodb");
 const { sentOTP } = require("./OTPcontroller");
 const Product = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
-// const Products = require('../Model/collections/ProductModel');
 
 const multer = require("multer");
 const storage = require("../auth/profilepicUpload");
 
 const upload = multer({ storage: storage });
 
-//securing password
+//securing password-------------------------------------------------------------------------------------
 const securePassword = async (password) => {
   try {
     const passwordhash = await bcrypt.hash(password, 10);
@@ -23,7 +22,7 @@ const securePassword = async (password) => {
   }
 };
 
-//load landingload
+//load landingload-------------------------------------------------------------------------------------
 const landingload = async (req, res) => {
   try {
     const products = await Product.find({}).limit(8);
@@ -34,7 +33,7 @@ const landingload = async (req, res) => {
   }
 };
 
-//loadSignup
+//loadSignup---------------------------------------------------------------------------------------
 
 const loadSignup = async (req, res) => {
   try {
@@ -44,7 +43,7 @@ const loadSignup = async (req, res) => {
   }
 };
 
-//signUp
+//signUp----------------------------------------------------------------------------------------------
 const signupUser = async (req, res) => {
   try {
     const userinfo = {
@@ -73,7 +72,7 @@ const signupUser = async (req, res) => {
     console.log(error.message);
   }
 };
-//sendng otp
+//sendng otp---------------------------------------------------------------------------------
 const otpSender = async (req, res) => {
   try {
     const email = req.session.data.email;
@@ -83,7 +82,7 @@ const otpSender = async (req, res) => {
   } catch (error) {}
 };
 
-//LoadOTP
+//LoadOTP-----------------------------------------------------------------------------------
 
 const LoadOTP = async (req, res) => {
   try {
@@ -93,7 +92,7 @@ const LoadOTP = async (req, res) => {
   }
 };
 
-//Load Login
+//Load Login-------------------------------------------------------------------------------------
 const loadLogin = async (req, res) => {
   try {
     if (req.session && req.session.logged) {
@@ -111,7 +110,7 @@ const loadLogin = async (req, res) => {
   }
 };
 
-//login
+//login-----------------------------------------------------------------------------------------------
 
 const loginUser = async (req, res) => {
   try {
@@ -147,7 +146,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-//load Home
+//load Home----------------------------------------------------------------------------------
 
 const loadHome = async (req, res) => {
   try {
@@ -166,7 +165,7 @@ const loadHome = async (req, res) => {
   }
 };
 
-//verify otp
+//verify otp---------------------------------------------------------------------------------
 const otpverify = async (req, res) => {
   try {
     const data = req.session.data;
@@ -206,7 +205,6 @@ const LoadUserProfile = async (req, res) => {
   try {
     const email = req.session.email;
     const userData = await User.findOne({ email: email });
-    // console.log(userData,"userdata-------------");
     res.render("../views/user/UserProfile", { userData });
   } catch (error) {
     console.log(error);
@@ -222,6 +220,8 @@ const LoadeditProfile = async (req, res) => {
   }
 };
 
+
+// Edit user profile-----------------------------------------------------------------
 const editUserProfile = async (req, res) => {
   try {
     const { username, phone } = req.body;
@@ -269,6 +269,8 @@ const LoadAdress = async (req, res) => {
   }
 };
 
+
+// adding address-------------------------------------------------------------------------
 const AddAdress = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
@@ -314,13 +316,6 @@ const editAdress = async (req, res) => {
 
     const userData = await User.findOne({ email: req.session.email });
 
-    // console.log(addressId, ":id---------");
-    // console.log(shippingName, ":s name---------");
-    // console.log(phone, ":pjone----------");
-    // console.log(city, ":ctrt----------");
-    // console.log(state, "state-----------");
-    // console.log(country, "cyrvetyt---------");
-    // console.log(pincode, "ytvctder--------------");
     if (
       !addressId ||
       !shippingName ||
@@ -349,6 +344,8 @@ const editAdress = async (req, res) => {
   }
 };
 
+
+// Delete address -------------------------------------------------------------------------------
 const DeleteuserAddress = async (req, res) => {
   try {
     const useremail = await User.findOne({ email: req.session.email });
@@ -368,6 +365,20 @@ const DeleteuserAddress = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+
+
+
+
+// Load wallet --------------------------------------------
+const LoadWallet=async(req,res)=>{
+  try {
+    const userData = await User.findOne({ email: req.session.email });
+    res.render("../views/user/wallet.ejs",{userData})
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 
 //LogoutUser
 
@@ -398,4 +409,5 @@ module.exports = {
   AddAdress,
   editAdress,
   DeleteuserAddress,
+  LoadWallet
 };

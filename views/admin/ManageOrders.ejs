@@ -13,6 +13,11 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
 </head>
+<style>
+    div.dataTables_wrapper div.dataTables_length select{
+        width: 53px;
+    } 
+</style>
 
 <body>
     <%-include("./partials/side-bar.ejs")%>
@@ -56,7 +61,7 @@
                                     <td>
                                         <%=data.Status%>
                                     </td>
-                                    <td><a href="/admin/orderdetails?id=<%=data._id%>">View Details</a></td>
+                                    <td><a style="text-decoration: none;" href="/admin/orderdetails?id=<%=data._id%>">View Details</a></td>
 
                                 </tr>
                                 <%})%>

@@ -8,7 +8,7 @@ const Products = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
 
 const LoadOrders = async (req, res) => {
-  const orderData = await Orders.find();
+  const orderData = await Orders.find().sort({ OrderDate: -1 });;
 
   try {
     res.render("../views/admin/ManageOrders", { orderData });
@@ -35,6 +35,7 @@ const Orderdetails = async (req, res) => {
 const UpdateOrderStatus = async (req, res) => {
   const { orderId } = req.params;
   const { status } = req.body;
+
 
   try {
     await Orders.findByIdAndUpdate(orderId, { Status: status });

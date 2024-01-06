@@ -197,16 +197,12 @@
                                     <span>
                                         <%if(orderData.Status!=="Cancelled"){%>
                                         <select class="form-select form-select-input form-select-sm shadow-none"
-                                            name="status" style="width: 79%;border-radius: 10px;" id="orderStatus"
+                                            name="status" style="width: 79%;border-radius: 5px;" id="orderStatus"
                                             aria-label=".form-select-sm example">
-                                            <option value="Ordered" <%=orderData.orderStatus==='Ordered' ? 'selected'
-                                                : '' %>>Ordered</option>
-                                            <option value="Shipped" <%=orderData.orderStatus==='Shipped' ? 'selected'
-                                                : '' %>>Shipped</option>
-                                            <option value="Delivered" <%=orderData.orderStatus==='Delivered'
-                                                ? 'selected' : '' %>>Delivered</option>
-                                            <option value="Cancelled" <%=orderData.orderStatus==='Cancelled'
-                                                ? 'selected' : '' %>>Cancelled</option>
+                                            <option value="Ordered" <%=orderData.Status==='Ordered' ? 'selected' : '' %>>Ordered</option>
+                                            <option value="Shipped" <%=orderData.Status==='Shipped' ? 'selected' : '' %>>Shipped</option>
+                                            <option value="Delivered" <%=orderData.Status==='Delivered' ? 'selected' : '' %>>Delivered</option>
+                                            <option value="Cancelled" <%=orderData.Status==='Cancelled' ? 'selected' : '' %>>Cancelled</option>
                                         </select>
                                         <%}else{%>
                                          <p>Cancelled</p>
@@ -219,16 +215,12 @@
                                     <span>
 
                                         <select class="form-select form-select-input form-select-sm shadow-none"
-                                            name="status" style="width: 79%;border-radius: 10px;" id="paymentStatus"
+                                            name="status" style="width: 79%;border-radius: 5px;" id="paymentStatus"
                                             aria-label=".form-select-sm example">
-                                            <option value="Pending" <%=orderData.paymentStatus==='Pending' ? 'selected'
-                                                : '' %>>Pending</option>
-                                            <option value="Completed" <%=orderData.paymentStatus==='Completed'
-                                                ? 'selected' : '' %>>Completed</option>
-                                            <option value="Failed" <%=orderData.paymentStatus==='Completed' ? 'selected'
-                                                : '' %>>Failed</option>
-                                            <option value="Refund" <%=orderData.paymentStatus==='Completed' ? 'selected'
-                                                : '' %>>Refund</option>
+                                            <option value="Pending" <%=orderData.paymentStatus==='Pending' ? 'selected' : '' %>>Pending</option>
+                                            <option value="Paid" <%=orderData.paymentStatus==='Paid' ? 'selected' : '' %>>Paid</option>
+                                            <option value="Failed" <%=orderData.paymentStatus==='Failed' ? 'selected' : '' %>>Failed</option>
+                                            <option value="Return" <%=orderData.paymentStatus==='Return' ? 'selected' : '' %>>Return</option>
                                         </select>
                                     </span>
                                     <span>
@@ -258,6 +250,8 @@
         <script>
             // Function to update order status
             const updateOrderStatus = async (orderId, status) => {
+              alert(status)
+
                 try {
                     // alert('reached')
                     const response = await fetch(`/admin/updateOrderStatus/${orderId}`, {
@@ -282,6 +276,7 @@
 
             // Function to update payment status
             const updatePaymentStatus = async (orderId, status) => {
+
                 try {
                     const response = await fetch(`/admin/updatePaymentStatus/${orderId}`, {
                         method: 'POST',
@@ -305,7 +300,7 @@
 
             // Event listener for order status select
             document.getElementById('orderStatus').addEventListener('change', (event) => {
-                const orderId = '<%= orderData._id %>'; // Replace with your actual order ID
+                const orderId = '<%= orderData._id %>'; 
                 const status = event.target.value;
                 
 
@@ -313,9 +308,8 @@
                 updateOrderStatus(orderId, status);
             });
 
-            // Event listener for payment status select
             document.getElementById('paymentStatus').addEventListener('change', (event) => {
-                const orderId = '<%= orderData._id %>'; // Replace with your actual order ID
+                const orderId = '<%= orderData._id %>'; 
                 const status = event.target.value;
 
                 // Call the updatePaymentStatus function
