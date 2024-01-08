@@ -93,11 +93,13 @@ body{
     margin-left: 5px;
 }
 @media (max-width: 990px) {
+
     .navbar-options{
         gap: 0px;
         font-weight: 700;
     
     }
+    
     .loginsignup-nav{
         gap: 0px;
         margin-right: -87px;

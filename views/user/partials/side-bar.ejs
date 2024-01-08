@@ -10,256 +10,65 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap");
-
-        body{
-            margin: 0;
-            padding: 0;
+        <style>
+            body{
+                margin: 0px;
+                padding: 0;
+                font-family: Arial, sans-serif;
+             }
+             .l-navbar {
+            width: 70px;
+            transition: 0.3s;
         }
 
-        :root {
-            --header-height: 3rem;
-            --nav-width: 68px;
-            --first-color: rgba(255, 255, 255, 0.345) --first-color-light: #000000;
-            --white-color: #000000;
-            --body-font: 'Nunito', sans-serif;
-            --normal-font-size: 1rem;
-            --z-fixed: 100;
-
-        }
-
-        *,
-        ::before,
-        ::after {
-            box-sizing: border-box;
-        }
-/* 
-        body {
-            position: relative;
-            margin: var(--header-height) 0 0 0;
-            padding: 0 1rem;
-            font-family: var(--body-font);
-            font-size: var(--normal-font-size);
-            transition: .5s;
-        } */
-
-        a {
-            text-decoration: none;
-        }
-       
-
-        .header {
-
-            width: 100%;
-            height: var(--header-height);
-            position: fixed;
-            top: 0;
-            left: 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            /* padding: 0 1rem; */
-            background-color: var(--white-color);
-            z-index: var(--z-fixed);
-            transition: .5s;
-            width: 5%;
-            background-color: white;
-        }
-
-        .header_toggle {
-            color: var(--first-color);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .header_img {
-            width: 35px;
-            height: 35px;
-            display: flex;
-            justify-content: center;
-            border-radius: 50%;
-            overflow: hidden;
-        }
-
-        .header_img img {
-            width: 40px;
-        }
-
-        .l-navbar {
-            /* position: fixed; */
-            top: 0;
-            left: -30%;
-            width: var(--nav-width);
-            height: 100vh;
-            background-color: var(--first-color);
-            /* padding: .5rem 1rem 0 0; */
-            /* transition: .5s; */
-            z-index: var(--z-fixed);
-            border-radius: 14px;
-            margin-left: 10px;
-            margin-top: 8px;
-            height: auto;
-            box-shadow: 0px 2px 13px -8px #000000;
-            margin-top: 82px
-
-        }
-
-        .nav {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-        }
-
-        .nav_logo,
-        .nav_link {
-            display: grid;
-            grid-template-columns: max-content max-content;
-            align-items: center;
-            column-gap: 1rem;
-            /* padding: .5rem 0 .5rem 1.5rem; */
-        }
-
-        .nav_logo {
-            margin-bottom: 2rem;
-        }
-
-        .nav_logo-icon {
-            font-size: 1.25rem;
-            color: var(--white-color);
-        }
-
-        .nav_logo-name {
-            color: var(--white-color);
-            font-weight: 700;
-        }
-
-        .nav_link {
-            /* position: relative; */
-            color: var(--first-color-light);
-            margin-bottom: 0px;
-            /* transition: .3s; */
-            border-radius: 8px;
-            height: 57px;
-            width: 220px;
-        }
-
-        .nav_link:hover {
-            color: var(--white-color);
-            border-radius: 8px;
-            /* height: 57px; */
-
-        }
-
-        .nav_icon {
-            font-size: 1.25rem;
-        }
-
-        .show {
-            left: 0;
-        }
-
-       
-
-        .nav_link {
-            color: black;
-            text-decoration: none;
-        }
-
-        .active::before {
-            content: '';
-            /* position: absolute; */
-            left: 0;
-            width: 2px;
-            height: 32px;
-            background-color: var(--white-color);
-        }
-
-        .height-100 {
-            height: 100vh;
-        }
-
-        @media screen and (min-width: 768px) {
-         
-            .header {
-                height: calc(var(--header-height) + 1rem);
-                /* padding: 0 2rem 0 calc(var(--nav-width) + 2rem); */
-            }
-
-            .header_img {
-                width: 40px;
-                height: 40px;
-            }
-
-            .header_img img {
-                width: 45px;
-            }
-
-            .l-navbar {
-                left: 0;
-                  width: 70px;
-            }
-
-            .show {
-                width: calc(var(--nav-width) + 156px);
-            }
-
-          
-        }
-        .nav_link{
-            text-decoration: none !important;
-        }
-
-     
-
-        .l-navbar {
+        .l-navbar:hover {
             width: 250px;
-
-            /* transition: 0.3s; */
         }
-
 
         .nav_list {
             width: 100%;
         }
 
-       
+        .l-navbar:hover .nav_list {
+            width: 250px;
+        }
+        .nav_link{
+            margin-bottom: 20px;
+        }
 
         /* Add this style for hovering color for links */
         .nav_link:hover {
             background-color: #c7d5ff;
             margin-left: 10px;
-            
-    
 
         }
-
-        @media (min-width:768px) {
-            #header {
+        @media (min-width:768px){
+               #header{
                 display: none;
-            }
+               } 
         }
-    </style>
+        @media (min-width:992px){
+            .aplex-logo{
+    display: none;
+}
+        }
+        </style>
 
     <title>Document</title>
 </head>
 
 <body>
-    <div id="body-pd" >
-        <header class="header" id="header" style="width: 101px;   border-radius: 13px; ">
-            <div class="header_toggle" style="color: black;"> <svg id="header-toggle" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill-gear" viewBox="0 0 16 16">
-  <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
-</svg></div>
-            <div class="header_img"> <img src="" alt=""> </div>
+    <div id="body-pd">
+        <header class="header" id="header" style="    border-radius: 13px; ">
+            <div class="header_toggle" style="color: black;"> <i class='bx bx-menu' id="header-toggle"></i> </div>
+            <div class="header_img"> <img src="https://i.imgur.com/hczKIze.jpg" alt=""> </div>
         </header>
         <div class="l-navbar" id="nav-bar" style="background-color: white ;    ">
             <nav class="nav">
                 <div>
                     <a href="#" class="nav_logo" style="text-decoration: none;">
                         <i class='fa-solid fa-user nav_logo-icon'></i>
-                        <span class="nav_logo-name" style="text-decoration: none;color: black;">Admin</span>
+                        <span class="nav_logo-name" style="text-decoration: none;color: black;">User</span>
                     </a>
                     <div class="nav_list">
                         <a href="/home" class="nav_link active">
@@ -350,3 +159,27 @@
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

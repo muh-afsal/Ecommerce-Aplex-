@@ -24,6 +24,7 @@ const Orderdetails = async (req, res) => {
     const orderData = await Orders.findOne({ _id: orderId }).populate(
       "Items.productId"
     );
+   
 
     res.render("../views/admin/AdminOrderDetails", { orderData });
   } catch (error) {
