@@ -41,6 +41,7 @@ router.get("/profile", userAuth.checkUserAuthentication, userController.LoadUser
 router.get("/editprofile", userAuth.checkUserAuthentication, userController.LoadeditProfile);
 router.post("/editprofile", profileimageUpload.single("image"), userAuth.checkUserAuthentication, userController.editUserProfile);
 router.get("/cancelOrder/:id", userAuth.checkUserAuthentication, OrderController.cancelOrder);
+router.post("/returnOrder/:id", userAuth.checkUserAuthentication, OrderController.returnOrder);
 router.get("/productsfilter", userAuth.checkUserAuthentication, productController.ProductFilter);
 router.get("/address", userAuth.checkUserAuthentication, userController.LoadAdress);
 router.post("/adduserAddress", userAuth.checkUserAuthentication, userController.AddAdress);

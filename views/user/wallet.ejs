@@ -82,7 +82,7 @@
 #order_date_id {
             height: 97px;
             background-color: rgb(216, 234, 255);
-            width: 95%;
+            width: 100%;
             margin-top: 20px;
             border-radius: 6px;
             display: flex;
@@ -98,18 +98,25 @@
 
         }
         .Wallet_history_container{
-               background-color: aquamarine;
+               background-color: rgb(255, 255, 255);
     height: auto;
-    padding-left: 16vw !important;
+    /* padding-left: 16vw !important; */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 80%!important;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 4, 0.1) 0px 0px 10px 2px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
         }
         #activity_Container{
             width: 100%;
     height: 49vh;
-    background-color: red;
+    background-color: rgb(240, 240, 240);
+    display: flex;
+    flex-direction: column;
+    
         }
        .aplex-logo{
         display: none;
@@ -121,6 +128,10 @@
         #containerdivofnav{
             height: 32px;
         }
+        .table>:not(:last-child)>:last-child>* {
+    border-bottom-color: #cbcbcb!important;
+}
+
         
     </style>
 
@@ -140,12 +151,59 @@
 
                         
                         
-                        <h4 style="font-weight: 600;" id="Totalprice"><%=userData.walletBalance%></h4>
+                        <h4 style="font-weight: 600;" id="Totalprice">₹<%=userData.walletBalance%>/-</h4>
                     </div>
                 </div>
                 <div id="activity_Container">
-                    
-
+                    <div class="orderdetails" >
+                        <!-- <div id="order_date_id" style="background-color: rgb(228, 228, 228); display: flex;  justify-content: center;height: 10px!important;">
+                            <H5>TRANSACTION  DETAILS</H5>
+                  
+                        </div> -->
+                        <div class="col-12 tm-block-col">
+                            <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll ">
+                                <h2 class="tm-block-title text-dark " style="font-size: larger; font-weight: 500 ;padding: 5px;">TRANSACTION  DETAILS</h2>
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">No.</th>
+                                            <th scope="col">TRANSACTION ID</th>
+                                            <th scope="col">DESCRIPTION </th>
+                                            <th scope="col">TRANSACTION TYPE</th>
+                                            <th scope="col">CANCELLED AT</th>
+                
+                
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <%userData.Activity.forEach((value,index)=>{%>
+                                            <tr>
+                                                <th scope="row">
+                                                    <%=index+1%>
+                                                </th>
+                                                <td>
+                                                    <%=value.TransactionID%>
+                                                </td>
+                                                <td>
+                                                    <%=value.message%>
+                                                </td>
+                                                <td>
+                                                    <%=value.TransactionType%>
+                                                </td>
+                                                <td>
+                                                    <%= value.Date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' }) %>
+                                                </td>
+                                                
+                
+                                            </tr>
+                                            <%})%>
+                
+                
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 

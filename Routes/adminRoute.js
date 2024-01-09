@@ -43,5 +43,8 @@ router.get("/Managecoupon",checkAdminAuth,couponController.LoadManageCoupons)
 router.post("/addCoupon",checkAdminAuth, couponController.addCoupon);
 router.post("/deleteCoupon/:id",checkAdminAuth, couponController.deleteCoupon);
 router.post("/editCoupon",checkAdminAuth, couponController.editCoupon);
+router.get("/returndetails",checkAdminAuth, orderController.LoadReturnreq);
+router.post("/acceptReturnRequest/:orderId",checkAdminAuth, orderController.acceptReturnRequest);
+router.post("/rejectReturnRequest/:orderId",checkAdminAuth, orderController.rejectReturnRequest);
 
 module.exports = router;

@@ -66,7 +66,7 @@ const Schema = new mongoose.Schema({
       TransactionType: { type: String, enum: ["credit", "debit"] },
       message: { type: String },
       Date: { type: Date },
-      TransactionID: { type: Date },
+      TransactionID: { type: String },
     },
   ],
 });

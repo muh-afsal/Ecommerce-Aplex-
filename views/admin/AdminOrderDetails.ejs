@@ -194,15 +194,14 @@
                                     <span>
                                         <%if(orderData.Status!=="Cancelled"){%>
                                         <select class="form-select form-select-input form-select-sm shadow-none"
-                                            name="status" style="width: 79%;border-radius: 5px;" id="orderStatus"
+                                            name="status" style="width: 100% !important; border-radius: 5px;" id="orderStatus"
                                             aria-label=".form-select-sm example">
                                             <option value="Ordered" <%=orderData.Status==='Ordered' ? 'selected' : '' %>>Ordered</option>
-                                            <option value="Shipped" <%=orderData.Status==='Shipped' ? 'selected' : '' %>>Shipped</option>
                                             <option value="Delivered" <%=orderData.Status==='Delivered' ? 'selected' : '' %>>Delivered</option>
                                             <option value="Cancelled" <%=orderData.Status==='Cancelled' ? 'selected' : '' %>>Cancelled</option>
                                         </select>
                                         <%}else{%>
-                                         <p>Cancelled</p>
+                                                <p>Cancelled</p>
                                             <%}%>
 
                                     </span>
@@ -210,15 +209,17 @@
                                         <%=orderData.OrderDate.toLocaleDateString()%>
                                     </span>
                                     <span>
-
+                                        <%if(orderData.Status!=="Cancelled" ){%>
                                         <select class="form-select form-select-input form-select-sm shadow-none"
-                                            name="status" style="width: 79%;border-radius: 5px;" id="paymentStatus"
+                                            name="status" style="width: 100% !important;border-radius: 5px;" id="paymentStatus"
                                             aria-label=".form-select-sm example">
                                             <option value="Pending" <%=orderData.paymentStatus==='Pending' ? 'selected' : '' %>>Pending</option>
                                             <option value="Paid" <%=orderData.paymentStatus==='Paid' ? 'selected' : '' %>>Paid</option>
-                                            <option value="Failed" <%=orderData.paymentStatus==='Failed' ? 'selected' : '' %>>Failed</option>
                                             <option value="Return" <%=orderData.paymentStatus==='Return' ? 'selected' : '' %>>Return</option>
                                         </select>
+                                        <%}else{%>
+                                                <p>Cancelled</p>
+                                            <%}%>
                                     </span>
                                     <span>
                                         <%=orderData.paymentMethod%>
@@ -247,10 +248,7 @@
         <script>
             // Function to update order status
             const updateOrderStatus = async (orderId, status) => {
-              alert(status)
-
                 try {
-                    // alert('reached')
                     const response = await fetch(`/admin/updateOrderStatus/${orderId}`, {
                         method: 'POST',
                         headers: {
@@ -262,6 +260,7 @@
                     const data = await response.json();
 
                     if (data.success) {
+                        window.location.reload()
                         console.log('Order status updated successfully');
                     } else {
                         console.error('Failed to update order status');
@@ -286,6 +285,7 @@
                     const data = await response.json();
 
                     if (data.success) {
+                        window.location.reload()
                         console.log('Payment status updated successfully');
                     } else {
                         console.error('Failed to update payment status');

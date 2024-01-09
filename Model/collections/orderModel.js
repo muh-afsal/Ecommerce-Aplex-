@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 
 const orders = new mongoose.Schema({
-    Status: { type: String, enum: [ 'Ordered', 'Shipped', 'delivered', 'cancelled' ] },
+    Status: { type: String, enum: [ 'Ordered', 'Return', 'delivered', 'cancelled' ] },
     Items: [{
         productId: { type: mongoose.Schema.Types.ObjectId, ref:process.env.PRODUCT_COLLECTION},
         Price: { type: Number },
@@ -18,13 +18,17 @@ const orders = new mongoose.Schema({
         state:{type:String},
         country:{type:String},
         pincode:{type:Number},
-    },
+    },  
+    cancelReason:{ type: String},
     paymentMethod: { type: String },
     paymentStatus: { type: String },
     CoupenDiscount: { type: Number },
     OrderDate: { type: Date },
     PaymentId: { type: Number },
-
+    returnRequestSend:{type:Boolean},
+    returnRequestAccept:{type:Boolean},
+    cancelledAt:{type:Date},
+  
   
 });
 

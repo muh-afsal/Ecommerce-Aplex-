@@ -24,12 +24,12 @@
 
         <div class="product-text-container container-fluid" style="display: flex; justify-content: space-between;">
             <h4 style="    margin-top: 11px;" id="ManageProduct-text">Manage Orders</h4>
-
         </div>
         <div>
             <div class="col-12 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                     <h2 class="tm-block-title text-dark">Orders</h2>
+                    <a href="/admin/returndetails"><button type="button" id="returnreqBTN" class="btn-dark" style="float: right ;border-radius: 6px;">Return requests</button></a>
                     <table class="table" id="orders">
                         <thead>
                             <tr>
@@ -77,6 +77,7 @@
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
         <script>
             new DataTable('#orders');
+            
         </script>
 </body>
 

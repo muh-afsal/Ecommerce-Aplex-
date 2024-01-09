@@ -264,6 +264,11 @@
                 width: 100%;
             }
         }
+        #orderstatus{
+            font-weight: 600;
+    font-size: large;
+    color: green;
+        }
     </style>
 
     </head>
@@ -274,13 +279,62 @@
 
             <div class="orderplacedcontainer container-fluid">
                 <h3 style="font-weight: 700; margin-top: 20px;">Order Details</h3>
-                <%if(orderData.Status!=="Cancelled"){%>
-                    <a href="/cancelOrder/<%=orderData._id%>" style="text-decoration: none;     margin-right: -151vh; color: red;">Cancel Order</a>
+                
+                <%if(orderData.Status!=="Cancelled" && orderData.Status!=="Return" && orderData.Status!=="Request Send for Return" ){%>
+                    <a href="" style="text-decoration: none;margin-right: -151vh;font-weight: 600; color: red;" data-toggle="modal" data-target="#cancelOrder">Cancel Order</a>
                 <%}%>
+                <%if(orderData.Status!=="Return" &&  orderData.Status!=="Cancelled" && orderData.Status!=="Request Send for Return"){%>
+                    <a href="" style="text-decoration: none;margin-right: -151vh;font-weight: 600; color: rgb(75, 75, 75);" data-toggle="modal" data-target="#returnReason">Return Order</a>
+                <%}%>
+                <!-- modal for confirmation of order cancel -->
+                <div class="modal fade" id="cancelOrder" tabindex="-1" role="dialog" aria-labelledby="cancelOrderLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <div class="modal-body">
+                          <h5>Are you sure ?</h5>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" style="background-color: #959595;" data-dismiss="modal">Cancel</button>
+                          <a href="/cancelOrder/<%=orderData._id%>"><button type="button" class="btn btn-primary" >Confirm</button></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+            
+                <!-- Modal for reason of return  -->
+<div class="modal fade" id="returnReason" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="font-weight: 700;">Reason</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form action="/returnOrder/<%=orderData._id%>" method="POST"  id="form">
+              <label for="entry ">Enter the Reason for returning the product</label>
+            <input type="text" class="form-control entry shadow-none"  placeholder="Reason " name="returnReason">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" style="background-color: #959595;" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary" >Return</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
                 <div class="orderdetails">
                     <div id="order_date_id">
                         <h4 style="font-weight: 600;" id="orderid">#<%=orderData.orderNumber%></h4>
-                        <h4 style="font-weight: 600;" id="orderid"><span style="color: rgba(0, 0, 0, 0.483);">Status:</span><%=orderData.Status%></h4>
+                        <h4 style="font-weight: 600;" id="orderstatus"><span style="color: rgba(0, 0, 0, 0.483);">Status:</span><%=orderData.Status%></h4>
                         <h4 style="font-weight: 600;" id="Totalprice">₹<%=orderData.TotalPrice%>/-</h4>
                     </div>
                 </div>
