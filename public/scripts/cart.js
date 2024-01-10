@@ -19,19 +19,35 @@ function addToCart(e, productId) {
                       duration: 2000,
                       newWindow: true,
                       close: true,
-                      gravity: "bottom", // `top` or `bottom`
-                      position: "center", // `left`, `center` or `right`
-                      stopOnFocus: true, // Prevents dismissing of toast on hover
+                      gravity: "to", 
+                      position: "center", 
+                      stopOnFocus: true,
                       style: {
                         background: "#52b963",
-                        // border-radius: 10px;
+                        borderRadius: "8px"
                         
                       },
-                      onClick: function(){} // Callback after click
+                      onClick: function(){} 
                     }).showToast();
                   })();
             } else {
-                alert("Error");
+                (function() {
+                    Toastify({
+                      text: "Error while Product Adding to cart!",
+                      duration: 2000,
+                      newWindow: true,
+                      close: true,
+                      gravity: "to", 
+                      position: "center", 
+                      stopOnFocus: true,
+                      style: {
+                        background: "#FF0000",
+                        borderRadius: "8px"
+                        
+                      },
+                      onClick: function(){} 
+                    }).showToast();
+                  })();alert("Error");
             }
         })
 

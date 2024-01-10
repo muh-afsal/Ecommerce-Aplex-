@@ -23,7 +23,7 @@ const LoadproductDetailVerified = async (req, res) => {
   try {
     const id = req.query.id;
     const alreadyexist = await cart.findOne({ "Items.Products": id });
-    const products = await Product.findById(id);
+    const products = await Product.findById(id,{isdeleted:false});
     res.render("../views/user/ProductDetailesVerified", {
       products: products,
       alreadyexist: alreadyexist,
@@ -233,6 +233,28 @@ const ProductFilter=async(req,res)=>{
   }
 }
 
+
+
+const searchProduct=async(req,res)=>{
+  try {
+    
+    const query = req.body.query;
+
+    const regex = new RegExp( query, "i");
+
+    const searchedProduct = await Products.find({
+      $or: [{ Name: { $regex: regex } }],
+      isdeleted: false,
+    });
+
+    res.json(searchedProduct)
+
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 module.exports = {
   LoadproductDetail,
   LoadproductDetailVerified,
@@ -244,5 +266,6 @@ module.exports = {
   softDeleteProduct,
   editProductLoad,
   UpdateProduct,
-  ProductFilter
+  ProductFilter,
+  searchProduct
 };

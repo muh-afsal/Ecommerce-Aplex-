@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/user/home.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="/css/user/login.css">
     <script src="/scripts/cart.js"></script>
@@ -18,500 +21,456 @@
 
     <title>Home</title>
     <style>
-      @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;700;800;900&display=swap');
 
-*{
-    padding: 0;
-    margin: 0;
-}
+        * {
+            padding: 0;
+            margin: 0;
+        }
 
-.fa-heart{
-    color: black;
-}
-.heart-fill{
-    color: red;
-}
+        .fa-heart {
+            color: black;
+        }
 
-:root{
-    font-size: 16px;
-    font-family: "Raleway";
-    --heading-color: hsl(0, 0%, 7%);
-    --date-text-color: hsl(0, 0%, 51%);
-    --previous-price-text-color: hsl(0, 98%, 44%);
-    --current-price-text-color: hsla(0, 0%, 0%, 0.822);
-    --liked-heart-icon-color: hsl(0, 98%, 44%);
-    --heart-icon-color: whitesmoke;
-    --pricing-font-weight: 800;
-    --title-font-weight: 800;
-    --date-font-weight: 550;
+        .heart-fill {
+            color: red;
+        }
 
-    /* Cards colors */
-    --card-main-color : whitesmoke;
-    --card-1-secondary-color: rgb(192, 82, 82);
-    --card-2-secondary-color: rgb(67,53,27);
-    --card-3-secondary-color: rgb(178,180,179);
-    --card-4-secondary-color: rgb(96,109,117);
-}
+        :root {
+            font-size: 16px;
+            font-family: "Raleway";
+            --heading-color: hsl(0, 0%, 7%);
+            --date-text-color: hsl(0, 0%, 51%);
+            --previous-price-text-color: hsl(0, 98%, 44%);
+            --current-price-text-color: hsla(0, 0%, 0%, 0.822);
+            --liked-heart-icon-color: hsl(0, 98%, 44%);
+            --heart-icon-color: whitesmoke;
+            --pricing-font-weight: 800;
+            --title-font-weight: 800;
+            --date-font-weight: 550;
 
-html{
-    width: 100%;
-    height: 100%;
-}
+            --card-main-color: whitesmoke;
+            --card-1-secondary-color: rgb(192, 82, 82);
+            --card-2-secondary-color: rgb(67, 53, 27);
+            --card-3-secondary-color: rgb(178, 180, 179);
+            --card-4-secondary-color: rgb(96, 109, 117);
+        }
 
-
-
-.container input{
-    display: none;
-}
-
-.card-container{
-    max-width: 100em;
-    /* background-color: lightgreen; */
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
-    align-content: flex-start;
-    margin: auto;
-    min-height: 30em;
-    padding: 3em 1em 1em 1em;
-    box-sizing: border-box;
-}
-
-/* Card Styling */
-.card-div{
-  width: 16em;
-    height: 25em;
-    display: flex;
-    flex-direction: column;
-    justify-items: center;
-    align-items: center;
-    /* background-color: var(--card-main-color); */
-    margin: 2.9em;
-    box-sizing: border-box;
-    border-radius: 15px;
-    /* box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); */
-    box-shadow: rgba(0, 0, 4, 0.1) 0px 0px 10px 2px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+        html {
+            width: 100%;
+            height: 100%;
+        }
 
 
-    transition: transform 0.2s ease-in-out;
-}
 
-/* ======== General styling of all cards and heart divs ========== */
-.img-div{
-    width: 100%;
-    height: 8em;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    padding-top: 1rem;
-    z-index: 1;
-    border-radius: 0 0 10px 10px;
-}
+        .container input {
+            display: none;
+        }
 
-.img-div img{
-    transform-origin: bottom;
-    transform: translateY(7.5%);
-    transition: transform 0.3s ease-in-out
-}
+        .card-container {
+            max-width: 100em;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+            justify-content: center;
+            align-content: flex-start;
+            margin: auto;
+            min-height: 30em;
+            padding: 3em 1em 1em 1em;
+            box-sizing: border-box;
+        }
 
-/* === Styling the like Icon ==== */
-.like-icon-div{
-    padding: 1em 1em 0 1em;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: right;
-    font-size: 1.5em;
-    color: var(--heart-icon-color);
-    border-radius:10px 10px 0 0;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.like-icon-div-child{
-    /* background-color: yellow; */
-    color: black;
-    width: 1em;
-    height: 1em;
-    position: relative;
-    z-index: 3;
-    cursor: pointer;
-}
-
-.heart-empty{
-    position: absolute;
-    left: 0;
-    opacity: 1;
-}
-
-.heart-fill{
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    transform: scale(0);
-    transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
-}
+        .card-div {
+            width: 16em;
+            height: 25em;
+            display: flex;
+            flex-direction: column;
+            justify-items: center;
+            align-items: center;
+            margin: 2.9em;
+            box-sizing: border-box;
+            border-radius: 15px;
+            box-shadow: rgba(0, 0, 4, 0.1) 0px 0px 10px 2px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 
 
-/* God of war image and heart-background*/
-/* .gow-img-div{
-    background-color: var(--card-1-secondary-color);
-} */
+            transition: transform 0.2s ease-in-out;
+        }
 
-.gow-img-div img{
-    width: 65%;
-    transform: translateY(7.5%);
-    /* background-color: whitesmoke; */
-}
+        .img-div {
+            width: 100%;
+            height: 8em;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            padding-top: 1rem;
+            z-index: 1;
+            border-radius: 0 0 10px 10px;
+        }
 
-/* .card-1 .like-icon-div{
-    background-color: var(--card-1-secondary-color);
-} */
+        .img-div img {
+            transform-origin: bottom;
+            transform: translateY(7.5%);
+            transition: transform 0.3s ease-in-out
+        }
 
+        .like-icon-div {
+            padding: 1em 1em 0 1em;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: right;
+            font-size: 1.5em;
+            color: var(--heart-icon-color);
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: flex-end;
+        }
 
-/* Sekiro image and heart-background */
-/* .sekiro-img-div{
-    background-color: var(--card-2-secondary-color);
-} */
+        .like-icon-div-child {
+            color: black;
+            width: 1em;
+            height: 1em;
+            position: relative;
+            z-index: 3;
+            cursor: pointer;
+        }
 
-.sekiro-img-div img{
-    width: 45%;
-    transform: translateY(7.5%);
-}
-/* 
-.card-2 .like-icon-div{
-    background-color: var(--card-2-secondary-color);
-} */
+        .heart-empty {
+            position: absolute;
+            left: 0;
+            opacity: 1;
+        }
 
-
-/* Dazai image and heart-background */
-/* .dazai-img-div{
-    background-color: var(--card-3-secondary-color);
-} */
-
-.dazai-img-div img{
-    width: 80%;
-    transform: translateY(7.5%);
-}
-
-/* .card-3 .like-icon-div{
-    background-color: var(--card-3-secondary-color);
-    
-} */
-
-/* U4 image and heart-background*/
-/* .u4-img-div{
-    background-color: var(--card-4-secondary-color);
-} */
-
-.u4-img-div img{
-    width: 50%;
-    transform: translateY(7.5%);
-}
-
-/* .card-4 .like-icon-div{
-    background-color: var(--card-4-secondary-color);
-} */
-
-/* ======== text Container Styling general ======== */
-
-.text-container{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    /* background-color: yellow; */
-    padding: 0 1.5em;
-    padding-top: 7em;
-    padding-bottom: 1em;
-    box-sizing: border-box;
-}
-
-.text-container .item-name,
-.text-container .date{
-    margin: 0.25em 0;
-    text-align: center;
-}
-
-.text-container .item-name{
-    font-size: 1.2em;
-    font-weight: var(--title-font-weight);
-    color: var(--heading-color);
-    margin-top: -33px;
-}
-
-.text-container .date{
-    font-size: 0.9em;
-    font-weight: var(--date-font-weight);
-    color: var(--date-text-color);
-}
-
-/* === Pricing and cart div  ===== */
-.pricing-and-cart{
-    /* background-color: wheat; */
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 0.25em 0 1em 0;
-}
-
-.pricing{
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.previous-price{
-    font-size: 0.8rem;
-    font-weight: var(--pricing-font-weight);
-    color: var(--previous-price-text-color);
-    text-decoration: line-through;
-    /* background-color: whitesmoke; */
-    text-align: left;
-}
-
-.current-price{
-    color: var(--current-price-text-color);
-    font-size: 1.3rem;
-    font-weight: var(--pricing-font-weight);
-    /* background-color: yellow; */
-    margin: 0;
-}
-.banner-video{
-  width: 95%;
-    margin-left: 38px;
-    margin-top: 3rem;
-    border-radius: 17px;
-}
-.down-banner{
-    height: 48vh;
-    /* background-color: aquamarine; */
-    width: 50%;
-    background-image: url(/assets/apple\ banner1.jpg);
-    background-position: center;
-    background-size: cover;
-    border-radius: 13px;
-}
-.down-banner-txt{
-    /* background-color: #4461F2; */
-    width: 50%;
-    height: 48vh;
-
-}
+        .heart-fill {
+            position: absolute;
+            left: 0;
+            opacity: 0;
+            transform: scale(0);
+            transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
+        }
 
 
-.pricing-and-cart{
-    width: 100%;
-}
-
-.fa-shopping-cart{
-    font-size: 1.3rem;
-    top: 0;
-    color: #0662ff;
-    transform: translateY(50%);
-    margin-top: 30px;
-}
 
 
-/* ====== Hover effects ======= */
-.card-div:hover .img-div img{
-    transform: translateY(7.5%) scale(1.1);
-}
-
-.card-div:hover{
-    transform: translate(0, -10px);
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 28px 5px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-}
-
-.like-icon-div-child:hover .heart-fill{
-    opacity: 1;
-    transform: scale(1);
-}
-
-.like-icon-div-child:hover .heart-empty{
-    transition-delay: 0.25s;
-    opacity: 0;
-}
-
-#card-1-like:checked ~ .heart-empty,
-#card-2-like:checked ~ .heart-empty,
-#card-3-like:checked ~ .heart-empty,
-#card-4-like:checked ~ .heart-empty{ 
-        opacity: 0;
-}
-
-#card-1-like:checked ~ .heart-fill,
-#card-2-like:checked ~ .heart-fill,
-#card-3-like:checked ~ .heart-fill,
-#card-4-like:checked ~ .heart-fill{
-    animation: like-animation 0.25s ease-in-out forwards;
-}
-
-#card-1-like:not(:checked) ~ .heart-fill,
-#card-2-like:not(:checked) ~ .heart-fill,
-#card-3-like:not(:checked) ~ .heart-fill,
-#card-4-like:not(:checked) ~ .heart-fill{
-    animation: unlike-animation 0.25s ease-in-out ;
-}
+        .gow-img-div img {
+            width: 65%;
+            transform: translateY(7.5%);
+        }
 
 
-@keyframes like-animation{
-    0%{
-        opacity: 1;
-        transform: scale(1)
-    }
-    
-    50%{
-        opacity: 1;
-        color: var(--liked-heart-icon-color);
-        transform: scale(0.5);
-    }
+        .sekiro-img-div img {
+            width: 45%;
+            transform: translateY(7.5%);
+        }
 
-    100%{
-        opacity: 1;
-        color: var(--liked-heart-icon-color);
-        transform: scale(1.0);
-    }
-}
 
-@keyframes unlike-animation{
-    0%{
-        opacity: 1;
-        transform: scale(1)
-    }
-    
-    50%{
-        opacity: 1;
-        transform: scale(0.5);
-    }
+        .dazai-img-div img {
+            width: 80%;
+            transform: translateY(7.5%);
+        }
 
-    100%{
-        opacity: 1;
-        color: var(--heart-icon-color);
-        transform: scale(1.0);
-    }
-}
+
+        .u4-img-div img {
+            width: 50%;
+            transform: translateY(7.5%);
+        }
+
+
+
+        .text-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 0 1.5em;
+            padding-top: 7em;
+            padding-bottom: 1em;
+            box-sizing: border-box;
+        }
+
+        .text-container .item-name,
+        .text-container .date {
+            margin: 0.25em 0;
+            text-align: center;
+        }
+
+        .text-container .item-name {
+            font-size: 1.2em;
+            font-weight: var(--title-font-weight);
+            color: var(--heading-color);
+            margin-top: -33px;
+        }
+
+        .text-container .date {
+            font-size: 0.9em;
+            font-weight: var(--date-font-weight);
+            color: var(--date-text-color);
+        }
+
+        .pricing-and-cart {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin: 0.25em 0 1em 0;
+        }
+
+        .pricing {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .previous-price {
+            font-size: 0.8rem;
+            font-weight: var(--pricing-font-weight);
+            color: var(--previous-price-text-color);
+            text-decoration: line-through;
+            text-align: left;
+        }
+
+        .current-price {
+            color: var(--current-price-text-color);
+            font-size: 1.3rem;
+            font-weight: var(--pricing-font-weight);
+            margin: 0;
+        }
+
+        .banner-video {
+            width: 95%;
+            margin-left: 38px;
+            margin-top: 3rem;
+            border-radius: 17px;
+        }
+
+        .down-banner {
+            height: 48vh;
+            width: 50%;
+            background-image: url(/assets/apple\ banner1.jpg);
+            background-position: center;
+            background-size: cover;
+            border-radius: 13px;
+        }
+
+        .down-banner-txt {
+            width: 50%;
+            height: 48vh;
+
+        }
+
+
+        .pricing-and-cart {
+            width: 100%;
+        }
+
+        .fa-shopping-cart {
+            font-size: 1.3rem;
+            top: 0;
+            color: #0662ff;
+            transform: translateY(50%);
+            margin-top: 30px;
+        }
+
+
+        .card-div:hover .img-div img {
+            transform: translateY(7.5%) scale(1.1);
+        }
+
+        .card-div:hover {
+            transform: translate(0, -10px);
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 28px 5px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+        }
+
+        .like-icon-div-child:hover .heart-fill {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .like-icon-div-child:hover .heart-empty {
+            transition-delay: 0.25s;
+            opacity: 0;
+        }
+
+        #card-1-like:checked~.heart-empty,
+        #card-2-like:checked~.heart-empty,
+        #card-3-like:checked~.heart-empty,
+        #card-4-like:checked~.heart-empty {
+            opacity: 0;
+        }
+
+        #card-1-like:checked~.heart-fill,
+        #card-2-like:checked~.heart-fill,
+        #card-3-like:checked~.heart-fill,
+        #card-4-like:checked~.heart-fill {
+            animation: like-animation 0.25s ease-in-out forwards;
+        }
+
+        #card-1-like:not(:checked)~.heart-fill,
+        #card-2-like:not(:checked)~.heart-fill,
+        #card-3-like:not(:checked)~.heart-fill,
+        #card-4-like:not(:checked)~.heart-fill {
+            animation: unlike-animation 0.25s ease-in-out;
+        }
+
+
+        @keyframes like-animation {
+            0% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 1;
+                color: var(--liked-heart-icon-color);
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                color: var(--liked-heart-icon-color);
+                transform: scale(1.0);
+            }
+        }
+
+        @keyframes unlike-animation {
+            0% {
+                opacity: 1;
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(0.5);
+            }
+
+            100% {
+                opacity: 1;
+                color: var(--heart-icon-color);
+                transform: scale(1.0);
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class=" search-nav" style="    margin-bottom: 23px;margin-top: 15px;">
-        <div>
-            <img id="aplexlogosearch" src="/assets/aplexlogosearch.png" alt="">
-        </div>
-        <div class="search-bars">
-            <input type="text" style=" border: none;" class="form-control rounded-pill shadow-none  " placeholder="Search...">
-            <div class="search-icon" style="color: #4461F2;" >
-                <i class="fas fa-search"  ></i>
-            </div>
-        </div>
-    </div>
+
     <%-include("./partials/nav-after-login.ejs")%>
-    <div>
-       <!-- <div class="main-banner container-fluid " >
-            
-       </div> -->
-       <div id="video-container" class=" container-fluid">
-        <video autoplay muted loop class="banner-video">
-          <!-- Specify the path to your video file -->
-          <source  src="/assets/iphone15video.mp4"  type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-      </div>
-    </div>
-    <div style="height: auto; width: 100%; " class="carosel-container container-fluid"> 
-        <div class="new-heading">
-               <h1 id="carosel-h1" >EXPLORE THE NEW</h1>
-        </div>
-        <div class="carosel">
-            <div class="swiper mySwiper">
-                <div class="swiper-wrapper " style="  border-radius: 25px;">
-                 <div class="swiper-slide slider-div" style="background-image: url(/assets/macbook.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;"></div>
-                  <div class="swiper-slide slider-div" style="background-image: url(/assets/iphone.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;"></div>
-                  <div class="swiper-slide slider-div" style="background-image: url(/assets/applewatch.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;"></div>
-                  <div class="swiper-slide slider-div" style="background-image: url(/assets/ipad.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;"></div>
-                  <div class="swiper-slide slider-div" style="background-image: url(/assets/airpods.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;"></div>
-                  <div class="swiper-slide slider-div" style="background-image: url(/assets/macProduct.png); background-size: 210px;background-position: center; background-repeat: no-repeat;"></div>
-                </div>
-                <div  class="swiper-pagination"></div>
-              </div>
-        </div>
-    </div>
-    <h3 style="margin-top: 50px; margin-left: 80px; margin-bottom: -22px; font-size: x-large; font-weight: 800; ">Recommended for You</h3>
-    <div class="container card-container">
-        <%products.forEach((data,index)=>{%>
-            <!-- <a href="/ProductDetailverified?id=<%=data._id%>" style="text-decoration: none;"> -->
-      <div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=<%=data._id%>')" style="cursor: pointer;">
-          <div class="like-icon-div">
-              <label for="card-1-like" class="like-icon-div-child">
-                  <input type="checkbox" id="card-1-like">
-                  <i class="far fa-heart heart-empty"></i>
-                  <i class="fas fa-heart heart-fill"></i>
-              </label>
-          </div>
-          <div class="gow-img-div img-div">
-                            <img style="width: 195px;" src="<%= data.Image[0] %>" alt="god-of-war-figurine">
+        <div>
 
-          </div>
-      
-          <div class="text-container">
-            
-           
-              <h2 class="item-name"><%=data.Name%></h2>
-             
-              <div class="pricing-and-cart">
-                  <div class="pricing">
-                      <p class="previous-price">₹<%=data.Price-1000%>/-</p>
-                      <p class="current-price">₹<%=data.Price%>/-</p>
-                  </div>
-                  <a onclick="addToCart(event,'<%=data._id%>')"><i  class="fas fa-shopping-cart"></i></a>
+            <div id="video-container" class=" container-fluid">
+                <video autoplay muted loop class="banner-video">
+                    <source src="/assets/iphone15video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+        <div style="height: auto; width: 100%; " class="carosel-container container-fluid">
+            <div class="new-heading">
+                <h1 id="carosel-h1">EXPLORE THE NEW</h1>
+            </div>
+            <div class="carosel">
+                <div class="swiper mySwiper">
+                    <div class="swiper-wrapper " style="  border-radius: 25px;">
+                        <div class="swiper-slide slider-div"
+                            style="background-image: url(/assets/macbook.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;">
+                        </div>
+                        <div class="swiper-slide slider-div"
+                            style="background-image: url(/assets/iphone.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;">
+                        </div>
+                        <div class="swiper-slide slider-div"
+                            style="background-image: url(/assets/applewatch.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;">
+                        </div>
+                        <div class="swiper-slide slider-div"
+                            style="background-image: url(/assets/ipad.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;">
+                        </div>
+                        <div class="swiper-slide slider-div"
+                            style="background-image: url(/assets/airpods.webp); background-size: 210px;background-position: center; background-repeat: no-repeat;">
+                        </div>
+                        <div class="swiper-slide slider-div"
+                            style="background-image: url(/assets/macProduct.png); background-size: 210px;background-position: center; background-repeat: no-repeat;">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
                 </div>
             </div>
         </div>
-    <!-- </a> -->
-        <%})%>
-        
-    </div>
+        <h3 style="margin-top: 50px; margin-left: 80px; margin-bottom: -22px; font-size: x-large; font-weight: 800; ">
+            Recommended for You</h3>
+        <div class="container card-container">
+            <%products.forEach((data,index)=>{%>
+                <div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=<%=data._id%>')"
+                    style="cursor: pointer;">
+                    <div class="like-icon-div">
+                        <label for="card-1-like" class="like-icon-div-child">
+                            <input type="checkbox" id="card-1-like">
+                            <i class="far fa-heart heart-empty"></i>
+                            <i class="fas fa-heart heart-fill"></i>
+                        </label>
+                    </div>
+                    <div class="gow-img-div img-div">
+                        <img style="width: 195px;" src="<%= data.Image[0] %>" alt="god-of-war-figurine">
 
-      <div class="container" style="display: flex; margin-top: 40px; margin-bottom: 100px; ">
-         <div class="down-banner">
+                    </div>
 
-         </div>
-         <div class=" down-banner-txt" style="display: flex; text-align: center; align-items: center;  justify-content: center;" >
-          <h1 style="font-size: 61px; font-weight: 700;  color: #444444
+                    <div class="text-container">
+
+
+                        <h2 class="item-name">
+                            <%=data.Name%>
+                        </h2>
+
+                        <div class="pricing-and-cart">
+                            <div class="pricing">
+                                <p class="previous-price">₹<%=data.Price-1000%>/-</p>
+                                <p class="current-price">₹<%=data.Price%>/-</p>
+                            </div>
+                            <a onclick="addToCart(event,'<%=data._id%>')"><i class="fas fa-shopping-cart"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <%})%>
+
+        </div>
+
+        <div class="container" style="display: flex; margin-top: 40px; margin-bottom: 100px; ">
+            <div class="down-banner">
+
+            </div>
+            <div class=" down-banner-txt"
+                style="display: flex; text-align: center; align-items: center;  justify-content: center;">
+                <h1 style="font-size: 61px; font-weight: 700;  color: #444444
       ">Step inside, for <br>
-            comfort and magic <br>
-            await you.</h1>
-         </div>
-      </div>
-      <%-include("./partials/footer.ejs")%>
+                    comfort and magic <br>
+                    await you.</h1>
+            </div>
+        </div>
+        <%-include("./partials/footer.ejs")%>
 
 
-      
 
 
-   
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    <script src="/scripts/cart.js"></script>
-    <script>
-        var swiper = new Swiper(".mySwiper", {
-          slidesPerView: 4,
-        //   centeredSlides: true,
-          spaceBetween: 30,
-          grabCursor: true,
-          pagination: {
-            el: ".swiper-pagination",
-            clickable: true,
-          },
-        });
-        function goDetail(link){
-            window.location.href=link
-        }
-      </script>
+
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+            <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+            <script src="/scripts/cart.js"></script>
+            <script>
+                var swiper = new Swiper(".mySwiper", {
+                    slidesPerView: 4,
+                    spaceBetween: 30,
+                    grabCursor: true,
+                    pagination: {
+                        el: ".swiper-pagination",
+                        clickable: true,
+                    },
+                });
+                function goDetail(link) {
+                    window.location.href = link
+                }
+            </script>
 </body>
 </body>
+
 </html>

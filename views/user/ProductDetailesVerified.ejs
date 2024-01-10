@@ -15,6 +15,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap');
 
@@ -353,18 +355,18 @@ img {
                 <div class="purchase-info" style="display: flex;">
                     <input type="number" min="0" value="1" class="increment-input">
                     <a href="/wishlist"><button type="submit " value="submit" class="btn" >Add to Whishlist</button></a>
-                    <%if(alreadyexist){%>
-                        <a href="/cart"> <button type="submit " value="submit" class="btn" style="margin-left: 10px;" >Go to Cart</button></a>
-
-                    <%}else{%>
+                
                         <a onclick="addToCart(event,'<%=products._id%>')"> <button type="submit " value="submit" class="btn" style="margin-left: 10px;" >Add to Cart</button></a>
-                    <%}%>
+                    
                    
                 </div>
 
             </div>
         </div>
     </div>
+    <script>
+        const addtocartbtn=document.getElementById("")
+    </script>
     <script>
         var options = {
         width: 400,

@@ -9,7 +9,9 @@
 <link rel="stylesheet" href="/css/user/login.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+<script src="/scripts/cart.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 <style>
       @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;700;800;900&display=swap');
@@ -141,67 +143,32 @@ html{
 }
 
 
-/* God of war image and heart-background*/
-/* .gow-img-div{
-    background-color: var(--card-1-secondary-color);
-} */
 
 .gow-img-div img{
     width: 65%;
     transform: translateY(7.5%);
-    /* background-color: whitesmoke; */
 }
 
-/* .card-1 .like-icon-div{
-    background-color: var(--card-1-secondary-color);
-} */
-
-
-/* Sekiro image and heart-background */
-/* .sekiro-img-div{
-    background-color: var(--card-2-secondary-color);
-} */
 
 .sekiro-img-div img{
     width: 45%;
     transform: translateY(7.5%);
 }
-/* 
-.card-2 .like-icon-div{
-    background-color: var(--card-2-secondary-color);
-} */
 
-
-/* Dazai image and heart-background */
-/* .dazai-img-div{
-    background-color: var(--card-3-secondary-color);
-} */
 
 .dazai-img-div img{
     width: 80%;
     transform: translateY(7.5%);
 }
 
-/* .card-3 .like-icon-div{
-    background-color: var(--card-3-secondary-color);
-    
-} */
 
-/* U4 image and heart-background*/
-/* .u4-img-div{
-    background-color: var(--card-4-secondary-color);
-} */
 
 .u4-img-div img{
     width: 50%;
     transform: translateY(7.5%);
 }
 
-/* .card-4 .like-icon-div{
-    background-color: var(--card-4-secondary-color);
-} */
 
-/* ======== text Container Styling general ======== */
 
 .text-container{
     width: 100%;
@@ -472,6 +439,10 @@ html{
 .heart-fill{
     color: red;
 }
+#cart_icon{
+    margin-top: 30px ;
+    color: #0A58CA;
+}
 
 </style>
 <body>
@@ -485,7 +456,7 @@ html{
         
         <div class="search-bars" >
             
-            <input type="text" class="form-control rounded-pill shadow-none" placeholder="Search...">
+            <input type="text" class="form-control rounded-pill shadow-none" oninput="searchProduct(event)" placeholder="Search...">
             <div class="search-icon" style="color: #4461F2;" >
                 <i class="fas fa-search"  ></i>
             </div>
@@ -531,7 +502,7 @@ html{
                       <p class="previous-price">₹<%=data.Price-1000%>/-</p>
                       <p class="current-price">₹<%=data.Price%>/-</p>
                   </div>
-                  <a href="/cart" style="margin-top: 30px ;"><i class="fas fa-shopping-cart"></i></a>
+                  <a onclick="addToCart(event,'<%=data._id%>')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
               </div>
           </div>
       </div>
@@ -547,6 +518,69 @@ html{
     <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+    //   fetch to  seach the products --------------------------------------------------------->
+        function searchProduct(e){
+               const query=e.target.value
+               let allproducts=[]
+               const searchproduct = fetch('/searchProduct', {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({query })
+                            })
+                                .then(response => response.json())
+                                .then(res=>{
+            console.log(res);
+            res.forEach((product)=>{
+
+                const card=`<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
+          <div class="like-icon-div">
+              <label for="card-1-like" class="like-icon-div-child">
+                  <input style="    display: none;" type="checkbox" id="card-1-like">
+                  <i class="far fa-heart heart-empty"></i>
+                  <i class="fas fa-heart heart-fill"></i>
+              </label>
+          </div>
+          <div class="gow-img-div img-div">
+                            <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
+
+          </div>
+      
+          <div class="text-container">
+            
+           
+              <h2 class="item-name">${product.Name}</h2>
+             
+              <div class="pricing-and-cart">
+                  <div class="pricing">
+                      <p class="previous-price">₹${product.Price}/-</p>
+                      <p class="current-price">₹${product.Price}/-</p>
+                  </div>
+                  <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
+              </div>
+          </div>
+      </div>
+    </a>`
+
+    allproducts.push(card)
+
+
+                
+            })
+            let data=allproducts.join("")
+            if(allproducts.length>=1){
+               document.getElementById("card_parent").innerHTML=data;
+            }else{
+
+                document.getElementById("card_parent").innerHTML="No Product Found";
+            }
+        }
+            
+        )
+        }
+    </script>
+    
+    <!--     to  filter the products ---------------------------------------------------------> 
     <script>
         
     
@@ -573,16 +607,16 @@ html{
       function updateProductList(){
         category=Array.from(document.querySelectorAll("input[name=category]:checked")).map((data)=>data.value)
         category=category.join(",")
-        console.log(category);
+
         let allproducts=[]
 
         fetch(`/productsfilter?category=${category}`)
         .then(response=>response.json())
         .then(res=>{
             console.log(res);
-            res.forEach((x)=>{
+            res.forEach((product)=>{
 
-                const card=`<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${x._id}')" style="cursor: pointer;">
+                const card=`<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
           <div class="like-icon-div">
               <label for="card-1-like" class="like-icon-div-child">
                   <input style="    display: none;" type="checkbox" id="card-1-like">
@@ -591,21 +625,21 @@ html{
               </label>
           </div>
           <div class="gow-img-div img-div">
-                            <img style="width: 195px;" src="${x.Image[0]}" alt="god-of-war-figurine">
+                            <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
 
           </div>
       
           <div class="text-container">
             
            
-              <h2 class="item-name">${x.Name}</h2>
+              <h2 class="item-name">${product.Name}</h2>
              
               <div class="pricing-and-cart">
                   <div class="pricing">
-                      <p class="previous-price">₹${x.Price}/-</p>
-                      <p class="current-price">₹${x.Price}/-</p>
+                      <p class="previous-price">₹${product.Price}/-</p>
+                      <p class="current-price">₹${product.Price}/-</p>
                   </div>
-                  <a href="/cart" style="margin-top: 30px ;"><i class="fas fa-shopping-cart"></i></a>
+                  <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
               </div>
           </div>
       </div>
