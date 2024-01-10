@@ -126,7 +126,6 @@ const removeProduct = async (req, res) => {
 
     const removedProduct = cartProduct.Items[ProductIndex];
     const removedProductQuantity = removedProduct.Quantity;
-    console.log(removedProductQuantity,"prdouct quantity")
     const removedProductPrice = removedProduct.Products.Price;
     
     const removedProductTotalPrice=removedProductPrice*removedProductQuantity

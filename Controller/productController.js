@@ -36,8 +36,16 @@ const LoadproductDetailVerified = async (req, res) => {
 //product listing
 const ProductListing = async (req, res) => {
   try {
-    const products = await Product.find({ isdeleted: false });
-    res.render("../views/user/ProductListing", { products });
+    const categoryData = await category.find({ Status: true });
+       //creating pagination
+       const pageNum = req.query.page;
+       const perPage = 8;
+       const [dataCount, products] = await Promise.all([
+         Product.find({ isdeleted: false }).count(),
+         Product.find({ isdeleted: false }).skip((pageNum - 1) * perPage).limit(perPage)
+       ]);
+       let i = (pageNum - 1) * perPage;
+       res.render("../views/user/ProductListing", {products,i,dataCount,categoryData});
   } catch (error) {
     console.log(error.message);
   }
@@ -47,12 +55,18 @@ const ProductListing = async (req, res) => {
 
 const ProductListingverified = async (req, res) => {
   try {
-    const products = await Product.find({ isdeleted: false });
     const categoryData = await category.find({ Status: true });
-    res.render("../views/user/ProductListingVerified", {
-      products,
-      categoryData,
-    });
+       //creating pagination
+       const pageNum = req.query.page;
+       const perPage = 8;
+       const [dataCount, products] = await Promise.all([
+         Product.find({ isdeleted: false }).count(),
+         Product.find({ isdeleted: false }).skip((pageNum - 1) * perPage).limit(perPage)
+       ]);
+       let i = (pageNum - 1) * perPage;
+       res.render("../views/user/ProductListingVerified", {products,i,dataCount,categoryData});
+     
+   
   } catch (error) {
     console.log(error.message);
   }
@@ -146,7 +160,6 @@ const UpdateProduct = async (req, res) => {
     let Image = [];
     if (req.files) {
       if (req.files["main-image"] && req.files["main-image"][0]) {
-        // Image.push("/product-images/" + req.files["main-image"][0].filename);
         await Product.updateOne(
           { _id: new ObjectId(id) },
           {
@@ -222,7 +235,7 @@ const ProductFilter=async(req,res)=>{
     if(categoryValue.length>0){
       filterQuery.Category={$in:categoryValue}
     }
-    const productdata=await Products.find(filterQuery)
+    const productdata=await Products.find(filterQuery).limit(8);
 
     
     res.json(productdata)
@@ -237,15 +250,15 @@ const ProductFilter=async(req,res)=>{
 
 const searchProduct=async(req,res)=>{
   try {
-    
     const query = req.body.query;
-
     const regex = new RegExp( query, "i");
 
     const searchedProduct = await Products.find({
+
       $or: [{ Name: { $regex: regex } }],
       isdeleted: false,
-    });
+
+    }).limit(8);
 
     res.json(searchedProduct)
 

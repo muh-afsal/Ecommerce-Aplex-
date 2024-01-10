@@ -94,6 +94,8 @@ function updatequantity(productId, stock, change) {
 
 function removeProduct(productId,rowId,rowtoremove) {    
    
+    alert(rowId)
+    alert(rowtoremove)
         fetch(`/removeproduct/${productId}/${rowId}/${rowtoremove}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }

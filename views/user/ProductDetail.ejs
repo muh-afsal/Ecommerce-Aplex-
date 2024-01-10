@@ -297,17 +297,9 @@ img {
             <div class="product-imgs">
                 <div class="img-display">
                     <div class="img-showcase" id="img-container">
-                        <!-- <img src="https://fadzrinmadu.github.io/hosted-assets/product-detail-page-design-with-image-slider-html-css-and-javascript/shoe_1.jpg"
-                            alt="shoe image"> -->
+                       
                             <img src="<%=products.Image[0]%>" alt="" id="displayIng">
-                        <!-- <img src="<%=products.Image[2]%>"
-                            alt="shoe image">
-                        <img src="<%=products.Image[3]%>"
-                            alt="shoe image">
-                        <img src="<%=products.Image[4]%>"
-                            alt="shoe image">
-                        <img src="<%=products.Image[4]%>"
-                            alt="shoe image"> -->
+                       
                     </div>
                 </div>
                 <div class="img-select" id="image-sel">
@@ -337,13 +329,11 @@ img {
                     </div>
                 </div>
             </div>
-            <!-- card right -->
             <div class="product-content">
                 <h2 class="product-title"><%=products.Name%></h2>
                 <h4 style="    font-weight: 600; color: #6d6d6d;"><%=products.Category%> Series</h4>
 
                 <div class="product-price">
-                    <!-- <p class="last-price">Old Price: <span>$257.00</span></p> -->
                     <p class="new-price"> <span>₹<%=products.Price%>/-</span></p>
                 </div>
                 
@@ -355,7 +345,7 @@ img {
                 </div>
                 
                 <div class="purchase-info" style="display: flex;">
-                    <input type="number" min="0" value="1" class="increment-input">
+                    
                     <a href="/login"><button type="submit " value="submit" class="btn" >Add to Whishlist</button></a>
                     <a href="/login"><button type="submit " value="submit" class="btn" style="margin-left: 10px;" >Add to Cart</button></a>
                    
@@ -365,8 +355,7 @@ img {
         </div>
     </div>
     <%-include("./partials/footer.ejs")%>
-
-    <!-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> -->
+      <!-- script for image zoom ---------------->
         <script>
             var options = {
             width: 400,

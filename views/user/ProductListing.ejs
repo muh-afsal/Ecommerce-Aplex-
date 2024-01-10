@@ -5,9 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product Listing</title>
 </head>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/user/login.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<script src="/scripts/cart.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
 
 <style>
       @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;700;800;900&display=swap');
@@ -415,14 +420,21 @@ html{
     margin-left: 5px;
 }
 .filter-div{
-    height: 62vh;
-    width: 17vw;
-    background-color: crimson;
+    height: auto;
+    width: 268px;
+    background-color: #eaf5ff;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     position: absolute;
     z-index: 10;
-    margin-top: -48px;
+    margin-top: -27px;
+    padding: 25px;
+    padding-top: 33px;
+    font-size: larger;
+    border-radius: 14px;
+    /* margin-left: 17px; */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 28px 5px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+
 }
 
 
@@ -433,9 +445,9 @@ html{
 
 }
 .main-contaner{
-    /* background-color: aquamarine; */
     height: auto;
     display: flex;
+    flex-direction: column;
 }
 /* Add this to your existing CSS */
 
@@ -445,8 +457,9 @@ html{
 }
 
 #filterButton {
-    margin-left: 10px; /* Adjust the margin as needed */
+    margin-left: 10px; 
 }
+
 
 
 .fa-heart{
@@ -464,13 +477,11 @@ html{
 
 
     <div class=" search-nav" style="    margin-bottom: 23px;margin-top: 15px;">
-        <button id="filterButton" style="width: 101px; border: 0; border-radius: 5px; display: none;">Filter</button>
-        <!-- <div>
-            <img id="aplexlogosearch" src="/assets/aplexlogosearch.png" alt="">
-        </div> -->
+        <button id="filterButton" style="width: 101px; border: 0; border-radius: 5px;">Filter</button>
+        
         <div class="search-bars" >
             
-            <input type="text" class="form-control rounded-pill shadow-none" placeholder="Search...">
+            <input type="text" class="form-control rounded-pill shadow-none" oninput="searchProduct(event)" placeholder="Search...">
             <div class="search-icon" style="color: #4461F2;" >
                 <i class="fas fa-search"  ></i>
             </div>
@@ -478,15 +489,23 @@ html{
     </div>
     <div class="main-contaner">
         <div class="filter-div">
-
-            
+            <h6 style="font-weight: 600;">Select Category for Filter</h6>
+            <%categoryData.forEach((data)=>{%>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="<%=data.name%>" name="category">
+                <label class="form-check-label" for="flexCheckDefault">
+                  <%=data.name%>
+                </label>
+              </div>
+              <%})%>
+              
         </div>
         <!-- <div class="card-divv"> -->
-    <div class="container-fluid card-container">
+    <div class="container-fluid card-container" id="card_parent">
         <%products.forEach((data,index)=>{%>
             <!-- <a href="/ProductDetail?id=<%=data._id%>" style="text-decoration: none;"> -->
-      <div class="card-1 card-div">
-          <div class="like-icon-div" onclick="goDetail('/ProductDetail?id=<%=data._id%>')" style="cursor: pointer;">
+      <div class="card-1 card-div" onclick="goDetail('/ProductDetail?id=<%=data._id%>')" style="cursor: pointer;">
+          <div class="like-icon-div" >
               <label for="card-1-like" class="like-icon-div-child">
                   <input style="    display: none;" type="checkbox" id="card-1-like">
                   <i class="far fa-heart heart-empty"></i>
@@ -516,29 +535,201 @@ html{
       <%})%>
       
     </div>
+    <div style="width: 100%; height: auto;display: flex;justify-content: center;">
+        <div class="pagination_div">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <% for(i=1; i < (dataCount/3)+1; i++) {%>
+                    <li class="page-item"><a class="page-link" href="/productlisting?page=<%=i%>"><%=i%></a></li>
+                    <%} %>
+                  <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+        </div>
+    </div>
         
     </div>
    
     <%-include("./partials/footer.ejs")%>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+
     <script>
+        //   fetch to  search the products --------------------------------------------------------->
+            function searchProduct(e){
+                   const query=e.target.value
+                   let allproducts=[]
+                   const searchproduct = fetch('/searchProduct', {
+                                    method: "POST",
+                                    headers: { "Content-Type": "application/json" },
+                                    body: JSON.stringify({query })
+                                })
+                                    .then(response => response.json())
+                                    .then(res=>{
+               
+                res.forEach((product)=>{
     
-    document.addEventListener('DOMContentLoaded', function () {
-        const filterButton = document.getElementById('filterButton');
-        const filterDiv = document.querySelector('.filter-div');
+                    const card=`<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
+              <div class="like-icon-div">
+                  <label for="card-1-like" class="like-icon-div-child">
+                      <input style="    display: none;" type="checkbox" id="card-1-like">
+                      <i class="far fa-heart heart-empty"></i>
+                      <i class="fas fa-heart heart-fill"></i>
+                  </label>
+              </div>
+              <div class="gow-img-div img-div">
+                                <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
     
-        filterButton.addEventListener('click', function () {
-            filterDiv.classList.toggle('show-filter');
+              </div>
+          
+              <div class="text-container">
+                
+               
+                  <h2 class="item-name">${product.Name}</h2>
+                 
+                  <div class="pricing-and-cart">
+                      <div class="pricing">
+                          <p class="previous-price">₹${product.Price}/-</p>
+                          <p class="current-price">₹${product.Price}/-</p>
+                      </div>
+                      <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
+                  </div>
+              </div>
+          </div>
+        </a>`
+    
+        allproducts.push(card)
+    
+    
+                    
+                })
+                let data=allproducts.join("")
+                if(allproducts.length>=1){
+                   document.getElementById("card_parent").innerHTML=data;
+                }else{
+    
+                    document.getElementById("card_parent").innerHTML="Product Not Found";
+                }
+            }
+                
+            )
+            }
+        </script>
+
+
+
+
+
+    <!--     to  filter the products ---------------------------------------------------------> 
+    <script>
+        
+    
+        document.addEventListener('DOMContentLoaded', function () {
+            const filterButton = document.getElementById('filterButton');
+            const filterDiv = document.querySelector('.filter-div');
+        
+            filterButton.addEventListener('click', function () {
+                filterDiv.classList.toggle('show-filter');
+            });
         });
-    });
-    
+        
+        </script>
+        <script>
+      let category=[]
+          const categoriescheckbox=document.querySelectorAll("input[name=category]")
             
-    function goDetail(link){
-            window.location.href=link
-        }
-    </script>
+          categoriescheckbox.forEach((input)=>{
+            {input.addEventListener('change',updateProductList)}
+          })
+
+    
+    
+    
+          function updateProductList() {
+  category = Array.from(document.querySelectorAll("input[name=category]:checked")).map((data) => data.value);
+  category = category.join(",");
+
+
+  let allproducts = [];
+
+  fetch(`/productsfilter?category=${category}`)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(res => {
+      
+      res.forEach((product) => {
+        
+        const card=`<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
+              <div class="like-icon-div">
+                  <label for="card-1-like" class="like-icon-div-child">
+                      <input style="    display: none;" type="checkbox" id="card-1-like">
+                      <i class="far fa-heart heart-empty"></i>
+                      <i class="fas fa-heart heart-fill"></i>
+                  </label>
+              </div>
+              <div class="gow-img-div img-div">
+                                <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
+    
+              </div>
+          
+              <div class="text-container">
+                
+               
+                  <h2 class="item-name">${product.Name}</h2>
+                 
+                  <div class="pricing-and-cart">
+                      <div class="pricing">
+                          <p class="previous-price">₹${product.Price}/-</p>
+                          <p class="current-price">₹${product.Price}/-</p>
+                      </div>
+                      <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
+                  </div>
+              </div>
+          </div>
+        </a>`
+    
+        allproducts.push(card)
+    
+    
+                    
+      });
+      let data = allproducts.join("");
+      if (allproducts.length >= 1) {
+        document.getElementById("card_parent").innerHTML = data;
+      } else {
+        document.getElementById("card_parent").innerHTML = "Product Not Found";
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+}
+    
+         
+    
+    
+              
+        function goDetail(link){
+                window.location.href=link
+            }
+        </script>
 </body>
 </html>
