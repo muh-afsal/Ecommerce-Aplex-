@@ -19,7 +19,7 @@ const generateOrderNumber = () => {
 };
 
 
-
+// Load orders funciton----------------------------------->
 const LoadOrders = async (req, res) => {
   const orderData = await Orders.find().sort({ OrderDate: -1 });;
 
@@ -29,6 +29,8 @@ const LoadOrders = async (req, res) => {
     console.log(error);
   }
 };
+
+// Load order details funciton----------------------------------->
 
 const Orderdetails = async (req, res) => {
   try {
@@ -42,9 +44,12 @@ const Orderdetails = async (req, res) => {
     res.render("../views/admin/AdminOrderDetails", { orderData });
   } catch (error) {
     console.error(error);
-    // res.render('user/404Page')
+    
   }
 };
+
+
+// update order status  funciton----------------------------------->
 
 const UpdateOrderStatus = async (req, res) => {
   
@@ -78,6 +83,8 @@ const UpdateOrderStatus = async (req, res) => {
   }
 };
 
+// update payment status  funciton----------------------------------->
+
 const UpdatePaymentStatus = async (req, res) => {
   
   try {
@@ -100,6 +107,7 @@ const UpdatePaymentStatus = async (req, res) => {
 };
 
 
+// Load return request--------------------------->
 const LoadReturnreq=async(req,res)=>{
   try {
      const userData = await User.findOne({ email: req.session.email },{});
@@ -111,6 +119,7 @@ const LoadReturnreq=async(req,res)=>{
   }
 }
 
+// accept return request--------------------------->
 
 const acceptReturnRequest=async(req,res)=>{
   try {
@@ -141,6 +150,9 @@ const acceptReturnRequest=async(req,res)=>{
     console.log(error);
   }
 }
+
+// reject return request--------------------------->
+
 const rejectReturnRequest=async(req,res)=>{
   try {
     const { orderId } = req.params;

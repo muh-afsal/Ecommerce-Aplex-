@@ -23,7 +23,7 @@ const LoadproductDetailVerified = async (req, res) => {
   try {
     const id = req.query.id;
     const alreadyexist = await cart.findOne({ "Items.Products": id });
-    const products = await Product.findById(id,{isdeleted:false});
+    const products = await Product.findById(id, { isdeleted: false });
     res.render("../views/user/ProductDetailesVerified", {
       products: products,
       alreadyexist: alreadyexist,
@@ -37,15 +37,22 @@ const LoadproductDetailVerified = async (req, res) => {
 const ProductListing = async (req, res) => {
   try {
     const categoryData = await category.find({ Status: true });
-       //creating pagination
-       const pageNum = req.query.page;
-       const perPage = 8;
-       const [dataCount, products] = await Promise.all([
-         Product.find({ isdeleted: false }).count(),
-         Product.find({ isdeleted: false }).skip((pageNum - 1) * perPage).limit(perPage)
-       ]);
-       let i = (pageNum - 1) * perPage;
-       res.render("../views/user/ProductListing", {products,i,dataCount,categoryData});
+    //creating pagination
+    const pageNum = req.query.page;
+    const perPage = 8;
+    const [dataCount, products] = await Promise.all([
+      Product.find({ isdeleted: false }).count(),
+      Product.find({ isdeleted: false })
+        .skip((pageNum - 1) * perPage)
+        .limit(perPage),
+    ]);
+    let i = (pageNum - 1) * perPage;
+    res.render("../views/user/ProductListing", {
+      products,
+      i,
+      dataCount,
+      categoryData,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -56,17 +63,22 @@ const ProductListing = async (req, res) => {
 const ProductListingverified = async (req, res) => {
   try {
     const categoryData = await category.find({ Status: true });
-       //creating pagination
-       const pageNum = req.query.page;
-       const perPage = 8;
-       const [dataCount, products] = await Promise.all([
-         Product.find({ isdeleted: false }).count(),
-         Product.find({ isdeleted: false }).skip((pageNum - 1) * perPage).limit(perPage)
-       ]);
-       let i = (pageNum - 1) * perPage;
-       res.render("../views/user/ProductListingVerified", {products,i,dataCount,categoryData});
-     
-   
+    //creating pagination
+    const pageNum = req.query.page;
+    const perPage = 8;
+    const [dataCount, products] = await Promise.all([
+      Product.find({ isdeleted: false }).count(),
+      Product.find({ isdeleted: false })
+        .skip((pageNum - 1) * perPage)
+        .limit(perPage),
+    ]);
+    let i = (pageNum - 1) * perPage;
+    res.render("../views/user/ProductListingVerified", {
+      products,
+      i,
+      dataCount,
+      categoryData,
+    });
   } catch (error) {
     console.log(error.message);
   }
@@ -198,10 +210,8 @@ const UpdateProduct = async (req, res) => {
       },
     });
     if (Products) {
-   
       res.redirect("/admin/manageProduct");
     } else {
-     
       res.render("../views/admin/EditProduct", {
         message: "Update failed",
         productdata,
@@ -209,7 +219,7 @@ const UpdateProduct = async (req, res) => {
     }
   } catch (error) {
     console.log(error.message);
-   
+
     res.send("Error in edit product", error);
   }
 };
@@ -226,47 +236,38 @@ const softDeleteProduct = async (req, res) => {
   }
 };
 
-
-
-const ProductFilter=async(req,res)=>{
+const ProductFilter = async (req, res) => {
   try {
-    const categoryValue=req.query.category?req.query.category.split(","):[]
-    let filterQuery={}
-    if(categoryValue.length>0){
-      filterQuery.Category={$in:categoryValue}
+    const categoryValue = req.query.category
+      ? req.query.category.split(",")
+      : [];
+    let filterQuery = {};
+    if (categoryValue.length > 0) {
+      filterQuery.Category = { $in: categoryValue };
     }
-    const productdata=await Products.find(filterQuery).limit(8);
+    const productdata = await Products.find(filterQuery).limit(8);
 
-    
-    res.json(productdata)
-    
-    
+    res.json(productdata);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
-
-
-const searchProduct=async(req,res)=>{
+const searchProduct = async (req, res) => {
   try {
     const query = req.body.query;
-    const regex = new RegExp( query, "i");
+    const regex = new RegExp(query, "i");
 
     const searchedProduct = await Products.find({
-
       $or: [{ Name: { $regex: regex } }],
       isdeleted: false,
-
     }).limit(8);
 
-    res.json(searchedProduct)
-
-
+    res.json(searchedProduct);
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 module.exports = {
   LoadproductDetail,
@@ -280,5 +281,5 @@ module.exports = {
   editProductLoad,
   UpdateProduct,
   ProductFilter,
-  searchProduct
+  searchProduct,
 };

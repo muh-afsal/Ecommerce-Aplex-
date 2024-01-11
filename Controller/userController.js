@@ -220,7 +220,6 @@ const LoadeditProfile = async (req, res) => {
   }
 };
 
-
 // Edit user profile-----------------------------------------------------------------
 const editUserProfile = async (req, res) => {
   try {
@@ -268,7 +267,6 @@ const LoadAdress = async (req, res) => {
     console.log(error);
   }
 };
-
 
 // adding address-------------------------------------------------------------------------
 const AddAdress = async (req, res) => {
@@ -344,7 +342,6 @@ const editAdress = async (req, res) => {
   }
 };
 
-
 // Delete address -------------------------------------------------------------------------------
 const DeleteuserAddress = async (req, res) => {
   try {
@@ -366,19 +363,15 @@ const DeleteuserAddress = async (req, res) => {
   }
 };
 
-
-
-
 // Load wallet --------------------------------------------
-const LoadWallet=async(req,res)=>{
+const LoadWallet = async (req, res) => {
   try {
     const userData = await User.findOne({ email: req.session.email });
-    res.render("../views/user/wallet.ejs",{userData})
+    res.render("../views/user/wallet.ejs", { userData });
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-}
-
+};
 
 //LogoutUser
 
@@ -409,5 +402,5 @@ module.exports = {
   AddAdress,
   editAdress,
   DeleteuserAddress,
-  LoadWallet
+  LoadWallet,
 };

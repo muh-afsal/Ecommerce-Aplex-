@@ -15,7 +15,7 @@ const loadAdminLogin = async (req, res) => {
       if (req.session && req.session.logged) {
         const admin = await Admin.findOne({ email: req.session.email });
         if (admin) {
-          res.redirect("/admin"); // Assuming you have a home route for admin
+          res.redirect("/admin"); 
         }
       } else {
         res.render("../views/admin/Adminlogin");

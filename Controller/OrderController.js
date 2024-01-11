@@ -11,7 +11,6 @@ const Products = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
 const mongoose = require("mongoose");
 
-
 // Generate a random string for orderNumber-----------------------------------------------
 const generateOrderNumber = () => {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -23,7 +22,6 @@ const generateOrderNumber = () => {
   return orderNumber;
 };
 
-
 // Load order details-------------------------------------------------------------------
 const LoadOrderDetails = async (req, res) => {
   try {
@@ -32,7 +30,7 @@ const LoadOrderDetails = async (req, res) => {
     const orderData = await Order.findOne({ _id: orderId }).populate(
       "Items.productId"
     );
-    if (orderData) {  
+    if (orderData) {
       res.render("../views/user/orderDetails", { orderData });
     } else {
       res.send("404");
@@ -48,7 +46,9 @@ const LoadOrders = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
     const userId = user._id;
-    const orderData = await Order.find({ UserID: userId}).sort({ OrderDate: -1 });
+    const orderData = await Order.find({ UserID: userId }).sort({
+      OrderDate: -1,
+    });
     res.render("../views/user/orders", { orderData });
   } catch (error) {
     console.log(error);
@@ -64,7 +64,7 @@ const cancelOrder = async (req, res) => {
     const orderObjectId = new mongoose.Types.ObjectId(orderId);
     const orderData = await Order.findOneAndUpdate(
       { _id: orderObjectId },
-      { $set: { Status: "Cancelled",paymentStatus:"Returned" } },
+      { $set: { Status: "Cancelled", paymentStatus: "Returned" } },
       { new: true }
     );
 
@@ -75,19 +75,18 @@ const cancelOrder = async (req, res) => {
 
       await user.save();
 
-        const transactionId = generateOrderNumber(); 
-        const activityDetails = {
-          TransactionType: "credit",
-          message: "Order cancelled",
-          Date: new Date(),
-          TransactionID: transactionId,
-        };
-  
-        user.Activity.push(activityDetails);
-  
-        await user.save();
-    }
+      const transactionId = generateOrderNumber();
+      const activityDetails = {
+        TransactionType: "credit",
+        message: "Order cancelled",
+        Date: new Date(),
+        TransactionID: transactionId,
+      };
 
+      user.Activity.push(activityDetails);
+
+      await user.save();
+    }
 
     res.redirect(`/orderDetails?id=${orderObjectId}`);
   } catch (error) {
@@ -99,15 +98,14 @@ const cancelOrder = async (req, res) => {
 
 const returnOrder = async (req, res) => {
   try {
-    
     const orderId = req.params.id;
-    const reason=req.body.returnReason;
+    const reason = req.body.returnReason;
     const user = await User.findOne({ email: req.session.email });
 
     const orderObjectId = new mongoose.Types.ObjectId(orderId);
     const orderData = await Order.findOneAndUpdate(
       { _id: orderObjectId },
-      { $set: { Status: "Request Send for Return" ,returnRequestSend:true} },
+      { $set: { Status: "Request Send for Return", returnRequestSend: true } },
       { new: true }
     );
 
@@ -121,6 +119,5 @@ module.exports = {
   LoadOrderDetails,
   LoadOrders,
   cancelOrder,
-  returnOrder
+  returnOrder,
 };
-
