@@ -501,7 +501,7 @@
                         <div class="like-icon-div">
                             <label for="card-1-like" class="like-icon-div-child">
                                 <input style="    display: none;" type="checkbox" id="card-1-like">
-                                <a href="" onclick="addtowishlist('<%=data._id%>')" ><i  class="far fa-heart heart-empty"></i></a>
+                                <button  onclick="addtowishlist(event,'<%=data._id%>')" style="border: none;background: transparent;"><i  class="far fa-heart heart-empty"></i></button>
                             </label>
                         </div>
                         <div class="gow-img-div img-div">
@@ -565,8 +565,8 @@
             <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
             <!-- //   fetch to  search the products --------------------------------------------------------->
             <script>
-                function addtowishlist(productId) {
-                    // alert(productId)
+                function addtowishlist(event,productId) {
+                    event.stopPropagation();
                     const addtowishlist = fetch('/addtowishlist', {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },

@@ -47,7 +47,7 @@ function addToCart(e, productId) {
                       },
                       onClick: function(){} 
                     }).showToast();
-                  })();alert("Error");
+                  })();
             }
         })
 
@@ -86,7 +86,7 @@ function updatequantity(productId, stock, change) {
                 if (res.status) {
                     document.getElementById(`number_${productId}`).value = newQuantity;
                 } else {
-                    alert('Error updating quantity');
+                    console.log('Error updating quantity');
                 }
             });
     }
@@ -94,8 +94,6 @@ function updatequantity(productId, stock, change) {
 
 function removeProduct(productId,rowId,rowtoremove) {    
    
-    alert(rowId)
-    alert(rowtoremove)
         fetch(`/removeproduct/${productId}/${rowId}/${rowtoremove}`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' }

@@ -37,7 +37,7 @@
             margin-top: 31px;
         }
         #returntoshopbtn{
-            margin-left: 56%;
+            margin-left: 41%;
     margin-top: 18px;
         }
 
@@ -70,7 +70,7 @@
             width: 90%;
         }
         .cartemptyimg{
-            width: 57%;
+            width: 39%;
     margin-left: 26vw;
     margin-top: -2vh;
     margin-bottom: 29px;
@@ -168,13 +168,13 @@
                 margin-left: 270px;
             }
             .cartemptyimg {
-                width: 57%;
+                width: 39%;
     margin-left: 26vw;
     margin-top: -2vh;
     margin-bottom: 29px
             }
             #returntoshopbtn{
-                margin-left: 37%;
+                margin-left: 27%;
    
         }
         }
@@ -340,7 +340,7 @@
         <h2 style="text-align: center; font-weight:800 ; margin-top: 20px;">Wishlist</h2>
         <div class="container-fluid cart-container">
             <div class="cart-products-container">
-              
+                <%if(WishlistProducts.length>0){%>
 
                     <div class="cart-products-listing" style=" padding-top: 13px;">
                         <div class="table-container">
@@ -387,7 +387,12 @@
 
 
             </div>
+             <%}else{%>
 
+    <img src="/assets/cartempty.png"  class="cartemptyimg" alt=" cart-empty-image">
+    <button onclick="navigatetoproductlisting()" type="submit " value="submit" class="btn" id="returntoshopbtn">Return To Shop</button >
+    
+    <%}%>
 
         </div>
       
@@ -399,6 +404,18 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-oysqN7c65EkEMB9S0Ag3ZqRde01Jg/rfBTKKY8iPm9nZpPGwTRkcmO9aHTt8XIGL" crossorigin="anonymous"></script>
         
 <script>
+
+              window.addEventListener("load", () => {
+                    localStorage.setItem("wishlist", '<%-WishlistProducts.length%>')
+                })
+                
+
+            function navigatetoproductlisting() {
+                    window.location.href = "/productlistingverified";
+                }
+
+
+
     function addtowishlist(productId) {
     // alert(productId)
     fetch('/addtowishlist', {
@@ -419,6 +436,30 @@
         showToast("An error occurred", "#FF0000"); 
     });
 }
+
+function remove(productId,rowId) {
+                    const addtowishlist = fetch('/removeFromWishlist', {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ productId })
+                    })
+                        .then(response => response.json())
+                        .then(res => {
+                            if (res.success) {
+                                let currentCount=localStorage.getItem("wishlist")
+                                localStorage.setItem("wishlist",currentCount-1)
+                      
+                                if(localStorage.getItem("wishlist")<=0){
+                              window.location.reload()
+                             }
+                                document.getElementById(rowId).style.display = 'none';
+                                showToast(res.message, "#52b963"); 
+                            } else {
+                                showToast(res.message, "#FF0000"); 
+                            }
+
+                        })
+                }
 
 function showToast(message, background) {
     Toastify({

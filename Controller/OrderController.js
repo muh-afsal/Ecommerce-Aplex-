@@ -64,7 +64,7 @@ const cancelOrder = async (req, res) => {
     const orderObjectId = new mongoose.Types.ObjectId(orderId);
     const orderData = await Order.findOneAndUpdate(
       { _id: orderObjectId },
-      { $set: { Status: "Cancelled" } },
+      { $set: { Status: "Cancelled",paymentStatus:"Returned" } },
       { new: true }
     );
 

@@ -880,7 +880,7 @@
 
                                 })
 
-                        } else {
+                        } else if(selectAddressRadioValue && selectPaymentRadioValue==="Online") {
 
                             fetch('/generateRazorpay', {
                                 method: "POST",

@@ -7,6 +7,19 @@ const User = require("../Model/collections/userModel");
 const Products = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
 
+
+const generateOrderNumber = () => {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let orderNumber = "";
+  for (let i = 0; i < 8; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    orderNumber += characters.charAt(randomIndex);
+  }
+  return orderNumber;
+};
+
+
+
 const LoadOrders = async (req, res) => {
   const orderData = await Orders.find().sort({ OrderDate: -1 });;
 
@@ -101,9 +114,10 @@ const LoadReturnreq=async(req,res)=>{
 
 const acceptReturnRequest=async(req,res)=>{
   try {
-    const user = await User.findOne({ email: req.session.email });
     const { orderId } = req.params;
-    await Orders.findByIdAndUpdate(orderId, { returnRequestAccept: true,Status:"Returned" });
+    const orderData= await Orders.findByIdAndUpdate(orderId, { returnRequestAccept: true,Status:"Returned",paymentStatus:"Return"});
+    const userId=orderData.UserID
+    const user = await User.findOne({ _id:userId  });
 
     const totalAmount = orderData.TotalPrice;
 
