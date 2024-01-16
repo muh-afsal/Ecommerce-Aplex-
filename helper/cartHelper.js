@@ -6,6 +6,11 @@ const Products = require("../Model/collections/ProductModel");
 async function productAddtocart(productId, userId) {
   try {
     const cartExist = await Cart.findOne({ User: userId });
+    const Productsdata=await Products.findOne({ _id: productId});
+
+    if(Productsdata.isOffer){
+    }
+
 
     if (!cartExist) {
       const newCart = new Cart({
@@ -49,7 +54,15 @@ async function productAddtocart(productId, userId) {
 
    const discount=cartExist.DiscountAmount
    
-    const totals = await calculateTotalPrice(userId);
+   let totals=0
+   
+   if(Productsdata.isOffer){
+      totals=Productsdata.DiscountPrice
+  }else{
+     totals = await calculateTotalPrice(userId);
+  }
+
+
     const totalAmount = totals-discount;
       
 
@@ -74,8 +87,13 @@ function calculateTotalPrice(userId) {
 
       await Promise.all(
         cartData.Items.map(async (data) => {
+          let subtotal
           let productData = await Products.findOne({ _id: data.Products });
-          let subtotal = productData.Price * data.Quantity;
+          if(productData.isOffer){
+             subtotal = productData.DiscountPrice * data.Quantity;
+          }else{
+             subtotal = productData.Price * data.Quantity;
+          }
           Total += subtotal;
         })
       );

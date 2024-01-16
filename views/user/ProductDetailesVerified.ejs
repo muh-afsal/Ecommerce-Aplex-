@@ -288,6 +288,13 @@ img {
     height: 34px;
 
 }
+.previous-price {
+            font-size: 1rem;
+            font-weight: 800!important;
+            color: red;
+            text-decoration: line-through;
+            text-align: left;
+        }
 
 
 
@@ -340,7 +347,21 @@ img {
                 <h4 style="    font-weight: 600; color: #6d6d6d;"><%=products.Category%> Series</h4>
 
                 <div class="product-price">
-                    <p class="new-price"> <span>₹<%=products.Price%>/-</span></p>
+                    
+                        <%if(products.isOffer){%>
+                            <div style="display: flex;flex-direction: row;align-items: center;">
+                            <p > <span class="previous-price" >₹ <%=products.Price%> /-</span></p>
+                            <p > <span style="font-size: x-large; font-weight: 700;color: red;margin-left: 20px;" ><%=products.DiscountPercentage%>%OFF</span></p>
+                        </div>
+                        <%}%>
+                       
+                    <p class="new-price"> <span>₹
+                        <%if(products.isOffer){%>
+                            <%=products.DiscountPrice%>
+                        <%}else{%>
+                            <%=products.Price%>
+                        <%}%>
+                        /-</span></p>
                 </div>
                 
                 <div class="product-detail">

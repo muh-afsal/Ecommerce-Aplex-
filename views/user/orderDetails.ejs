@@ -235,6 +235,33 @@
             }
 
         }
+       #downloadbtn{
+            float: left; 
+            border-radius: 5px;
+            border: none;
+            background-color: #4461F2;
+            color: aliceblue;
+        }
+        #cancelbtn{
+            float: left; 
+            border-radius: 5px;
+            border: none;
+            background-color: #ff4343;
+            color: aliceblue;
+            text-decoration: none;
+            margin-right: -151vh;
+        }
+        #returnbtn{
+            float: left; 
+            border-radius: 5px;
+            border: none;
+            background-color: #b9b9b9;
+            color: rgb(51, 51, 51);
+            text-decoration: none;
+            margin-right: -151vh;
+            padding-left: 4px;
+            padding-right: 4px;
+        }
 
         @media (max-width:900px) {
             #ordersummary_address {
@@ -279,13 +306,17 @@
 
             <div class="orderplacedcontainer container-fluid">
                 <h3 style="font-weight: 700; margin-top: 20px;">Order Details</h3>
-                
-                <%if(orderData.Status!=="Cancelled" && orderData.Status!=="Return" && orderData.Status!=="Request Send for Return" ){%>
-                    <a href="" style="text-decoration: none;margin-right: -151vh;font-weight: 600; color: red;" data-toggle="modal" data-target="#cancelOrder">Cancel Order</a>
+                <div style="display: flex;justify-content: space-between;width: 80%;">
+                <button id="downloadbtn">Download Invoice</button>
+                <div style="width: 121px;">
+                <%if(orderData.Status!=="Cancelled" && orderData.Status!=="Return" && orderData.Status!=="Request Send for Return" && orderData.Status!=="Delivered" ){%>
+                    <a href="" id="cancelbtn"  data-toggle="modal" data-target="#cancelOrder">Cancel Order</a>
                 <%}%>
                 <%if(orderData.Status!=="Return" &&  orderData.Status!=="Cancelled" && orderData.Status!=="Request Send for Return"){%>
-                    <a href="" style="text-decoration: none;margin-right: -151vh;font-weight: 600; color: rgb(75, 75, 75);" data-toggle="modal" data-target="#returnReason">Return Order</a>
+                    <a href="" id="returnbtn"  data-toggle="modal" data-target="#returnReason">Return Order</a>
                 <%}%>
+            </div>
+            </div>
                 <!-- modal for confirmation of order cancel -->
                 <div class="modal fade" id="cancelOrder" tabindex="-1" role="dialog" aria-labelledby="cancelOrderLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -355,11 +386,12 @@
                                         <%=value.productId.Name%>
                                     </p>
                                 </div>
-                                <p id="product-price">₹<%=value.Price%>/-</p>
+                                
+                                <p id="product-price">₹<%=value.productId.DiscountPrice%>/-</p>
                                 <p>
                                     <%=value.quantity%>
                                 </p>
-                                <p>₹<%=value.Price*value.quantity%>/-</p>
+                                <p>₹<%=value.productId.DiscountPrice*value.quantity%>/-</p>
                             </div>
                             <%})%>
 

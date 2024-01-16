@@ -180,6 +180,7 @@
                                             <tr>
                                                 <th scope="col">No.</th>
                                                 <th scope="col">TRANSACTION ID</th>
+                                                <th scope="col">AMOUNT</th>
                                                 <th scope="col">DESCRIPTION </th>
                                                 <th scope="col">TRANSACTION TYPE</th>
                                                 <th scope="col">CANCELLED AT</th>
@@ -195,6 +196,9 @@
                                                     </th>
                                                     <td>
                                                         <%=value.TransactionID%>
+                                                    </td>
+                                                    <td>
+                                                        <%=value.amount%>
                                                     </td>
                                                     <td>
                                                         <%=value.message%>

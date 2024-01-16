@@ -23,6 +23,7 @@ const LoadCart = async (req, res) => {
       "Items.Products"
     );
 
+    
     await calculateTotalPrice(user._id).then((total) => {
       req.session.orderplaced = false;
       res.render("../views/user/cart", { cartProduct: cartProduct, total });

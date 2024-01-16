@@ -74,11 +74,9 @@ cron.schedule("* * * * * *", async () => {
   try {
     const currentDate = new Date();
 
-    //changing status expired coupons
     await Coupon.updateMany(
       {
         ExpirationDate: { $lt: currentDate },
-        IsActive: true,
       },
       { $set: { IsActive: false } }
     );

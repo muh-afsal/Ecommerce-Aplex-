@@ -66,9 +66,13 @@ const Schema = new mongoose.Schema({
       TransactionType: { type: String, enum: ["credit", "debit"] },
       message: { type: String },
       Date: { type: Date },
+      amount:{type:Number},
       TransactionID: { type: String },
     },
   ],
+  ReferalID:{
+    type:String
+  }
 });
 
 const Users = mongoose.model(process.env.USER_COLLECTION, Schema);

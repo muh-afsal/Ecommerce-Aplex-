@@ -544,7 +544,11 @@
                                         <%=value.Products.Name%>
                                     </p>
                                     <p style="margin-right: 10px;">
-                                        <%=value.Products.Price%>/-
+                                        <%if(value.Products.isOffer){%>
+                                            <%=value.Products.DiscountPrice%>/-
+                                            <%}else{%>
+                                                <%=value.Products.Price%>/-
+                                            <%}%>
                                     </p>
                                 </div>
                                 <%})%>
@@ -554,9 +558,10 @@
                             <p class="cart-prices" id="cartTotal-Subtotal"><%-subtotal%><span>/-</span></p>
                         </div>
                         <div class="total-values">
-                            <p class="total-texts">Discount Price :</p>
+                            <p class="total-texts">Coupon Discount:</p>
                             <p  class="cart-prices">-<span id="discountPrice"><%=cartData.DiscountAmount%></span>/-</p>
                         </div>
+                      
                         <div class="total-values">
                             <p class="total-texts" style="font-size: x-large; color: black ;">Total :</p>
                             <p style="font-size: x-large; font-weight: 600; " class="cart-prices"><span id="total">

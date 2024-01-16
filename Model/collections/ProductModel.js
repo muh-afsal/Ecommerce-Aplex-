@@ -11,16 +11,6 @@ const ProductSchema = new mongoose.Schema({
     
     Description: { type: String, required: true },
     
-    variant: [{
-    
-
-    model: {type: String, required: true },
-    memory: {type: String, required: true },
-    color: {type: String, required: true },
-    quantity: { type: Number, required: true }
-    
-    }],
-
     Image: {
         type:Array,
     },
@@ -35,24 +25,14 @@ const ProductSchema = new mongoose.Schema({
     
     Product_added: { type: Date },
     
-    Specification: [{
-    
-    model: {type: String },
-    
-    memory: {type: String },
-    
-    color: {type: String },
-    
-    Category: {type: String },
-    
-    
-    
-    }],
-    
     Price: { type: Number, required: true },
     
-    Rating: {type: Number },
-  
+    DiscountPrice: { type: Number},
+
+    DiscountPercentage: { type: Number},
+
+    isOffer:{type: Boolean},
+    Offertype:{type:String}
     
     }, { timestamps: true });
     

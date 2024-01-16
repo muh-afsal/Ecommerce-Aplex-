@@ -9,6 +9,7 @@ const productController = require("../Controller/productController");
 const categoryController = require("../Controller/categoryController");
 const orderController = require("../Controller/adminOrdersController");
 const couponController = require("../Controller/couponController");
+const OfferController = require("../Controller/OffersController");
 
 const adminAuth = require("../auth/adminAuth");
 
@@ -46,5 +47,18 @@ router.post("/editCoupon",checkAdminAuth, couponController.editCoupon);
 router.get("/returndetails",checkAdminAuth, orderController.LoadReturnreq);
 router.post("/acceptReturnRequest/:orderId",checkAdminAuth, orderController.acceptReturnRequest);
 router.post("/rejectReturnRequest/:orderId",checkAdminAuth, orderController.rejectReturnRequest);
+router.get("/categoryOffers",checkAdminAuth, OfferController.LoadManageCategoryOffers);
+router.get("/productOffers",checkAdminAuth, OfferController.LoadManageProductOffers);
+router.get("/referalOffers",checkAdminAuth, OfferController.LoadManageReferalOffers);
+router.get("/disableReferalOffers",checkAdminAuth, OfferController.DisableReferalOffers);
+router.get("/enableReferalOffers",checkAdminAuth, OfferController.EnableReferalOffers);
+router.post("/editReferal",checkAdminAuth, OfferController.EditReferal);
+router.post("/addcategoryOffer",checkAdminAuth, OfferController.AddCategoryOffer);
+router.post("/editcategoryoffer",checkAdminAuth, OfferController.EditCategoryOffer);
+router.post("/deletecategoryOffer/:id",checkAdminAuth, OfferController.DeleteCategoryOffer);
+router.post("/addproductoffer",checkAdminAuth, OfferController.AddProductOffer);
+router.post("/deleteproductOffer/:id",checkAdminAuth, OfferController.DeleteProductOffer);
+router.post("/editproductoffer",checkAdminAuth, OfferController.EditProductsOffer);
+
 
 module.exports = router;

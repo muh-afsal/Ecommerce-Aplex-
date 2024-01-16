@@ -6,11 +6,28 @@ const { ObjectId } = require("mongodb");
 const { sentOTP } = require("./OTPcontroller");
 const Product = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
+const ReferalData = require("../Model/collections/referalOfferModel");
 
 const multer = require("multer");
 const storage = require("../auth/profilepicUpload");
 
 const upload = multer({ storage: storage });
+
+
+
+
+//generating coupon id --------------->
+const generateOrderNumber = () => {
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let orderNumber = "";
+  for (let i = 0; i < 10; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    orderNumber += characters.charAt(randomIndex);
+  }
+  return orderNumber;
+};
+
+
 
 //securing password-------------------------------------------------------------------------------------
 const securePassword = async (password) => {
@@ -37,6 +54,9 @@ const landingload = async (req, res) => {
 
 const loadSignup = async (req, res) => {
   try {
+    const RferalID=req.query.referalid
+    req.session.referalID = RferalID; 
+  
     res.render("../views/user/signup");
   } catch (error) {
     console.log(error.message);
@@ -51,6 +71,7 @@ const signupUser = async (req, res) => {
       email: req.body.email.toLowerCase(),
       phone: req.body.phone,
       password: await securePassword(req.body.password),
+      
     };
 
     const emailexist = await User.findOne({ email: userinfo.email });
@@ -156,6 +177,8 @@ const loadHome = async (req, res) => {
     if (req.session.logged) {
       const products = await Product.find({}).limit(8);
 
+      
+
       res.render("../views/user/home", { products });
     } else {
       res.redirect("/");
@@ -173,12 +196,26 @@ const otpverify = async (req, res) => {
     if (Date.now() > otp.ExpireAt) {
       await OTP.deleteOne({ email: data.email });
     } else {
+      const referalID=generateOrderNumber()
       const hashed = otp.otp;
       const code =
         req.body.otp1 + req.body.otp2 + req.body.otp3 + req.body.otp4;
       req.session.email = data.email;
 
       if (hashed == code) {
+      
+        if(req.session.referalID){
+          const referalData=await ReferalData.findOne()
+          if(referalData.Status===true){
+            const BonusPrice=referalData.BonusPrice
+            req.session.bonusPrice = BonusPrice; 
+          }
+        }else{
+          req.session.bonusPrice = 0;
+        }
+        
+
+
         const newUser = new User({
           username: data.username,
           email: data.email,
@@ -186,6 +223,8 @@ const otpverify = async (req, res) => {
           password: data.password,
           profileImage: "usericons.png",
           date: Date.now(),
+          ReferalID:referalID,
+          walletBalance:req.session.bonusPrice,
         });
         await newUser.save();
         req.session.logged = true;

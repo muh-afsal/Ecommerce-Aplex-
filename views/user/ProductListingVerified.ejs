@@ -498,8 +498,17 @@
                     <!-- <a href="/ProductDetailverified?id=<%=data._id%>" style="text-decoration: none;"> -->
                     <div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=<%=data._id%>')"
                         style="cursor: pointer;">
-                        <div class="like-icon-div">
-                            <label for="card-1-like" class="like-icon-div-child">
+                        <div class="like-icon-div" style="display: flex;justify-content: space-between;">
+                            <div style="width: 60px; height:40px; z-index: 100;float: left;margin-bottom: -41px;display: flex; justify-content: center;align-items: center;">
+                          <%if(data.isOffer){%>
+                              <div style="display: flex; align-items: center;">
+                                  <img src="/assets/offerPersentage.png" alt="" style="width: 60px; background-position: center;background-size: cover;background-repeat: no-repeat;width: 88px;">
+                                  <h4 style="z-index: 1000;position: absolute;margin-top: 12px;margin-left: 23px;transform: rotate(-7deg);font-weight: 700;" ><%=data.DiscountPercentage%></h4 >
+                                </div>
+                          <%}%>
+                          
+                          </div>
+                           <label for="card-1-like" class="like-icon-div-child">
                                 <input style="    display: none;" type="checkbox" id="card-1-like">
                                 <button onclick="addtowishlist(event,'<%=data._id%>')"
                                     style="border: none;background: transparent;"><i
@@ -520,8 +529,24 @@
 
                             <div class="pricing-and-cart">
                                 <div class="pricing">
-                                    <p class="previous-price">₹<%=data.Price-1000%>/-</p>
-                                    <p class="current-price">₹<%=data.Price%>/-</p>
+                                    <%if(data.isOffer){%>
+                                        <p class="previous-price" id="previousp">₹
+                                            <%=data.Price%>
+                                                <%}else{%>
+
+                                                    <div
+                                                        style="    width: 115px;height: 42px;background-color: rgb(255, 255, 255);">
+                                                    </div>
+
+                                                    <%}%>
+                                                        <p class="current-price">₹
+                                                            <%if(data.isOffer){%>
+                                                                <%=data.DiscountPrice%>
+                                                                    <%}else{%>
+                                                                        <%=data.Price%>
+                                                                            <%}%>
+                                                                                /-
+                                                        </p>
                                 </div>
                                 <a onclick="addToCart(event,'<%=data._id%>')" id="cart_icon"><i
                                         class="fas fa-shopping-cart"></i></a>
@@ -637,32 +662,39 @@
                             res.forEach((product) => {
 
                                 const card = `<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
-          <div class="like-icon-div">
-              <label for="card-1-like" class="like-icon-div-child">
-                  <input style="    display: none;" type="checkbox" id="card-1-like">
-                  <i class="far fa-heart heart-empty"></i>
-              </label>
-          </div>
-          <div class="gow-img-div img-div">
-                            <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
+                                      <div class="like-icon-div" style="display: flex;justify-content: space-between;">
+                                          <div style="width: 60px; height:40px; z-index: 100;float: left;margin-bottom: -41px;display: flex; justify-content: center;align-items: center;">
+                                              ${product.isOffer
+                                                                          ? `<div style="display: flex; align-items: center;">
+                                                      <img src="/assets/offerPersentage.png" alt="" style="width: 60px; background-position: center;background-size: cover;background-repeat: no-repeat;width: 88px;">
+                                                      <h4 style="z-index: 1000;position: absolute;margin-top: 12px;margin-left: 23px;transform: rotate(-7deg);font-weight: 700;" >${product.DiscountPercentage}</h4 >
+                                                  </div>`
+                                                                          : ''
+                                                                      }
+                                          </div>
+                                          <label for="card-1-like" class="like-icon-div-child">
+                                              <input style="display: none;" type="checkbox" id="card-1-like">
+                                              <i class="far fa-heart heart-empty"></i>
+                                          </label>
+                                      </div>
+                                      <div class="gow-img-div img-div">
+                                          <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
+                                      </div>
+                                      <div class="text-container">
+                                          <h2 class="item-name">${product.Name}</h2>
+                                          <div class="pricing-and-cart">
+                                              <div class="pricing">
+                                                  ${product.isOffer
+                                                                          ? `<p class="previous-price" id="previousp">₹${product.Price}</p>`
+                                                                          : `<div style="width: 115px; height: 42px; background-color: rgb(255, 255, 255);"></div>`
+                                                                      }
+                                                  <p class="current-price">₹${product.isOffer ? product.DiscountPrice : product.Price}/-</p>
+                                              </div>
+                                              <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
+                                          </div>
+                                      </div>
+                                    </div>`;
 
-          </div>
-      
-          <div class="text-container">
-            
-           
-              <h2 class="item-name">${product.Name}</h2>
-             
-              <div class="pricing-and-cart">
-                  <div class="pricing">
-                      <p class="previous-price">₹${product.Price}/-</p>
-                      <p class="current-price">₹${product.Price}/-</p>
-                  </div>
-                  <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
-              </div>
-          </div>
-      </div>
-    </a>`
 
                                 allproducts.push(card)
 
@@ -719,32 +751,38 @@
                             res.forEach((product) => {
 
                                 const card = `<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
-          <div class="like-icon-div">
-              <label for="card-1-like" class="like-icon-div-child">
-                  <input style="    display: none;" type="checkbox" id="card-1-like">
-                  <i class="far fa-heart heart-empty"></i>
-              </label>
-          </div>
-          <div class="gow-img-div img-div">
-                            <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
-
-          </div>
-      
-          <div class="text-container">
-            
-           
-              <h2 class="item-name">${product.Name}</h2>
-             
-              <div class="pricing-and-cart">
-                  <div class="pricing">
-                      <p class="previous-price">₹${product.Price}/-</p>
-                      <p class="current-price">₹${product.Price}/-</p>
-                  </div>
-                  <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
-              </div>
-          </div>
-      </div>
-    </a>`
+                                      <div class="like-icon-div" style="display: flex;justify-content: space-between;">
+                                          <div style="width: 60px; height:40px; z-index: 100;float: left;margin-bottom: -41px;display: flex; justify-content: center;align-items: center;">
+                                              ${product.isOffer
+                                                                          ? `<div style="display: flex; align-items: center;">
+                                                      <img src="/assets/offerPersentage.png" alt="" style="width: 60px; background-position: center;background-size: cover;background-repeat: no-repeat;width: 88px;">
+                                                      <h4 style="z-index: 1000;position: absolute;margin-top: 12px;margin-left: 23px;transform: rotate(-7deg);font-weight: 700;" >${product.DiscountPercentage}</h4 >
+                                                  </div>`
+                                                                          : ''
+                                                                      }
+                                          </div>
+                                          <label for="card-1-like" class="like-icon-div-child">
+                                              <input style="display: none;" type="checkbox" id="card-1-like">
+                                              <i class="far fa-heart heart-empty"></i>
+                                          </label>
+                                      </div>
+                                      <div class="gow-img-div img-div">
+                                          <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
+                                      </div>
+                                      <div class="text-container">
+                                          <h2 class="item-name">${product.Name}</h2>
+                                          <div class="pricing-and-cart">
+                                              <div class="pricing">
+                                                  ${product.isOffer
+                                                                          ? `<p class="previous-price" id="previousp">₹${product.Price}</p>`
+                                                                          : `<div style="width: 115px; height: 42px; background-color: rgb(255, 255, 255);"></div>`
+                                                                      }
+                                                  <p class="current-price">₹${product.isOffer ? product.DiscountPrice : product.Price}/-</p>
+                                              </div>
+                                              <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
+                                          </div>
+                                      </div>
+                                    </div>`;
 
                                 allproducts.push(card)
                             })

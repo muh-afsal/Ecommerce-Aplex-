@@ -80,6 +80,7 @@ const cancelOrder = async (req, res) => {
         TransactionType: "credit",
         message: "Order cancelled",
         Date: new Date(),
+        amount:totalAmount,
         TransactionID: transactionId,
       };
 

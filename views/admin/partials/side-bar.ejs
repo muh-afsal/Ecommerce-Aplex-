@@ -16,6 +16,7 @@
             transition: 0.3s;
         }
 
+
         .l-navbar:hover {
             width: 250px;
         }
@@ -30,7 +31,8 @@
 
         /* Add this style for hovering color for links */
         .nav_link:hover {
-            background-color: #c7d5ff;
+            background-color: #4461F2;
+            color: white;
             margin-left: 10px;
 
         }
@@ -39,9 +41,33 @@
                 display: none;
                } 
         }
+        /* @media  (min-width:1000px){
+            .l-navbar{
+            width: 250px!important;
+        }
+        } */
+
+        .OffersLink{
+            text-decoration: none;
+            font-size: medium;
+            font-weight: 600;
+            color: rgb(59, 59, 59);
+            margin-left: 41px;
+
+        }
+        .d-inline-flex{
+            margin-bottom: -13px;
+
+        }
+        .collapse.show {
+            display: block !important;
+        }
+        .card-body{
+            border: none!important;
+        }
+
         </style>
 
-    <title>Document</title>
 </head>
 
 <body>
@@ -86,8 +112,22 @@
                             <i title="Settings" class='fa fa-solid fa-gear nav_icon'></i>
                             <span class="nav_name">Settings</span>
                         </a>
-                        <a href="/admin/adminlogout" class="nav_link">
-                            <i title="Logout" class='bx bx-log-out nav_icon'></i>
+                        <p class="d-inline-flex gap-1 ">
+                        <a  class="nav_link " data-bs-toggle="collapse" href="#Offerscollapse" role="button" aria-expanded="false" aria-controls="collapseExample">
+                            <i title="Offers" class='fa fa-solid fa-percent' style="font-size:x-large ;"></i>
+                            <span class="nav_name">Offers</span>
+                                </a>
+                              </p>
+                              <div class="collapse" id="Offerscollapse" style=" width: 13vw;">
+                                <div class="card card-body">
+                                  <a href="/admin/categoryOffers" class="OffersLink">->Category Offers</a>
+                                  <a href="/admin/referalOffers" class="OffersLink">->Referal Offers</a>
+                                  <a href="/admin/productOffers" class="OffersLink">->Product Offers</a>
+                                </div>
+                              </div>
+                         
+                        <a href="/admin/adminlogout" class="nav_link text-danger ">
+                            <i  title="Logout" class='bx bx-log-out nav_icon'></i>
                             <span class="nav_name">Logout</span> </a>
 
                     </div>
@@ -95,10 +135,7 @@
         </div>
 
     </div>
-    </nav>
-    </div>
-
-    </div>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -142,6 +179,10 @@
             // Your code to run since DOM is loaded and ready
         });
     </script>
+
+    
+    
+    
 </body>
 
 </html>

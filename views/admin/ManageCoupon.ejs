@@ -460,15 +460,15 @@
                         startDateVal.setHours(0, 0, 0, 0);
 
                         const endDateVal = new Date(endDate);
-                        startDateVal.setHours(0, 0, 0, 0);
+                        endDateVal.setHours(0, 0, 0, 0);
 
 
 
-                        //  if (startDateVal < todaysDate) {
-                        //      startError.textContent = "The Start date cannot be before the current Date!";
-                        //      event.preventDefault();
-                        //      return false;
-                        //  }
+                         if (startDateVal < todaysDate) {
+                             startError.textContent = "The Start date cannot be before the current Date!";
+                             event.preventDefault();
+                             return false;
+                         }
 
                         if (startDateVal > endDateVal) {
                             endError.textContent = "The expiration date cannot be before the starting date!";
@@ -617,7 +617,7 @@
                         startDateVal.setHours(0, 0, 0, 0);
 
                         const endDateVal = new Date(endDate);
-                        startDateVal.setHours(0, 0, 0, 0);
+                        endDateVal.setHours(0, 0, 0, 0);
 
 
 

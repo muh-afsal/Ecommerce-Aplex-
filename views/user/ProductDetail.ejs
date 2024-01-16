@@ -283,6 +283,13 @@ img {
     height: 34px;
 
 }
+.previous-price {
+            font-size: 1rem;
+            font-weight: 800!important;
+            color: red;
+            text-decoration: line-through;
+            text-align: left;
+        }
 
 
 
@@ -334,8 +341,19 @@ img {
                 <h4 style="    font-weight: 600; color: #6d6d6d;"><%=products.Category%> Series</h4>
 
                 <div class="product-price">
-                    <p class="new-price"> <span>₹<%=products.Price%>/-</span></p>
-                </div>
+                    
+                    <%if(products.isOffer){%>
+                        <p > <span class="previous-price" >₹ <%=products.Price%> /-</span></p>
+                    <%}%>
+                   
+                <p class="new-price"> <span>₹
+                    <%if(products.isOffer){%>
+                        <%=products.DiscountPrice%>
+                    <%}else{%>
+                        <%=products.Price%>
+                    <%}%>
+                    /-</span></p>
+            </div>
                 
                 <div class="product-detail">
                     <h3 style=" font-weight: 700; ">About this item: </h3>

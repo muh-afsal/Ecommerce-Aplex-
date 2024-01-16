@@ -340,7 +340,11 @@
                                                 <%=value.Products.Name%>
                                             </td>
                                             <td id="Price_<%=value.Products._id%>">
-                                                <%=value.Products.Price%>/-
+                                                <%if(value.Products.isOffer){%>
+                                                    <%=value.Products.DiscountPrice%>/-
+                                                    <%}else{%>
+                                                        <%=value.Products.Price%>/-
+                                                    <%}%>
                                             </td>
                                             <td>
                                                 <form>
@@ -358,7 +362,11 @@
 
                                             </td>
                                             <td id="Subtotal_<%=value.Products._id%>" style="font-weight: 700;">
-                                                <%=value.Products.Price*value.Quantity%>/-
+                                                <%if(value.Products.isOffer){%>
+                                                    <%=value.Products.DiscountPrice*value.Quantity%>/-
+                                                    <%}else{%>
+                                                        <%=value.Products.Price*value.Quantity%>/-
+                                                    <%}%>
                                             </td>
                                             <!-- Update the relevant part of your EJS file -->
                                             <td style="font-weight: 700;">
