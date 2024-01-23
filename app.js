@@ -10,6 +10,7 @@ require('dotenv').config()
 const bcrypt=require("bcrypt")
 const Admin = require("./Model/collections/AdminModel");
 const ReferalOffer = require("./Model/collections/referalOfferModel");
+const morgan = require('morgan')
 
 
 
@@ -23,6 +24,7 @@ app.use(session({
 }))
 
 app.set("view engine", "ejs");
+// app.use(morgan('tiny'));
 
 
 app.use(express.urlencoded({extended:true}))

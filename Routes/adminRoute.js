@@ -21,6 +21,12 @@ const uploadObj = [
 router.get("/adminlogin", adminController.loadAdminLogin);
 router.post("/adminlogin", adminController.loginAdmin);
 router.get("/admin", checkAdminAuth, adminController.LoadAdminDash);
+router.get('/count-orders-by-day', adminController.getCount)
+router.get('/count-orders-by-month', adminController.getCount)
+router.get('/count-orders-by-year', adminController.getCount)
+router.get('/latestOrders', adminController.getOrdersAndSellers)
+
+
 router.get("/manageProduct", checkAdminAuth, productController.LoadmanageProduct);
 router.get("/addproduct", checkAdminAuth, productController.LoadaddProduct);
 router.post("/addProduct", productUpload.fields(uploadObj), productController.addProduct);
@@ -59,6 +65,7 @@ router.post("/deletecategoryOffer/:id",checkAdminAuth, OfferController.DeleteCat
 router.post("/addproductoffer",checkAdminAuth, OfferController.AddProductOffer);
 router.post("/deleteproductOffer/:id",checkAdminAuth, OfferController.DeleteProductOffer);
 router.post("/editproductoffer",checkAdminAuth, OfferController.EditProductsOffer);
+router.post("/salesReport",checkAdminAuth, OfferController.genereatesalesReport);
 
 
 module.exports = router;

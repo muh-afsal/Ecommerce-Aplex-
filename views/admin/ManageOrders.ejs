@@ -9,14 +9,34 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
 </head>
 <style>
-    div.dataTables_wrapper div.dataTables_length select{
+    div.dataTables_wrapper div.dataTables_length select {
         width: 53px;
-    } 
+    }
+
+    th.no-sort i {
+        display: none;
+    }
+
+    .Entry {
+        font-size: medium;
+        height: 49px;
+        background-color: #DBECFF;
+        box-shadow: 0px 2px 13px -8px #000000;
+        border-radius: 10px;
+        width: 91%;
+        margin-left: 25px;
+        border: none;
+        padding: 9px;
+    }
+    .active::before {
+    
+    background-color: #ffffff!important;
+}
 </style>
 
 <body>
@@ -29,11 +49,15 @@
             <div class="col-12 tm-block-col">
                 <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll">
                     <h2 class="tm-block-title text-dark">Orders</h2>
-                    <a href="/admin/returndetails"><button type="button" id="returnreqBTN" class="btn-dark" style="float: right ;border-radius: 6px;">Return requests</button></a>
+                    <button type="button" id="returnreqBTN" class="btn-primary"
+                        style="margin-left: 20px; float: right ;border-radius: 6px;border: none;" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Sales Report<i class="fa-solid fa-download ml-2"></i></button>
+                    <a href="/admin/returndetails"><button type="button" id="returnreqBTN" class="btn-dark"
+                            style="float: right ;border-radius: 6px;border: none">Return requests </button></a>
                     <table class="table" id="orders">
                         <thead>
                             <tr>
-                                <th scope="col">No.</th>
+                                <th scope="col" data-order="asc">No. <i class="fas fa-sort"></i></th>
                                 <th scope="col">Order ID</th>
                                 <th scope="col">Date</th>
                                 <th scope="col">Payment Status</th>
@@ -45,7 +69,7 @@
                         </thead>
                         <tbody>
                             <%orderData.forEach((data,index)=>{%>
-                                <tr> 
+                                <tr>
                                     <th scope="row">
                                         <%=index+1%>
                                     </th>
@@ -61,13 +85,67 @@
                                     <td>
                                         <%=data.Status%>
                                     </td>
-                                    <td><a style="text-decoration: none;" href="/admin/orderdetails?id=<%=data._id%>">View Details</a></td>
+                                    <td><a style="text-decoration: none;"
+                                            href="/admin/orderdetails?id=<%=data._id%>">View Details</a></td>
 
                                 </tr>
                                 <%})%>
 
 
                         </tbody>
+                        <!-- modal to download sales report -->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/admin/salesReport" method="POST" id="salesReportForm">
+                                            <label for="fromDate" class="form-label">From:</label>
+                                            <input type="date" id="fromDate" name="startDate" class="Entry">
+                                            <div style="margin-left: 30px;" id="fromDateError"></div>
+                                            <label for="toDate" class="form-label">To:</label>
+                                            <input type="date" id="toDate" name="endDate" class="Entry">
+                                            <div style="margin-left: 30px;"   id="toDateError"></div>
+                                            <label for="formatSelect" class="form-label">Select Format:</label>
+                                            <div class="row mt-5">
+                                                <div class="col-sm-6"> 
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="downloadFormat" value="pdf" id="pdfCheckbox" checked>
+                                                        <label class="form-check-label" for="pdfCheckbox">
+                                                            PDF
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6"> 
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio" name="downloadFormat" value="excel" id="excelCheckbox">
+                                                        <label class="form-check-label" for="excelCheckbox">
+                                                            Excel
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Move the submit button inside the form -->
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary">Download</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
                     </table>
                 </div>
             </div>
@@ -76,8 +154,71 @@
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
         <script>
-            new DataTable('#orders');
-            
+            document.addEventListener('DOMContentLoaded', function () {
+                // Get the form element
+                const form = document.getElementById('salesReportForm');
+        
+                // Add a submit event listener to the form
+                form.addEventListener('submit', function (event) {
+                    // Validate the form fields
+                    if (!validateForm()) {
+                        // If validation fails, prevent the form from submitting
+                        event.preventDefault();
+                    }
+                });
+        
+                // Function to validate the form fields
+                function validateForm() {
+                    // Get the input fields
+                    const fromDateInput = document.getElementById('fromDate');
+                    const toDateInput = document.getElementById('toDate');
+        
+                    // Get the error divs
+                    const fromDateError = document.getElementById('fromDateError');
+                    const toDateError = document.getElementById('toDateError');
+        
+                    // Reset previous errors
+                    fromDateError.innerText = '';
+                    toDateError.innerText = '';
+        
+                    // Flag to check if the form is valid
+                    let isValid = true;
+        
+                    // Validate 'From' date
+                    if (fromDateInput.value === '') {
+                        fromDateError.innerText = 'Please select a From date.';
+                        fromDateError.style.color = 'red';
+                        isValid = false;
+                    }
+        
+                    // Validate 'To' date
+                    if (toDateInput.value === '') {
+                        toDateError.innerText = 'Please select a To date.';
+                        toDateError.style.color = 'red';
+                        isValid = false;
+                    }
+        
+                    // You can add more validation logic for other fields if needed
+        
+                    return isValid;
+                }
+            });
+        </script>
+        <script>
+            // new DataTable('#orders');
+
+            $(document).ready(function () {
+                $("#orders").DataTable({
+                    columnDefs: [
+                        { orderable: false, targets: [1, 2, 3, 4, 5,] },
+                    ],
+                    order: [[0, 'asc']],
+                });
+            });
+
+        </script>
+        <script>
+
         </script>
 </body>
 

@@ -248,7 +248,7 @@ const ApplyCoupons = async (req, res) => {
     console.log(error);
     return res
       .status(500)
-      .json({ success: false, message: "Internal Server Error" });
+      .json({ success: false, message: "Please fill the coupon Input" });
   }
 };
 

@@ -1,145 +1,6 @@
 <%-include("./partials/header.ejs")%>
     <title>Wallet</title>
-    <style>
-        .profile_container {
-            height: 77vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-
-
-        .side_nav_container {
-            width: 40%;
-            height: auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-
-        }
-
-        .userDetails_container {
-            margin-left: 53px;
-            width: 56vw;
-            height: auto;
-            margin-bottom: 21px;
-            margin-top: 23px;
-            border-radius: 11px;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-        }
-
-        .profile_img_container {
-            height: 28vh;
-            padding: 20px;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-bottom: 0.5px solid;
-        }
-
-        .profile_info_container {
-            height: 40vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
-
-        }
-
-        #profile_image {
-            height: 12vw;
-            width: 24vh;
-            border-radius: 50%;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-
-
-        }
-
-        .input_text {
-            width: 23vw;
-            height: 45px;
-            border-radius: 12px;
-            border: none;
-            outline: none;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px -4px 16px 0px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-
-        }
-
-        .edit_btn {
-            width: 13vw;
-            height: 36px;
-            border-radius: 12px;
-            border: none;
-            outline: none;
-            color: white;
-            background-color: #4461F2;
-        }
-
-        #order_date_id {
-            height: 97px;
-            background-color: rgb(216, 234, 255);
-            width: 100%;
-            margin-top: 20px;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 23px;
-        }
-
-        .orderdetails {
-            height: auto;
-            width: 100%;
-            border-radius: 9px;
-            padding-bottom: 23px;
-
-        }
-
-        .Wallet_history_container {
-            background-color: rgb(255, 255, 255);
-            height: auto;
-            /* padding-left: 16vw !important; */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            width: 80% !important;
-            border-radius: 10px;
-            box-shadow: rgba(0, 0, 4, 0.1) 0px 0px 10px 2px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-
-        }
-
-        #activity_Container {
-            width: 100%;
-            height: 49vh;
-            background-color: rgb(240, 240, 240);
-            display: flex;
-            flex-direction: column;
-
-        }
-
-        .aplex-logo {
-            display: none;
-        }
-
-        .navbar-toggler {
-            display: none;
-        }
-
-        #containerdivofnav {
-            height: 32px;
-        }
-
-        .table>:not(:last-child)>:last-child>* {
-            border-bottom-color: #cbcbcb !important;
-        }
-    </style>
+    <link rel="stylesheet" href="/css/user/waller.css">
 
     </head>
 
@@ -161,15 +22,13 @@
 
 
 
-                            <h4 style="font-weight: 600;" id="Totalprice">₹<%=userData.walletBalance%>/-</h4>
+                            <h4 style="font-weight: 600;margin-left: 70px;" id="Totalprice">₹<%=userData.walletBalance%>
+                                    /-</h4>
                         </div>
                     </div>
                     <div id="activity_Container">
                         <div class="orderdetails">
-                            <!-- <div id="order_date_id" style="background-color: rgb(228, 228, 228); display: flex;  justify-content: center;height: 10px!important;">
-                            <H5>TRANSACTION  DETAILS</H5>
-                  
-                        </div> -->
+                           
                             <div class="col-12 tm-block-col">
                                 <div class="tm-bg-primary-dark tm-block tm-block-taller tm-block-scroll ">
                                     <h2 class="tm-block-title text-dark "

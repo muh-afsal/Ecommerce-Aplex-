@@ -7,7 +7,6 @@
     align-items: center;
     border-radius: 20px;
     padding: 5px;
-    /* margin-top: -33px; */
     width: 39vw;
     height: 37px;
     margin-left: 31%;
@@ -22,12 +21,10 @@
     margin-left: 5px;
 }
 .product-text-container{
-    /* background-color: aqua; */
     border-radius: 12px;
     width: 100%;
     height: 56px;
     margin-top: 20px;
-    /* box-shadow: 0px 0px 7px -3px; */
 }
 #login-btn{
     border-radius: 9px;
@@ -37,7 +34,6 @@
     background-color: #4461F2;
     color: white;
     font-weight: 600;
-    /* margin-left: 1095px; */
     box-shadow: 0px 0px 5px -1px #4461F2;
 }
 
@@ -56,14 +52,7 @@
     }
 }
  
-/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
-/*
 
-Product Admin CSS Template
-
-https://templatemo.com/tm-524-product-admin
-
-*/
 
 html {
     font-size: 16px;
@@ -71,7 +60,6 @@ html {
   }
   body {
     font-family: Roboto, Helvetica, Arial, sans-serif;
-    /* background-color: #4e657a; */
     overflow-x: hidden;
   }
   a {
@@ -100,7 +88,6 @@ html {
   }
   .navbar {
 
-    /* height: 100px; */
     background-color: #567086;
     padding: 0;
   }
@@ -130,7 +117,6 @@ html {
     box-shadow: rgba(0, 0, 4, 0.1) 0px 0px 7px 2px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px!important;
     min-height: 350px;
     height: 78vh;
-    /* max-height: 450px; */
     margin-top: 20px;
 width: 90%;
   }
@@ -149,6 +135,13 @@ width: 90%;
   .tm-block-scroll {
     overflow-y: scroll;
   }
+  .tm-block-scroll::-webkit-scrollbar {
+    width: 0;
+}
+
+.tm-block-scroll {
+    scrollbar-width: none;
+}
 
   .tm-block-overflow {
     overflow: hidden;
@@ -267,18 +260,10 @@ width: 90%;
   }
   .table {
     --bs-table-bg: transparent; 
-    /* --bs-table-striped-color: #212529; */
-    /* --bs-table-striped-bg: rgba(0, 0, 0, 0.05); */
-    /* --bs-table-active-color: #212529; */
-    /* --bs-table-active-bg: rgba(0, 0, 0, 0.1); */
-    /* --bs-table-hover-color: #212529; */
-    /* --bs-table-hover-bg: rgba(0, 0, 0, 0.075); */
     width: 100%;
     margin-bottom: 1rem;
     color: #000000;
     vertical-align: top;
-    /* border-color: #dee2e6; */
-    /* height: 100vh; */
     background-color: #ffff;
     border-radius: 17px;
 
@@ -440,10 +425,7 @@ width: 90%;
   }
   .table td,
   .table th {
-    /* border-top: 1px solid #415a70; */
-    /* padding: 15px 25px; */
     vertical-align: middle;
-    /* height: 77px; */
     width: 115px;
     padding: 0px;
     padding-left: 1px;
@@ -622,151 +604,7 @@ width: 90%;
   .tm-login-col {
     max-width: 470px;
   }
-  
-  .navbar-toggler:hover {
-    border-color: #f5a623;
-    color: #f5a623;
-  }
-  .tm-nav-icon {
-    color: #fff;
-  }
-  .navbar-toggler:hover .tm-nav-icon {
-    color: #f5a623;
-  }
-  ::-webkit-scrollbar {
-    width: 0;
 
-  }
-  .tm-footer-link {
-    color: white;
-  }
-  
-  .tm-footer-link:hover,
-  .tm-footer-link:focus {
-    color: #aacbea;
-  }
-  
-  @media (min-width: 1200px) {
-    .navbar-expand-xl .navbar-nav .nav-link {
-      padding-left: 28px;
-      padding-right: 28px;
-    }
-    .navbar-collapse {
-      height: 100%;
-    }
-  }
-  @media (min-width: 992px) {
-    .navbar-expand-lg .navbar-nav .nav-link {
-      padding: 15px 20px;
-    }
-  }
-  @media (max-width: 1275px) and (min-width: 1200px) {
-    .nav-item {
-      margin-right: 15px;
-    }
-  }
-  @media (max-width: 1350px) {
-    .nav-item {
-      margin-right: 1px;
-    }
-  }
-  @media (max-width: 1199px) {
-    .tm-col-big,
-    .tm-col-small {
-      width: 49.65%;
-    }
-    .navbar-collapse {
-      padding: 0;
-      box-shadow: rgba(0, 0, 4, 0.1) 0px 0px 7px 2px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-
-      position: absolute;
-      top: 72px;
-      right: 20px;
-      width: 200px;
-      z-index: 1000;
-    }
-    .dropdown-menu {
-      text-align: center;
-    }
-    .nav-link {
-      color: #fff;
-      background-color: #567086;
-      padding: 15px;
-      flex-direction: row;
-    }
-    .nav-link > i {
-      font-size: 1rem;
-      margin-right: 10px;
-      margin-bottom: 0;
-    }
-    .nav-item {
-      margin-right: 0;
-    }
-    .tm-block-taller {
-      max-height: 520px;
-    }
-  }
-  @media (max-width: 1199.98px) {
-    .navbar-expand-xl > .container,
-    .navbar-expand-xl > .container-fluid {
-      padding-left: 15px;
-      padding-right: 15px;
-    }
-    .navbar-collapse {
-      right: 15px;
-    }
-  }
-  @media (max-width: 991px) {
-    .tm-col-big,
-    .tm-col-small {
-      width: 100%;
-      min-height: 383px;
-      height: auto;
-    }
-    .tm-block {
-      padding: 30px;
-    }
-  }
-  @media (max-width: 767px) {
-    .tm-col-account-settings,
-    .tm-col-avatar {
-      width: 100%;
-      max-width: 100%;
-    }
-    .tm-block-avatar {
-      display: flex;
-      flex-direction: column;
-    }
-    .tm-avatar {
-      align-self: center;
-    }
-    .tm-hide-sm {
-      display: none;
-    }
-  }
-  @media (max-width: 633px) {
-    .page-item {
-      margin-top: 10px;
-    }
-    .custom-select {
-      background-position: 96%;
-    }
-  }
-  @media (max-width: 574px) {
-    .navbar-collapse {
-      top: 47px;
-    }
-    .navbar {
-      height: 50px;
-    }
-    .tm-site-title {
-      font-size: 1.4rem;
-      margin-left: 7px;
-    }
-    .tm-site-icon {
-      font-size: 2em;
-    }
-  }
   @media (max-width: 480px) {
     .tm-mt-big {
       margin-top: 45px;
@@ -779,7 +617,6 @@ width: 90%;
       max-height: 350px;
     }
   }
-/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////   */
 td{
     height: 70px;
     font-weight: 600;
@@ -794,15 +631,13 @@ td{
 
 }
 .block-icon {
-  font-size: 20px; /* Adjust the font size as needed */
+  font-size: 20px; 
   color: #FF0000;
   border: none;
   background: white;
-} /* Set the color to your preferred color */
-  /* Add more styles as needed */
+} 
 
 
 .block-icon:hover {
-  cursor: pointer; /* Change cursor on hover */
-  /* Add more styles for hover state */
+  cursor: pointer;
 }

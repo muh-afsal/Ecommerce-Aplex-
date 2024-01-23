@@ -9,11 +9,21 @@ const Wishlist = require("../Model/collections/wishlistModel");
 const ReferalOffers = require("../Model/collections/referalOfferModel");
 const CategoryOffers = require("../Model/collections/categoryofferModel");
 const ProductOffers = require("../Model/collections/productOfferModel");
+const Orders = require("../Model/collections/orderModel");
+const srpdf=require("../utils/salespdf")
 var cron = require("node-cron");
 const {
   productAddtocart,
   calculateTotalPrice,
 } = require("../helper/cartHelper");
+// const ExcelJS = require('exceljs');
+const PDFDocument = require('pdfkit');
+const { isValid, parseISO } = require('date-fns');
+
+
+
+
+
 
 // Load Manage Category offers ------------------------------------------------>
 const LoadManageCategoryOffers = async (req, res) => {
@@ -202,7 +212,7 @@ const DeleteCategoryOffer = async (req, res) => {
     res.json({ success: true, message: 'Category offer deleted successfully' });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+    res.status(500).json({ success: false, message: 'Internal server error 0000000000000000000000000' });
   }
 };
 
@@ -340,7 +350,7 @@ const DeleteProductOffer = async (req, res) => {
     res.json({ success: true, message: 'Product offer deleted successfully' });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: 'Internal server error' });
+    res.status(500).json({ success: false, message: 'Internal server error ' });
   }
 };
 
@@ -390,6 +400,52 @@ const EditProductsOffer = async (req, res) => {
 
 
 
+const genereatesalesReport = async (req, res) => {
+  try {
+   
+      const format = req.body.downloadFormat;
+      const startDate = isValid(parseISO(req.body.startDate)) ? parseISO(req.body.startDate) : null;
+      const endDate = isValid(parseISO(req.body.endDate)) ? parseISO(req.body.endDate) : null;
+    endDate.setHours(23, 59, 59, 999);
+
+    const orders = await Orders.find({
+      Status: "Delivered",
+      OrderDate: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    }).populate('Items.productId');
+
+    let totalSales = 0;
+
+    orders.forEach((order) => {
+      totalSales += order.TotalPrice || 0;
+    });
+    
+
+    srpdf.downloadReport(
+      req,
+      res,
+      orders,
+      startDate,
+      endDate,
+      totalSales.toFixed(2),
+      format
+    );
+    
+  } catch (error) {
+    console.log("Error while generating sales report pdf:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+
+
+
+
+
+
+
 
 
 module.exports = {
@@ -404,5 +460,6 @@ module.exports = {
   EditCategoryOffer,
   AddProductOffer,
   DeleteProductOffer,
-  EditProductsOffer
+  EditProductsOffer,
+  genereatesalesReport
 };

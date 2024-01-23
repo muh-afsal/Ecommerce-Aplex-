@@ -246,7 +246,7 @@ const LoadOrderPlaced = async (req, res) => {
       TotalPrice: cartData.TotalAmount,
       Items: cartData.Items.map((item) => ({
         productId: item.Products._id,
-        Price: item.Products.Price,
+        Price: item.Products.Price, Price:item.Products.DiscountPrice !== 0 ? item.Products.DiscountPrice : item.Products.Price,
         quantity: item.Quantity,
       })),
       Address: {

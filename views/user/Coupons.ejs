@@ -1,93 +1,65 @@
 <%-include("./partials/header.ejs")%>
-<title>Coupons</title>
-<link rel="stylesheet" href="/css/user/coupon.css">
-<style>
+  <title>Coupons</title>
+  <link rel="stylesheet" href="/css/user/coupon.css">
 
-    .Coupons_container{
-        width: 70%;
-    height: 60vh;
-    box-shadow: rgba(0, 0, 4, 0.1) 0px 0px 10px 2px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
-    border-radius: 12px;
-    margin-top: 50px;
-    margin-bottom: 50px;
-    display: flex;
-    justify-content: center;
-    background: rgb(242, 248, 255);
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 36px;
-    padding: 30px;
-    overflow: scroll;
-    }
-    .Coupons_container::-webkit-scrollbar {
-            width: 0;
-            /* Remove scrollbar space on Webkit browsers */
-        }
 
-        .Coupons_container {
-            scrollbar-width: none;
-            /* Firefox */
-        }
-        #coupon_code{
-            font-size: x-large;
-            font-weight: 700;
-            color: gold;
-        }
-        #discountPrice{
-            font-weight: 700;
-        }
- 
-</style>
+  </head>
 
-</head>
-
-<body>
+  <body>
 
     <%-include("./partials/nav-after-login.ejs")%>
 
-    <h3 style="    margin-top: 24px;font-weight: 700;text-align: center; margin-bottom: -26px;" >Coupons</h3>
-    <div class=" container-fluid  Coupons_container" style="display: flex; justify-content: center; flex-direction: column;">
-      <%if(!couponData || couponData.length === 0){%>
-        <img width="280px" src="/assets/no_coupon_available.png" alt="">
-        <h4 style="color: #969696;
-        font-size: larger;">No Coupons Available for Now</h4>
+      <h3 style="    margin-top: 24px;font-weight: 700;text-align: center; margin-bottom: -26px;">Coupons</h3>
+      <div class=" container-fluid  Coupons_container"
+        style="display: flex; justify-content: center; flex-direction: row;">
+        <%if(!couponData || couponData.length===0){%>
+          <img width="280px" src="/assets/no_coupon_available.png" alt="">
+          <h4 style="color: #969696;
+        font-size: larger;font-weight: 600;text-align: center ;">No Coupons Available for Now</h4>
 
-      <%}else{%>
-        <%couponData.forEach((data,index)=>{%>
-          <div class="coupon">
-              <div class="left">
-                <div>Enjoy Your Gift</div>
-              </div>
-              <div class="center">
-                <div>
-                  <h2 id="discountPrice"><%=data.DiscountValue%>/- OFF</h2>
-                  <h3>Coupon Code:-</h3>
-                  <h3 id="coupon_code"><%=data.CouponCode%></h3>
-                  <small>Valid From <%= data.StartDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' }) %></small><br>
-                  <small>Valid Until <%= data.ExpirationDate.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: '2-digit' }) %></small>
+          <%}else{%>
+            <%couponData.forEach((data,index)=>{%>
+
+              <div class="coupon">
+                <div class="left">
+                  <div>Enjoy Your Gift</div>
                 </div>
+                <div class="center">
+                  <div>
+                    <h2 id="discountPrice">
+                      <%=data.DiscountValue%>/- OFF
+                    </h2>
+                    <h3>Coupon Code:-</h3>
+                    <h3 id="coupon_code">
+                      <%=data.CouponCode%>
+                    </h3>
+                    <small>Valid From <%= data.StartDate.toLocaleDateString('en-GB', { day: '2-digit' , month: '2-digit'
+                        , year: '2-digit' }) %></small><br>
+                    <small>Valid Until <%= data.ExpirationDate.toLocaleDateString('en-GB', { day: '2-digit' ,
+                        month: '2-digit' , year: '2-digit' }) %></small>
+                  </div>
+                </div>
+
+                <div class="right">
+                  <div>87878521112</div>
+                </div>
+
               </div>
-              
-              <div class="right">
-                <div>87878521112</div>
-              </div>
-                
-            </div>
-          
-        <%})%>
 
-        <%}%>
-      
+              <%})%>
+
+                <%}%>
 
 
-    </div>
-    
-       
-           
-   
-    <script>
 
-    </script>
+      </div>
 
-    <%-include("./partials/footer.ejs")%>
-    <%-include("./partials/footerlinks.ejs")%>
+
+
+
+      <script>
+
+      </script>
+
+      <%-include("./partials/footer.ejs")%>
+        <%-include("./partials/footerlinks.ejs")%>

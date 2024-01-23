@@ -6,6 +6,18 @@ const easyinvoice = require('easyinvoice');
 
 module.exports = {
     generateInvoice: async (orderDetails) => {
+
+        const orderDate =  orderDetails.OrderDate;
+const parsedDate = new Date(orderDate);
+
+const year = parsedDate.getFullYear().toString().slice(-2);
+const month = (parsedDate.getMonth() + 1).toString().padStart(2, "0");
+const day = parsedDate.getDate().toString().padStart(2, "0");
+
+const formattedDate = `${year}/${month}/${day}`;
+
+console.log(formattedDate);
+
         try {
             var data = {
                 
@@ -20,31 +32,35 @@ module.exports = {
     
                 },
                 "sender": {
-                    "company": "Phone Bazaar",
-                    "address": "Vellayil",
+                    "company": "Aplex Store",
+                    "address": "Emirate",
                     "zip": "673001",
-                    "city": "Calicut",
-                    "country": "Kerala"
+                    "city": "Fujairah",
+                    "country": "UAE"
                 },
+               
+
                 "client": {
-                    "company": orderDetails[0].Address.Name,
-                    "address": orderDetails[0].Address.Address,
-                    "zip":orderDetails[0].Address.Pincode ,
-                    "city": orderDetails[0].Address.City,
-                    "state":orderDetails[0].Address.State,
-                    "Mob No": orderDetails[0].Address.Mobile
+                    "company": orderDetails.Address.shippingName,
+                    "address": orderDetails.Address.shippingName+orderDetails.Address.city,
+                    "zip":orderDetails.Address.pincode ,
+                    "city": orderDetails.Address.city,
+                    "state":orderDetails.Address.state,
+                    "Mob No": orderDetails.Address.phone
                 },
                 "information": {
-                    "Order ID": orderDetails[0]._id,
-                    "date": orderDetails[0].OrderDate,
-                    "invoice date": orderDetails[0].OrderDate,
+                    "Order ID": orderDetails._id,
+                    "date": formattedDate,
+                    "invoice date": formattedDate,
                 },
-                "products": (orderDetails[0].Items && orderDetails[0].Items.length > 0) ? orderDetails[0].Items.map((product) => ({
+                "products": (orderDetails.Items && orderDetails.Items.length > 0) ? orderDetails.Items.map((product) => ({
                     "quantity": product.quantity,
-                    "description": product.productId.name,
-                    "price": product.productId.descountedPrice
-                })) : [],
-                
+                    "description": product.productId.Name, 
+                    "tax-rate": 18,
+                    "price": product.Price
+                })) : [],   
+         
+               
     
                 "bottom-notice": "Thank You For Your Purchase",
                 "settings": {
@@ -62,7 +78,8 @@ module.exports = {
 
             const result = await easyinvoice.createInvoice(data);
 
-            const filePath = path.join(__dirname, '..', 'pdf', `${orderDetails[0]._id}.pdf`);
+            const filePath = path.join(__dirname, "..", "public", "pdf", `${orderDetails._id}.pdf`);
+
             await fs.promises.writeFile(filePath, result.pdf, 'base64');
 
             return filePath;

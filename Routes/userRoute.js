@@ -57,6 +57,9 @@ router.post("/searchProduct",productController.searchProduct)
 router.get("/wishlist",userAuth.checkUserAuthentication,wishlistController.LoadWishlist)
 router.post("/addtowishlist", userAuth.checkUserAuthentication, wishlistController.addtoWishlist);
 router.post("/removeFromWishlist",userAuth.checkUserAuthentication,wishlistController.RemoveFromWishlist)
+router.post("/generateInvoices",userAuth.checkUserAuthentication,OrderController.GenerateInvoices)
+router.get("/downloadinvoice/:orderId",userAuth.checkUserAuthentication,OrderController.downloadInvoice)
+
 
 
 

@@ -178,13 +178,7 @@
         }
       }
 
-      //  //to validate imagez
-      //  function imagevalidate(value){
-      //   if(!value.files && !value.files[0]){
-      //     return true
-      //   }
-      //  }
-
+   
       function isValid(value) {
         if (value > 0) {
           return true
@@ -225,17 +219,12 @@
         const StockError = document.querySelector("#StockError");
 
 
-        // const imageInput=document.getElementById('#file');
-        // // const imageValue=imageInput.value;
-        // const mainImageError=document.getElementById('#mainImageError')
 
         nameError.textContent = "";
         priceError.textContent = "";
         descriptionError.textContent = "";
         categoryError.textContent = "";
         statusError.textContent = "";
-        // mainImageError.textContent = "";
-        // statusError.textContent = "";
 
 
         if (isEmpty(nameValue)) {

@@ -10,6 +10,9 @@ const {
 const Products = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
 const mongoose = require("mongoose");
+const fs = require("fs");
+const path = require("path");
+const { generateInvoice } = require("../utils/easyinvoice");
 
 // Generate a random string for orderNumber-----------------------------------------------
 const generateOrderNumber = () => {
@@ -116,9 +119,62 @@ const returnOrder = async (req, res) => {
   }
 };
 
+
+
+//generate invoice
+const GenerateInvoices = async (req, res) => {
+
+  try {
+    const { orderId } = req.body;
+
+    const orderDetails = await Order.findOne({ _id: orderId })
+      .populate("Items.productId");
+
+
+    if (orderDetails) {
+      const invoicePath = await generateInvoice(orderDetails);
+
+      res.json({
+        success: true,
+        message: "Invoice generated successfully",
+        invoicePath,
+      });
+    } else {
+      res
+        .status(500)
+        .json({ success: false, message: "Failed to generate the invoice" });
+    }
+  } catch (error) {    
+    console.error("error in invoice downloading",error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error in generating the invoice" });
+  }
+};
+
+// download invoice
+const downloadInvoice = async (req, res) => {
+  try {
+    const id = req.params.orderId;
+    const filePath = `D:\\brocamp weekly\\Week11-project-1st\\Aplex\\public\\pdf\\${id}.pdf`;
+    res.download(filePath, `invoice.pdf`);
+  } catch (error) {
+    console.error("Error in downloading the invoice:", error);
+    res
+      .status(500)
+      .json({ success: false, message: "Error in downloading the invoice"});
+  }
+};
+
+
+
+
+
 module.exports = {
   LoadOrderDetails,
   LoadOrders,
   cancelOrder,
   returnOrder,
+  GenerateInvoices,
+  downloadInvoice
 };
