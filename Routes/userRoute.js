@@ -52,8 +52,7 @@ router.get("/coupon",userAuth.checkUserAuthentication,couponController.LoadUserC
 router.post("/applycoupon",userAuth.checkUserAuthentication,couponController.ApplyCoupons)
 router.post("/cancelcoupon",userAuth.checkUserAuthentication,couponController.CancelCoupon)
 router.get("/wallet",userAuth.checkUserAuthentication,userController.LoadWallet)
-router.get("/productsfilter",  productController.ProductFilter);
-router.post("/searchProduct",productController.searchProduct)
+router.post("/productfiltering",productController.Productfiltering)
 router.get("/wishlist",userAuth.checkUserAuthentication,wishlistController.LoadWishlist)
 router.post("/addtowishlist", userAuth.checkUserAuthentication, wishlistController.addtoWishlist);
 router.post("/removeFromWishlist",userAuth.checkUserAuthentication,wishlistController.RemoveFromWishlist)

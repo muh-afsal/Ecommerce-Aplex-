@@ -33,6 +33,10 @@ const LoadproductDetailVerified = async (req, res) => {
   }
 };
 
+
+
+
+
 //product listing
 const ProductListing = async (req, res) => {
   try {
@@ -57,6 +61,7 @@ const ProductListing = async (req, res) => {
     console.log(error.message);
   }
 };
+
 
 //product details verified
 
@@ -236,38 +241,59 @@ const softDeleteProduct = async (req, res) => {
   }
 };
 
-const ProductFilter = async (req, res) => {
+
+const Productfiltering = async (req, res) => {
   try {
-    const categoryValue = req.query.category
-      ? req.query.category.split(",")
-      : [];
-    let filterQuery = {};
-    if (categoryValue.length > 0) {
-      filterQuery.Category = { $in: categoryValue };
+
+    const { category, sorting, search, page } = req.body;
+    
+
+    const pageNum = parseInt(page) || 1;
+    const perPage = 8;
+    let filterQuery = { isdeleted: false }; 
+    let sortOption = {Price:1};
+
+    if (category) {
+      filterQuery.Category = { $in: category.split(",") };
     }
-    const productdata = await Products.find(filterQuery).limit(8);
 
-    res.json(productdata);
+    if (sorting === 'highToLow') {
+      sortOption = { isOffer: -1, DiscountPrice: -1, Price: -1 };
+    } else if (sorting === 'lowToHigh') {
+      sortOption = { isOffer: -1, Price: 1 };
+    }
+
+    let searchQuery = {};
+    if (search) {
+      searchQuery = { Name: { $regex: new RegExp(search, 'i') } };
+    }
+
+    filterQuery = { ...filterQuery, ...searchQuery };
+
+    const [dataCount, products] = await Promise.all([
+      Products.find(filterQuery).countDocuments(),
+      Products.find(filterQuery)
+        .sort(sortOption)
+        .skip((pageNum - 1) * perPage)
+        .limit(perPage),
+    ]);
+
+    if (req.headers.accept && req.headers.accept.includes('application/json')) {
+      return res.json(products);
+    }
+
+    let i = (pageNum - 1) * perPage;
+    res.json({
+      products,
+      i,
+      dataCount,
+    });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-const searchProduct = async (req, res) => {
-  try {
-    const query = req.body.query;
-    const regex = new RegExp(query, "i");
-
-    const searchedProduct = await Products.find({
-      $or: [{ Name: { $regex: regex } }],
-      isdeleted: false,
-    }).limit(8);
-
-    res.json(searchedProduct);
-  } catch (error) {
-    console.log(error);
-  }
-};
 
 module.exports = {
   LoadproductDetail,
@@ -280,6 +306,5 @@ module.exports = {
   softDeleteProduct,
   editProductLoad,
   UpdateProduct,
-  ProductFilter,
-  searchProduct,
+  Productfiltering,
 };

@@ -3,13 +3,16 @@ const Products = require("../Model/collections/ProductModel");
 
 
 
-async function productAddtocart(productId, userId) {
+async function productAddtocart(productId, userId,res) {
   try {
     const cartExist = await Cart.findOne({ User: userId });
     const Productsdata=await Products.findOne({ _id: productId});
 
-    if(Productsdata.isOffer){
+    if (!Productsdata || Productsdata.Stock <= 0) {
+      return res.json({ success:true});
     }
+   
+    
 
 
     if (!cartExist) {
@@ -68,7 +71,7 @@ async function productAddtocart(productId, userId) {
 
     await Cart.updateOne({ User: userId }, { $set: { TotalAmount: totalAmount } });
 
-   
+    res.json({ status: true });
   } catch (error) {
     console.log(error);
   }

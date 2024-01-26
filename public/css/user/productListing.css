@@ -24,6 +24,13 @@
   --card-3-secondary-color: rgb(178, 180, 179);
   --card-4-secondary-color: rgb(96, 109, 117);
 }
+.categorycontainer::-webkit-scrollbar {
+  width: 0;
+}
+
+.categorycontainer {
+  scrollbar-width: none;
+}
 
 html {
   width: 100%;
@@ -228,6 +235,8 @@ html {
   font-size: 1.3rem;
   top: 0;
   transform: translateY(50%);
+  margin-top: 40px;
+  color: #0059ff;
 }
 
 .card-div:hover .img-div img {

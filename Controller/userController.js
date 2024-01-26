@@ -6,7 +6,7 @@ const { ObjectId } = require("mongodb");
 const { sentOTP } = require("./OTPcontroller");
 const Product = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
-const ReferalData = require("../Model/collections/referalOfferModel");
+const Referal = require("../Model/collections/referalOfferModel");
 
 const multer = require("multer");
 const storage = require("../auth/profilepicUpload");
@@ -193,28 +193,35 @@ const otpverify = async (req, res) => {
   try {
     const data = req.session.data;
     const otp = await OTP.findOne({ email: data.email });
+
     if (Date.now() > otp.ExpireAt) {
       await OTP.deleteOne({ email: data.email });
+      res.render("../views/user/otp", { message: "OTP has expired !" });
     } else {
-      const referalID=generateOrderNumber()
+      const referalID = generateOrderNumber();
       const hashed = otp.otp;
-      const code =
-        req.body.otp1 + req.body.otp2 + req.body.otp3 + req.body.otp4;
+      const code = req.body.otp1 + req.body.otp2 + req.body.otp3 + req.body.otp4;
       req.session.email = data.email;
+      
+
 
       if (hashed == code) {
-      
-        if(req.session.referalID){
-          const referalData=await ReferalData.findOne()
-          if(referalData.Status===true){
-            const BonusPrice=referalData.BonusPrice
-            req.session.bonusPrice = BonusPrice; 
-          }
-        }else{
-          req.session.bonusPrice = 0;
-        }
-        
+        if (req.session.referalID) {
+          const referalData = await Referal.findOne();
 
+          if (referalData.Status === true) {
+            const bonusPrice = referalData.BonusPrice;
+            req.session.bonusPrice = bonusPrice;
+            
+        const refID= req.session.referalID
+        const referredUser = await User.findOneAndUpdate(
+          { ReferalID: refID },
+          { $inc: { walletBalance: bonusPrice } },
+          { new: true } 
+         );
+        
+          }
+        }
 
         const newUser = new User({
           username: data.username,
@@ -223,9 +230,9 @@ const otpverify = async (req, res) => {
           password: data.password,
           profileImage: "usericons.png",
           date: Date.now(),
-          ReferalID:referalID,
-          walletBalance:req.session.bonusPrice,
+          ReferalID: referalID,
         });
+
         await newUser.save();
         req.session.logged = true;
         req.session.email = data.email;
@@ -238,6 +245,7 @@ const otpverify = async (req, res) => {
     console.log(error.message);
   }
 };
+
 
 //Load user Profile
 const LoadUserProfile = async (req, res) => {
@@ -405,7 +413,8 @@ const DeleteuserAddress = async (req, res) => {
 // Load wallet --------------------------------------------
 const LoadWallet = async (req, res) => {
   try {
-    const userData = await User.findOne({ email: req.session.email });
+    const userData = await User.findOne({ email: req.session.email});
+    userData.Activity.sort((a, b) => b.Date - a.Date);
     res.render("../views/user/wallet.ejs", { userData });
   } catch (error) {
     console.log(error);

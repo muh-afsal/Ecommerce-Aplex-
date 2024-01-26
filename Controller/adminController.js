@@ -96,11 +96,7 @@ const blockUnblockUser = async (req, res) => {
 //admin dash days cfiltering 
 const getCount=async(req,res)=>{
   try {
-    const orders = await order.find({
-      Status: {
-        $nin:["returned","Cancelled","Rejected"]
-      }
-    });
+    const orders = await order.find({Status:"Delivered"});
 
     const orderCountsByDay = {};
     const totalAmountByDay = {};

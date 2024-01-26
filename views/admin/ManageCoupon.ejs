@@ -187,7 +187,7 @@
                                                                     <label for="DiscountValue"
                                                                         style="color: #000000; font-size: smaller; margin-left: 30px;">Discount
                                                                         Price</label>
-                                                                    <input id="DiscountValue_<%= data._id%>"
+                                                                    <input min="1" id="DiscountValue_<%= data._id%>"
                                                                         type="number" value="<%=data.DiscountValue%>"
                                                                         class="Entry"
                                                                         placeholder="Enter the Discount Price"
@@ -199,7 +199,7 @@
                                                                     <label for="minPurchaceAmount"
                                                                         style="color: #000000; font-size: smaller; margin-left: 30px;">Minimum
                                                                         Purchase Amount</label>
-                                                                    <input id="minPurchaceAmount_<%= data._id%>"
+                                                                    <input min="1" id="minPurchaceAmount_<%= data._id%>"
                                                                         type="number"
                                                                         value="<%=data.MinPurchaseAmount%>"
                                                                         class="Entry" placeholder="Enter Amount"
@@ -212,7 +212,7 @@
                                                                     <label for="maxPurchaceAmount"
                                                                         style="color: #000000; font-size: smaller; margin-left: 30px;">Maximum
                                                                         Purchase Amount</label>
-                                                                    <input id="maxPurchaceAmount_<%= data._id%>"
+                                                                    <input min="1" id="maxPurchaceAmount_<%= data._id%>"
                                                                         type="number"
                                                                         value="<%=data.MaxPurchaseAmount%>"
                                                                         class="Entry" placeholder="Enter Amount"
@@ -508,6 +508,7 @@
 
 
             </script>
+            
 
 
 

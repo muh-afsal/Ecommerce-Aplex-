@@ -12,6 +12,26 @@ function addToCart(e, productId) {
     })
         .then(response => response.json())
         .then(res => {
+            // if (res.success) {
+            //     (function() {
+            //         Toastify({
+            //           text: "Product Out of Stock!",
+            //           duration: 2000,
+            //           newWindow: true,
+            //           close: true,
+            //           gravity: "to", 
+            //           position: "center", 
+            //           stopOnFocus: true,
+            //           style: {
+            //             background: "#52b963",
+            //             borderRadius: "8px"
+                        
+            //           },
+            //           onClick: function(){} 
+            //         }).showToast();
+            //       })();
+            // }
+        
             if (res.status) {
                 (function() {
                     Toastify({
@@ -33,7 +53,7 @@ function addToCart(e, productId) {
             } else {
                 (function() {
                     Toastify({
-                      text: "Error while Product Adding to cart!",
+                      text: "Product Out of Stock,or Error while Product Adding!",
                       duration: 2000,
                       newWindow: true,
                       close: true,

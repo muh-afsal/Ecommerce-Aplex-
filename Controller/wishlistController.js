@@ -23,14 +23,19 @@ const LoadWishlist = async (req, res) => {
       path: "Items.Products",
     });
 
+    if (!WishlistProducts) {
+      return res.render("../views/user/wishlist.ejs", { WishlistProducts: [] });
+    }
+
     res.render("../views/user/wishlist.ejs", {
-      WishlistProducts: WishlistProducts.Items,
+      WishlistProducts: WishlistProducts.Items || [],
     });
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
   }
 };
+
 
 const addtoWishlist = async (req, res) => {
   try {

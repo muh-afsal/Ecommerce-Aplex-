@@ -57,6 +57,17 @@ cron.schedule("* * * * * *", async () => {
           { $set: { Status: false } },
           { new: true }
         );
+
+        const associatedProduct = await Products.findOne({ Name: productOffer.ProductName });
+
+        if (associatedProduct) {
+          associatedProduct.DiscountPrice = 0;
+          associatedProduct.DiscountPercentage = 0;
+          associatedProduct.isOffer = false;
+          associatedProduct.Offertype = 'none';
+
+          await associatedProduct.save();
+        }
       }
     });
 
@@ -66,6 +77,7 @@ cron.schedule("* * * * * *", async () => {
     console.error("Error updating offers:", error);
   }
 });
+
 
 
 

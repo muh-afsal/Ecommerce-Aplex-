@@ -100,11 +100,11 @@
 
                     <div class="purchase-info" style="display: flex;">
 
-                        <a href="/wishlist"><button type="submit " value="submit" class="btn">Add to
+                        <a class="bttonlink" onclick="addtowishlist('<%=products._id%>')"><button type="submit " value="submit" class="btn">Add to
                                 Whishlist</button></a>
 
-                        <a onclick="addToCart(event,'<%=products._id%>')"> <button type="submit " value="submit"
-                                class="btn" style="margin-left: 10px;">Add to Cart</button></a>
+                        <a class="bttonlink" onclick="addToCart(event,'<%=products._id%>')"> <button type="submit " value="submit"
+                                class="btn addcartbtn" style="margin-left: 22px;">Add to Cart</button></a>
 
 
                     </div>

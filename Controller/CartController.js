@@ -22,7 +22,6 @@ const LoadCart = async (req, res) => {
     const cartProduct = await Cart.findOne({ User: user._id }).populate(
       "Items.Products"
     );
-
     
     await calculateTotalPrice(user._id).then((total) => {
       req.session.orderplaced = false;
@@ -41,9 +40,9 @@ const addtoCart = async (req, res) => {
     const productId = req.body.productId;
     const userId = user._id;
 
-    await productAddtocart(productId, userId);
+    await productAddtocart(productId, userId,res);
 
-    res.json({ status: true });
+    // res.json({ status: true });
   } catch (error) {
     console.log(error);
     res.json({ status: false });

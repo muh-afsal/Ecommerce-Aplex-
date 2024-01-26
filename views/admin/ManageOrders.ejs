@@ -107,10 +107,10 @@
                                         <form action="/admin/salesReport" method="POST" id="salesReportForm">
                                             <label for="fromDate" class="form-label">From:</label>
                                             <input type="date" id="fromDate" name="startDate" class="Entry">
-                                            <div style="margin-left: 30px;" id="fromDateError"></div>
+                                            <div style="margin-left: 30px;color: red;" id="fromDateError"></div>
                                             <label for="toDate" class="form-label">To:</label>
                                             <input type="date" id="toDate" name="endDate" class="Entry">
-                                            <div style="margin-left: 30px;"   id="toDateError"></div>
+                                            <div style="margin-left: 30px; color: red;"   id="toDateError"></div>
                                             <label for="formatSelect" class="form-label">Select Format:</label>
                                             <div class="row mt-5">
                                                 <div class="col-sm-6"> 
@@ -153,57 +153,55 @@
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                // Get the form element
-                const form = document.getElementById('salesReportForm');
-        
-                // Add a submit event listener to the form
-                form.addEventListener('submit', function (event) {
-                    // Validate the form fields
-                    if (!validateForm()) {
-                        // If validation fails, prevent the form from submitting
+                const salesReportForm = document.getElementById('salesReportForm');
+                const fromDateInput = document.getElementById('fromDate');
+                const toDateInput = document.getElementById('toDate');
+                const fromDateError = document.getElementById('fromDateError');
+                const toDateError = document.getElementById('toDateError');
+    
+                salesReportForm.addEventListener('submit', function (event) {
+                    // Reset previous error messages
+                    fromDateError.textContent = '';
+                    toDateError.textContent = '';
+    
+                    // Get selected dates
+                    const fromDate = new Date(fromDateInput.value);
+                    const toDate = new Date(toDateInput.value);
+    
+                    // Get current date
+                    const currentDate = new Date();
+    
+                    // Check if start date is after current date
+                    if (fromDate > currentDate) {
+                        fromDateError.textContent = 'Start date cannot be after current date';
+                        event.preventDefault();
+                    }
+    
+                    // Check if end date is after current date
+                    if (toDate > currentDate) {
+                        toDateError.textContent = 'End date cannot be after current date';
+                        event.preventDefault();
+                    }
+    
+                    // Check if end date is before start date
+                    if (fromDate > toDate) {
+                        toDateError.textContent = 'End date cannot be before start date';
+                        event.preventDefault();
+                    }
+    
+                    // Check if both date fields are empty
+                    if (!fromDateInput.value && !toDateInput.value) {
+                        fromDateError.textContent = 'Start date is required';
+                        toDateError.textContent = 'End date is required';
                         event.preventDefault();
                     }
                 });
-        
-                // Function to validate the form fields
-                function validateForm() {
-                    // Get the input fields
-                    const fromDateInput = document.getElementById('fromDate');
-                    const toDateInput = document.getElementById('toDate');
-        
-                    // Get the error divs
-                    const fromDateError = document.getElementById('fromDateError');
-                    const toDateError = document.getElementById('toDateError');
-        
-                    // Reset previous errors
-                    fromDateError.innerText = '';
-                    toDateError.innerText = '';
-        
-                    // Flag to check if the form is valid
-                    let isValid = true;
-        
-                    // Validate 'From' date
-                    if (fromDateInput.value === '') {
-                        fromDateError.innerText = 'Please select a From date.';
-                        fromDateError.style.color = 'red';
-                        isValid = false;
-                    }
-        
-                    // Validate 'To' date
-                    if (toDateInput.value === '') {
-                        toDateError.innerText = 'Please select a To date.';
-                        toDateError.style.color = 'red';
-                        isValid = false;
-                    }
-        
-                    // You can add more validation logic for other fields if needed
-        
-                    return isValid;
-                }
             });
         </script>
+        
         <script>
             // new DataTable('#orders');
 

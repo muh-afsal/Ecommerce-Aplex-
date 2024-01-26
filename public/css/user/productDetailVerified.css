@@ -214,6 +214,10 @@ img {
   font-size: 0.8rem;
   transition: all 0.5s ease;
 }
+.bttonlink{
+  display: flex;
+  justify-content: center;
+}
 
 .social-links a:hover {
   background: #000;
@@ -221,7 +225,7 @@ img {
   color: #fff;
 }
 
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1300px) {
   .card {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -240,6 +244,20 @@ img {
     padding-top: 8vh;
     width: 59vw;
   }
+}
+@media (max-width:730px) {
+
+ .purchase-info{
+  flex-direction: column;
+ }
+ .addcartbtn{
+  margin-left: 22!important;
+ }
+ .card-wrapper{
+   width: 86vw;
+ }
+  
+
 }
 
 .product-imgs {

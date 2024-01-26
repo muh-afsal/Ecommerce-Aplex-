@@ -20,6 +20,7 @@
 
 
 
+
 <body>
     <%-include("./partials/navbar.ejs")%>
 
@@ -29,7 +30,7 @@
 
             <div class="search-bars">
 
-                <input type="text" class="form-control rounded-pill shadow-none" oninput="searchProduct(event)"
+                <input type="text" class="form-control rounded-pill shadow-none" 
                     placeholder="Search...">
                 <div class="search-icon" style="color: #4461F2;">
                     <i class="fas fa-search"></i>
@@ -37,139 +38,107 @@
             </div>
         </div>
         <div class="main-contaner">
-            <div class="filter-div">
-                <h6 style="font-weight: 600;">Select Category for Filter</h6>
-                <%categoryData.forEach((data)=>{%>
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="<%=data.name%>" name="category">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            <%=data.name%>
-                        </label>
-                    </div>
-                    <%})%>
+            <div class="filter-div" >
+                <h6 style=" font-weight: 600;">Select Category for Filter</h6>
+                <div class="categorycontainer" style=" height: 36vh; overflow:auto;">
+                    <%categoryData.forEach((data)=>{%>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="<%=data.name%>" name="category">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                <%=data.name%>
+                            </label>
+                        </div>
+                        <%})%>
+                </div>
+                <h6 style="font-weight: 600;margin-top: 30px;">Sort By Price</h6>
+                <div>
+                    <label>
+                        <input type="radio" id="highToLow" name="sorting" value="highToLow">
+                        High to Low
+                    </label>
+
+                    <label>
+                        <input type="radio" id="lowToHigh" name="sorting" value="lowToHigh">
+                        Low to High
+                    </label>
+                </div>
 
             </div>
             <!-- <div class="card-divv"> -->
             <div class="container-fluid card-container" id="card_parent">
-                <%products.forEach((data,index)=>{%>
-                    <div class="card-1 card-div" onclick="goDetail('/ProductDetail?id=<%=data._id%>')"
-                        style="cursor: pointer;">
-                        <div class="like-icon-div" style="display: flex;justify-content: space-between;">
-                            <div
-                                style="width: 60px; height:40px; z-index: 100;float: left;margin-bottom: -41px;display: flex; justify-content: center;align-items: center;">
-                                <%if(data.isOffer){%>
-                                    <div style="display: flex; align-items: center;">
-                                        <img src="/assets/offerPersentage.png" alt=""
-                                            style="width: 60px; background-position: center;background-size: cover;background-repeat: no-repeat;width: 88px;">
-                                        <h4
-                                            style="z-index: 1000;position: absolute;margin-top: 12px;margin-left: 23px;transform: rotate(-7deg);font-weight: 700;">
-                                            <%=data.DiscountPercentage%>
-                                        </h4>
-                                    </div>
-                                    <%}%>
-                            </div>
-                            <label for="card-1-like" class="like-icon-div-child">
-                                <input style="    display: none;" type="checkbox" id="card-1-like">
-                                <i class="far fa-heart heart-empty"></i>
-                                <i class="fas fa-heart heart-fill"></i>
-                            </label>
-                        </div>
-                        <div class="gow-img-div img-div">
-                            <img style="width: 195px;" src="<%= data.Image[0] %>" alt="god-of-war-figurine">
 
-                        </div>
-
-                        <div class="text-container">
-
-
-                            <h2 class="item-name">
-                                <%=data.Name%>
-                            </h2>
-
-                            <div class="pricing-and-cart">
-                                <div class="pricing">
-                                    <%if(data.isOffer){%>
-                                        <p class="previous-price" id="previousp">₹
-                                            <%=data.Price%>
-                                                <%}else{%>
-
-                                                    <div
-                                                        style="    width: 115px;height: 42px;background-color: rgb(255, 255, 255);">
-                                                    </div>
-
-                                                    <%}%>
-                                                        <p class="current-price">₹
-                                                            <%if(data.isOffer){%>
-                                                                <%=data.DiscountPrice%>
-                                                                    <%}else{%>
-                                                                        <%=data.Price%>
-                                                                            <%}%>
-                                                                                /-
-                                                        </p>
-                                </div>
-                                <a href="/login" style="margin-top: 30px ;"><i class="fas fa-shopping-cart"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    </a>
-                    <%})%>
 
             </div>
             <div style="width: 100%; height: auto;display: flex;justify-content: center;">
-                <div class="pagination_div">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <% for(i=1; i < (dataCount/3)+1; i++) {%>
-                                <li class="page-item"><a class="page-link" href="/productlisting?page=<%=i%>">
-                                        <%=i%>
-                                    </a></li>
-                                <%} %>
-                                    <li class="page-item">
-                                        <a class="page-link" href="#" aria-label="Next">
-                                            <span aria-hidden="true">&raquo;</span>
-                                            <span class="sr-only">Next</span>
-                                   </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
+             <!-- Add this block in the <body> section of your EJS file -->
+<div class="pagination_div">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <% for (let i = 1; i <= Math.ceil(dataCount / 8); i++) { %>
+                <li class="page-item <%= i === i ? 'active' : '' %>">
+                    <a class="page-link" href="#" onclick="updateProductList(i)"><%= i %></a>
+                </li>
+            <% } %>
+        </ul>
+    </nav>
+</div>
+
             </div>
 
         </div>
 
         <%-include("./partials/footer.ejs")%>
 
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> 
 
 
 
 
-            <script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const filterCheckboxes = document.querySelectorAll("input[name=category]");
+      const sortingRadios = document.querySelectorAll("input[name=sorting]");
+      const searchInput = document.querySelector(".form-control");
+      const currentPage = 1; 
 
+      filterCheckboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', updateProductList);
+      });
+  
+      sortingRadios.forEach((radio) => {
+        radio.addEventListener('change', updateProductList);
+      });
+  
+      searchInput.addEventListener('input', updateProductList);
+  
+      updateProductList(currentPage);
+    });
+    
+    function updateProductList(page) {
+      const category = Array.from(document.querySelectorAll("input[name=category]:checked")).map((data) => data.value).join(",");
+      const sorting = document.querySelector("input[name=sorting]:checked") ? document.querySelector("input[name=sorting]:checked").value : null;
+      const search = document.querySelector(".form-control").value;
+      const allproducts = []
 
+      fetch("/productfiltering", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                category: category,
+                search: search,
+                sorting: sorting,
+                page: page, 
+            }),
+          })
+        .then(response => response.json())
+        .then(res => {
 
-
-                //   fetch to  search the products --------------------------------------------------------->
-                function searchProduct(e) {
-                    const query = e.target.value
-                    let allproducts = []
-                    const searchproduct = fetch('/searchProduct', {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ query })
-                    })
-                        .then(response => response.json())
-                        .then(res => {
-
-                            res.forEach((product) => {
+            console.log(res.products);
+                         const productdetails= res.products.forEach((product) => {
 
                                 const card = `<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
                                       <div class="like-icon-div" style="display: flex;justify-content: space-between;">
@@ -208,31 +177,46 @@
 
                                 allproducts.push(card)
 
-
+ 
 
                             })
+                           
+                            // alert(allproducts)
                             let data = allproducts.join("")
                             if (allproducts.length >= 1) {
+                                console.log(data)
                                 document.getElementById("card_parent").innerHTML = data;
                             } else {
 
+                                console.log(data)
                                 document.getElementById("card_parent").innerHTML = "Product Not Found";
                             }
-                        }
 
-                        )
-                }
-            </script>
+                            const paginationDiv = document.querySelector(".pagination_div");
+            paginationDiv.innerHTML = generatePagination(res.dataCount, page);
+        })
+        .catch(error => console.error('Error fetching product data:', error));
+    }
+    function generatePagination(dataCount, currentPage) {
+        const totalPages = Math.ceil(dataCount / 8);
+        let paginationHTML = `<nav aria-label="Page navigation example"><ul class="pagination">`;
 
+        for (let i = 1; i <= totalPages; i++) {
+            paginationHTML += `<li class="page-item ${i === currentPage ? 'active' : ''}">
+                                <a class="page-link" href="#" onclick="updateProductList(${i})">${i}</a>
+                            </li>`;
+        }
 
+        paginationHTML += `</ul></nav>`;
+        return paginationHTML;
+    }
+</script>
 
+  
+  
 
-
-            <!--     to  filter the products --------------------------------------------------------->
             <script>
-
-
-                document.addEventListener('DOMContentLoaded', function () {
+              document.addEventListener('DOMContentLoaded', function () {
                     const filterButton = document.getElementById('filterButton');
                     const filterDiv = document.querySelector('.filter-div');
 
@@ -242,90 +226,9 @@
                 });
 
             </script>
-            <script>
-                let category = []
-                const categoriescheckbox = document.querySelectorAll("input[name=category]")
-
-                categoriescheckbox.forEach((input) => {
-                    { input.addEventListener('change', updateProductList) }
-                })
 
 
-
-
-                function updateProductList() {
-                    category = Array.from(document.querySelectorAll("input[name=category]:checked")).map((data) => data.value);
-                    category = category.join(",");
-
-
-                    let allproducts = [];
-
-                    fetch(`/productsfilter?category=${category}`)
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(res => {
-
-                            res.forEach((product) => {
-
-                                const card = `<div class="card-1 card-div" onclick="goDetail('/ProductDetailverified?id=${product._id}')" style="cursor: pointer;">
-                                      <div class="like-icon-div" style="display: flex;justify-content: space-between;">
-                                          <div style="width: 60px; height:40px; z-index: 100;float: left;margin-bottom: -41px;display: flex; justify-content: center;align-items: center;">
-                                              ${product.isOffer
-                                        ? `<div style="display: flex; align-items: center;">
-                                                      <img src="/assets/offerPersentage.png" alt="" style="width: 60px; background-position: center;background-size: cover;background-repeat: no-repeat;width: 88px;">
-                                                      <h4 style="z-index: 1000;position: absolute;margin-top: 12px;margin-left: 23px;transform: rotate(-7deg);font-weight: 700;" >${product.DiscountPercentage}</h4 >
-                                                  </div>`
-                                        : ''
-                                    }
-                                          </div>
-                                          <label for="card-1-like" class="like-icon-div-child">
-                                              <input style="display: none;" type="checkbox" id="card-1-like">
-                                              <i class="far fa-heart heart-empty"></i>
-                                          </label>
-                                      </div>
-                                      <div class="gow-img-div img-div">
-                                          <img style="width: 195px;" src="${product.Image[0]}" alt="god-of-war-figurine">
-                                      </div>
-                                      <div class="text-container">
-                                          <h2 class="item-name">${product.Name}</h2>
-                                          <div class="pricing-and-cart">
-                                              <div class="pricing">
-                                                  ${product.isOffer
-                                        ? `<p class="previous-price" id="previousp">₹${product.Price}</p>`
-                                        : `<div style="width: 115px; height: 42px; background-color: rgb(255, 255, 255);"></div>`
-                                    }
-                                                  <p class="current-price">₹${product.isOffer ? product.DiscountPrice : product.Price}/-</p>
-                                              </div>
-                                              <a onclick="addToCart(event,'${product._id}')" id="cart_icon"><i class="fas fa-shopping-cart"></i></a>
-                                          </div>
-                                      </div>
-                                    </div>`;
-
-                                allproducts.push(card)
-
-
-
-                            });
-                            let data = allproducts.join("");
-                            if (allproducts.length >= 1) {
-                                document.getElementById("card_parent").innerHTML = data;
-                            } else {
-                                document.getElementById("card_parent").innerHTML = "Product Not Found";
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                }
-
-
-
-
-
+             <script>
                 function goDetail(link) {
                     window.location.href = link
                 }

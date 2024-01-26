@@ -36,24 +36,11 @@ app.use("/",userRoute)
 app.use("/admin",adminRoute)
 
 
-// const addReferalOffer = async () => {
-//   try {
-//     const newReferalOffer = new ReferalOffer({
-//       BonusPrice: 15,
-//       Joincount: 0,
-//       Added: new Date(),
-//       Status: true
-//     });
+app.use((req, res, next) => {
+  res.status(404);
 
-//     // Save the new document to the database
-//     await newReferalOffer.save();
-//     console.log('New ReferalOffer document added successfully');
-//   } catch (error) {
-//     console.error('Error adding ReferalOffer document', error);
-//   }
-// };
-
-// addReferalOffer();
+  res.render('../views/user/404.ejs');
+});
 
 
 app.listen(3000, () => {

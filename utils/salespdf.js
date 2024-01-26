@@ -38,7 +38,6 @@ module.exports = {
   
           worksheet.columns = [
             { header: 'Order ID', key: 'orderId', width: 25 },
-            { header: 'Product Name', key: 'productName', width: 25 },
             { header: 'Date', key: 'date', width: 25 },
             { header: 'Total Amount', key: 'totalamount', width: 25 },
             { header: 'Payment Method', key: 'paymentmethod', width: 25 },
@@ -47,10 +46,8 @@ module.exports = {
           let totalSalesAmount = 0;
   
           orders.forEach(order => {
-            order.Items.forEach(item => {
               worksheet.addRow({
                 orderId: order.orderNumber,
-                productName: item.productId.Name,
                 date: order.OrderDate ? new Date(order.OrderDate).toLocaleDateString() : '',
                 totalamount: order.TotalPrice !== undefined ? order.TotalPrice.toFixed(2) : '',
                 paymentmethod: order.paymentMethod,
@@ -59,7 +56,7 @@ module.exports = {
              
               totalSalesAmount += order.TotalPrice !== undefined ? order.TotalPrice : 0;
             });
-        });
+        
         const browser = await puppeteer.launch({ headless: "new" });
   
           

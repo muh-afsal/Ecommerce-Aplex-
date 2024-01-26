@@ -176,7 +176,6 @@ body{
     flex-direction: row;
     justify-content: center;
     align-content: center;
-    margin-left: 13px!important;
     margin: auto;
     min-height: 30em;
     padding: 3em 1em 1em 1em;
@@ -269,7 +268,6 @@ body{
         flex-wrap: wrap;
         flex-direction: row;
         justify-content: center;
-        align-content: flex-start;
         margin: auto;
         min-height: 30em;
         padding: 3em 1em 1em 1em;
