@@ -56,13 +56,21 @@
         color: #4461F2;
     }
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 
+input[type="number"] {
+    -moz-appearance: textfield;
+}
 
 /* login container */
 
 .signup-container{
     /* background-color: #98a9ff; */
-    height: 83vh;
+    height: 95vh;
     /* position: fixed; */
     width: 100%;
 } 

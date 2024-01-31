@@ -59,6 +59,7 @@ const LoadOrders = async (req, res) => {
 };
 
 // Cancell order-------------------------------------------------------------------
+
 const cancelOrder = async (req, res) => {
   try {
     const user = await User.findOne({ email: req.session.email });
@@ -83,13 +84,24 @@ const cancelOrder = async (req, res) => {
         TransactionType: "credit",
         message: "Order cancelled",
         Date: new Date(),
-        amount:totalAmount,
+        amount: totalAmount,
         TransactionID: transactionId,
       };
 
       user.Activity.push(activityDetails);
 
       await user.save();
+
+      for (const item of orderData.Items) {
+        const productId = item.productId;
+        const quantity = item.quantity;
+
+        const product = await Products.findById(productId);
+        if (product) {
+          product.Stock += quantity; 
+          await product.save();
+        }
+      }
     }
 
     res.redirect(`/orderDetails?id=${orderObjectId}`);
@@ -97,6 +109,7 @@ const cancelOrder = async (req, res) => {
     console.log(error);
   }
 };
+
 
 // Return order -------------------------------------------------------------------
 

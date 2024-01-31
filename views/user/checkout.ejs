@@ -288,27 +288,27 @@ function limitDigits(input, maxLength) {
 
                                     let currentDate = new Date();
                                     if (TotalAmount >= minamount && TotalAmount <= maxamount) {
-                                        const newtotalamount = TotalAmount - discountValue;
+                                        const newtotalamount = TotalAmount ;
 
                                         discountPrice.innerHTML = discountValue;
 
                                         couponBox.innerHTML = `
                                         <p style="font-weight: 700; color: rgb(69, 69, 69);margin-bottom: 61px;">Applied Coupon Discount:${discountValue}rs</p>
                                         <button id="CancelCouponBtn" style="    background-color: rgb(213, 1, 1);
-    float: right;
-    position: relative;
-    /* width: 7vw; */
-    color: #eff6ff;
-    text-align: center;
-    border-radius: 50px;
-    margin-left: -150px;
-    height: 33px;
-    border: none;
-    outline: none;
-    font-size: small;
-    margin-top: 20px; ;" onclick="cancelCoupon()">
-                                          Cancel Coupon
-                                  </button>
+                                        float: right;
+                                        position: relative;
+                                        /* width: 7vw; */
+                                        color: #eff6ff;
+                                        text-align: center;
+                                        border-radius: 50px;
+                                        margin-left: -150px;
+                                        height: 33px;
+                                        border: none;
+                                        outline: none;
+                                        font-size: small;
+                                        margin-top: 20px; ;" onclick="cancelCoupon()">
+                                        Cancel Coupon
+                                         </button>
                                         `
                                         document.getElementById("total").innerText = newtotalamount.toFixed(2);
 

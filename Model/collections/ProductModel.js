@@ -18,7 +18,7 @@ const ProductSchema = new mongoose.Schema({
         type: Number, required: true
     },
     Category:{
-        type:String,
+        type: mongoose.Schema.Types.ObjectId, ref:process.env.CATEGORY_COLLECTION
     },
     
     Status: {type: String, enum: ['Draft', 'Published', 'Out of Stock', 'Low Stock'] },

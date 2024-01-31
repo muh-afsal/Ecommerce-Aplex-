@@ -11,7 +11,7 @@ const Products = require("../Model/collections/ProductModel");
 const LoadproductDetail = async (req, res) => {
   try {
     const id = req.query.id;
-    const products = await Product.findById(id);
+    const products = await Product.findById(id).populate('Category');
     res.render("../views/user/ProductDetail", { products });
   } catch (error) {
     console.log(error.message);
@@ -23,7 +23,7 @@ const LoadproductDetailVerified = async (req, res) => {
   try {
     const id = req.query.id;
     const alreadyexist = await cart.findOne({ "Items.Products": id });
-    const products = await Product.findById(id, { isdeleted: false });
+    const products = await Product.findById(id, { isdeleted: false }).populate('Category');
     res.render("../views/user/ProductDetailesVerified", {
       products: products,
       alreadyexist: alreadyexist,
@@ -92,9 +92,7 @@ const ProductListingverified = async (req, res) => {
 //Load Manage Product
 const LoadmanageProduct = async (req, res) => {
   try {
-    const productsData = await Product.find({ isdeleted: false }).sort({
-      date: 1,
-    });
+    const productsData = await Product.find({ isdeleted: false }).sort({ date: 1 }).populate('Category');
     res.render("../views/admin/manageProduct", { productsData });
   } catch (error) {
     console.log(error.message);
@@ -156,9 +154,10 @@ const addProduct = async (req, res) => {
 //edit product
 const editProductLoad = async (req, res) => {
   try {
-    const Category = await category.find({ Status: true }).sort({ date: -1 });
+    const Category = await category.find({ Status: true }).sort({ date: -1 })
+
     const id = req.query.id;
-    const productdata = await Product.findById({ _id: id });
+    const productdata = await Product.findById({ _id: id }).populate('Category');
     if (productdata) {
       res.render("../views/admin/EditProduct.ejs", { productdata, Category });
     } else {

@@ -24,7 +24,6 @@ app.use(session({
 }))
 
 app.set("view engine", "ejs");
-// app.use(morgan('tiny'));
 
 
 app.use(express.urlencoded({extended:true}))

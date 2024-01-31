@@ -29,7 +29,7 @@ const { isValid, parseISO } = require('date-fns');
 const LoadManageCategoryOffers = async (req, res) => {
   try {
     const Categorydata = await category.find();
-    const Offerdata = await CategoryOffers.find();
+    const Offerdata = await CategoryOffers.find().populate("CategoryName");
     res.render("../views/admin/ManageCategoryOffers.ejs",{Categorydata,Offerdata})
   } catch (error) {
     console.log(error)
@@ -141,7 +141,7 @@ const EditReferal=async(req,res)=>{
 const AddCategoryOffer = async (req, res) => {
   try {
     const categoryentered = req.body.categoryName;
-    const Offerdata = await CategoryOffers.find();
+    const Offerdata = await CategoryOffers.find().populate("CategoryName")
     const Categorydata = await category.find({ Status: true });
     const productdata = await Products.find({ Category: categoryentered });
 
@@ -151,12 +151,12 @@ const AddCategoryOffer = async (req, res) => {
       return res.render('../views/admin/ManageCategoryOffers.ejs', {
         Categorydata,
         Offerdata,
-        errorMessage: 'Category with this name already exists.',
+        errorMessage: 'CategoryOffer with this name already exists.',
       });
     }
 
     const newCategoryOffer = new CategoryOffers({
-      CategoryName: req.body.categoryName,
+      CategoryName: categoryentered,
       OfferPersentage: req.body.OfferePersentage,
       EndDate: req.body.newexpiringDate,
       Added: Date.now(),
@@ -203,9 +203,8 @@ const DeleteCategoryOffer = async (req, res) => {
       return res.status(404).json({ success: false, message: 'Category offer not found' });
     }
 
-    const productsInCategory = await Products.find({ Category: categoryOffer.CategoryName });
+    const productsInCategory = await Products.find({ "Category.name": categoryOffer.CategoryName });
 
-    // Update each product in the category
     const updateProductsPromises = productsInCategory.map(async (product) => {
       if (product.Offertype === 'categoryoffer') {
         product.DiscountPrice = 0;
@@ -224,7 +223,7 @@ const DeleteCategoryOffer = async (req, res) => {
     res.json({ success: true, message: 'Category offer deleted successfully' });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ success: false, message: 'Internal server error 0000000000000000000000000' });
+    res.status(500).json({ success: false, message: 'Some error Occured while deleting!' });
   }
 };
 
@@ -235,7 +234,6 @@ const EditCategoryOffer = async (req, res) => {
     const updatedCategoryOffer = await CategoryOffers.findByIdAndUpdate(
       offerId,
       {
-        CategoryName: req.body.CategoryName,
         OfferPersentage: req.body.OfferePersentage,
         EndDate: req.body.newexpiringDate,
       },
@@ -267,7 +265,7 @@ const EditCategoryOffer = async (req, res) => {
     await Promise.all(updateProductsPromises);
 
     const Categorydata = await category.find();
-    const Offerdata = await CategoryOffers.find();
+    const Offerdata = await CategoryOffers.find().populate("CategoryName")
     res.render("../views/admin/ManageCategoryOffers.ejs", { Categorydata, Offerdata });
   } catch (error) {
     console.log(error);
@@ -301,7 +299,7 @@ const AddProductOffer = async (req, res) => {
     const discountMultiplier = 1 - discountPercentage / 100;
 
     const product = await Products.findOne({ Name: ProductName });
-     console.log(product)
+     
     if (product) {
       const originalPrice = product.Price;
       const discountedPrice = Math.ceil(originalPrice * discountMultiplier);

@@ -3,7 +3,6 @@ const session = require("express-session");
 const { ObjectId } = require("mongodb");
 const category = require("../Model/collections/categoryModel");
 const User = require("../Model/collections/userModel");
-
 const Products = require("../Model/collections/ProductModel");
 const Cart = require("../Model/collections/CartModel");
 
@@ -39,7 +38,7 @@ const Orderdetails = async (req, res) => {
     const orderData = await Orders.findOne({ _id: orderId }).populate(
       "Items.productId"
     );
-   
+    
 
     res.render("../views/admin/AdminOrderDetails", { orderData });
   } catch (error) {
@@ -121,35 +120,58 @@ const LoadReturnreq=async(req,res)=>{
 
 // accept return request--------------------------->
 
-const acceptReturnRequest=async(req,res)=>{
+// accept return request
+const acceptReturnRequest = async (req, res) => {
   try {
     const { orderId } = req.params;
-    const orderData= await Orders.findByIdAndUpdate(orderId, { returnRequestAccept: true,Status:"Returned",paymentStatus:"Return"});
-    const userId=orderData.UserID
-    const user = await User.findOne({ _id:userId  });
+    const orderData = await Orders.findById(orderId);
+    const userId = orderData.UserID;
+    const user = await User.findOne({ _id: userId });
 
+  
     const totalAmount = orderData.TotalPrice;
-
     user.walletBalance += totalAmount;
 
     await user.save();
 
-      const transactionId = generateOrderNumber(); 
-      const activityDetails = {
-        TransactionType: "credit",
-        message: "Order cancelled",
-        Date: new Date(),
-        TransactionID: transactionId,
-      };
+    const transactionId = generateOrderNumber();
 
-      user.Activity.push(activityDetails);
+    const activityDetails = {
+      TransactionType: "credit",
+      message: "Order returned",
+      Date: new Date(),
+      TransactionID: transactionId,
+      amount: totalAmount,
+    };
 
-      await user.save();
-    res.json({ success: true});
+    user.Activity.push(activityDetails);
+
+    await user.save();
+
+    for (const item of orderData.Items) {
+      const productId = item.productId;
+      const quantity = item.quantity;
+
+      const product = await Products.findById(productId);
+      if (product) {
+        product.Stock += quantity;
+        await product.save();
+      }
+    }
+
+    await Orders.findByIdAndUpdate(orderId, {
+      returnRequestAccept: true,
+      Status: "Returned",
+      paymentStatus: "Return",
+    });
+
+    res.json({ success: true });
   } catch (error) {
     console.log(error);
+    res.json({ success: false, message: "Error accepting return request" });
   }
-}
+};
+
 
 // reject return request--------------------------->
 

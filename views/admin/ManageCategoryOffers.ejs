@@ -70,7 +70,7 @@
                               name="categoryName"  id="" aria-label=".form-select-sm example">
                               <option selected disabled>Choose...</option>
                               <% Categorydata.forEach(category => { %>
-                                <option value="<%= category.name %>"><%= category.name %></option>
+                                <option value="<%= category._id %>"><%= category.name %></option>
                               <% }); %>
                           </select>
                               <div class="text-danger errorDiv" id="selectCategoryError"></div>
@@ -128,7 +128,7 @@
                                     <%=index+1%>
                                 </td>
                                 <td>
-                                    <%=data.CategoryName%>
+                                    <%=data.CategoryName.name%>
                                 </td>
                                 <td>
                                     <%=data.OfferPersentage%>%
@@ -216,7 +216,7 @@
                                                                 style="color: #000000; font-size: smaller; margin-left: 30px;">Category
                                                                 Name</label>
                                                             <input id="CouponName_<%= data._id%>" type="text"
-                                                                value="<%=data.CategoryName%>" class="Entry"
+                                                                value="<%=data.CategoryName.name%>" class="Entry"
                                                                 placeholder="Coupon Name" name="CouponName" readonly>
                                                             <div class="text-danger errorDiv"
                                                                 id="CouponNameError_<%= data._id%>"></div>

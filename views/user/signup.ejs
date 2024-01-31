@@ -42,7 +42,7 @@
                                 <% }%>
                         </div>
                         <div class="form-group  mb-4">
-                            <input id="phone" type="phone" class="form-control entry shadow-none"
+                            <input oninput="limitDigits(this, 10)" id="phone" type="number" class="form-control entry shadow-none"
                                 placeholder="Phone Number" name="phone">
                             <div class="text-danger " style="font-size: small; margin-left: 20px;" id="phoneError">
                             </div>
@@ -79,17 +79,25 @@
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
             <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
             <script>
+                
+                function limitDigits(input, maxLength) {
+            const value = input.value;
+            if (value.length > maxLength) {
+                input.value = value.slice(0, maxLength);
+            }
+        }
+
                 function validateEmail(email) {
                     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+/;
                     return emailRegex.test(email);
                 }
+                
+                 function isEmpty(value) {
+                     const trimmedValue = value.trim();
+                     return trimmedValue === "";
+                 }
                 function validatephone(phone) {
                     return phone.length === 10;
-                }
-
-                function isEmpty(value) {
-                    const trimmedValue = value.trim();
-                    return trimmedValue === "";
                 }
                 function validatePassword(password) {
                     // Define the strong password pattern
@@ -126,6 +134,7 @@
 
                     nameError.textContent = "";
                     emailError.textContent = "";
+                    phoneError.textContent = "";
                     createpasswordError.textContent = "";
                     passwordError.textContent = "";
 
@@ -157,6 +166,10 @@
                     }
                     if (!validatephone(phoneValue)) {
                         phoneError.textContent = "Phone number is not valid,please enter a 10 digit phone number";
+                        event.preventDefault();
+                    }
+                         if (/^(\d)\1+$/.test(phoneValue)) {
+                        phoneError.textContent = 'Invalid phone number';
                         event.preventDefault();
                     }
                     //validate password

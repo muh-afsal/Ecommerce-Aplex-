@@ -1,6 +1,6 @@
 .profile_container {
   height: 77vh;
-  background-color: #dfecff;
+  /* background-color: #dfecff; */
   display: flex;
   justify-content: center;
   flex-direction: row;
@@ -22,7 +22,7 @@
 
 .userDetails_container {
   width: 56vw;
-  background-color: rgb(255, 255, 255);
+  background-color: #ecf7ff;
   height: auto;
   margin-bottom: 21px;
   margin-top: 23px;

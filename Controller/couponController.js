@@ -185,42 +185,35 @@ const ApplyCoupons = async (req, res) => {
     const coupon = await Coupon.findOne({ CouponCode: couponCode });
     const cart = await Cart.findOne({ _id: orderid });
 
+    if (!coupon || !cart) {
+      return res.status(404).json({ success: false, message: "Coupon or Cart not found!" });
+    }
+
     if (coupon.IsActive === false) {
-      return res.json({ success: false, message: "Coupon has Expired !" });
+      return res.json({ success: false, message: "Coupon has Expired!" });
     }
     if (coupon.isUsed === true) {
-      return res.json({
-        success: false,
-        message: "The coupon code has already been used !",
-      });
+      return res.json({ success: false, message: "The coupon code has already been used!" });
     }
     if (cart.couponUsed === true) {
-      return res.json({
-        success: false,
-        message: "Sorry,You have already used one coupon for this order !",
-      });
+      return res.json({ success: false, message: "You have already used one coupon for this order!" });
     }
     if (cart.TotalAmount < coupon.MinPurchaseAmount) {
-      return res.json({
-        success: false,
-        message: `Minimum Purchase amount of this coupon is ${coupon.MinPurchaseAmount}`,
-      });
+      return res.json({ success: false, message: `Minimum Purchase amount of this coupon is ${coupon.MinPurchaseAmount}` });
     }
     if (cart.TotalAmount > coupon.MaxPurchaseAmount) {
-      return res.json({
-        success: false,
-        message: `Maximum Purchase amount of this coupon is ${coupon.MaxPurchaseAmount}`,
-      });
+      return res.json({ success: false, message: `Maximum Purchase amount of this coupon is ${coupon.MaxPurchaseAmount}` });
     }
 
     const currentDate = new Date();
     if (currentDate > coupon.ExpirationDate) {
-      return res.json({ success: false, message: "Coupon has Expired !" });
+      return res.json({ success: false, message: "Coupon has Expired!" });
     }
 
     const carttotal = cart.TotalAmount;
     const discountValue = coupon.DiscountValue;
     const couponDiscountTotal = carttotal - discountValue;
+
     const updatedCart = await Cart.findOneAndUpdate(
       { _id: orderid },
       {
@@ -228,8 +221,10 @@ const ApplyCoupons = async (req, res) => {
           TotalAmount: couponDiscountTotal,
           DiscountAmount: discountValue,
           couponUsed: true,
+          usedCoupon: couponCode,
         },
-      }
+      },
+      { new: true } 
     );
 
     coupon.isUsed = true;
@@ -241,30 +236,23 @@ const ApplyCoupons = async (req, res) => {
       discountValue: coupon.DiscountValue,
       minpurchase: coupon.MinPurchaseAmount,
       maxpurchase: coupon.MaxPurchaseAmount,
-      totalAmount: cart.TotalAmount,
+      totalAmount: updatedCart.TotalAmount, // Use the updated total amount from the cart
       isused: coupon.isUsed,
     });
   } catch (error) {
     console.log(error);
-    return res
-      .status(500)
-      .json({ success: false, message: "Please fill the coupon Input" });
+    return res.status(500).json({ success: false, message: "Please fill the coupon Input" });
   }
 };
+
 
 // cancelling the coupon---------------------------------------------------------------------
 const CancelCoupon = async (req, res) => {
   try {
     const orderID = req.body.orderid;
-    // const couponCode = req.body.couponCode;
     const cart = await Cart.findOne({ _id: orderID });
-    // const coupon = await Coupon.findOne({ CouponCode: couponCode });
-
-    //  const  discountValue= coupon.DiscountValue
-    //  const  totalAmount= cart.TotalAmount
-
-    //  console.log(discountValue,"discound value")
-    //  console.log(totalAmount,"total amount ")
+    const couponcode=cart.usedCoupon;
+    
 
     if (!cart) {
       return res
@@ -278,7 +266,19 @@ const CancelCoupon = async (req, res) => {
       cart.couponUsed = false;
       cart.UpdatedAt = new Date();
 
+      cart.usedCoupon = null;
+
       await cart.save();
+
+     
+
+      const coupon = await Coupon.findOne({ CouponCode: couponcode });
+  
+
+      if (coupon) {
+        coupon.isUsed = false;
+        await coupon.save();
+      }
 
       return res.status(200).json({
         success: true,
@@ -299,6 +299,9 @@ const CancelCoupon = async (req, res) => {
       });
   }
 };
+
+
+
 
 module.exports = {
   LoadManageCoupons,

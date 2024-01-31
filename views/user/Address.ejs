@@ -268,6 +268,12 @@ function limitDigits(input, maxLength) {
             }
         }
 
+        function isOnlyLettersAndSpaces(value) {
+        const regex = /^[a-zA-Z\s]+$/;
+        return regex.test(value);
+    }
+
+
 
                 function isEmpty(value) {
                     const trimmedValue = value.trim();
@@ -338,15 +344,34 @@ function limitDigits(input, maxLength) {
                         pincodeError.textContent = "Pincode is required";
                         event.preventDefault();
                     }
+                    if (!isOnlyLettersAndSpaces(shippingNameValue)) {
+            shippingNameError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
+
+        if (!isOnlyLettersAndSpaces(cityValue)) {
+            cityError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
+
+        if (!isOnlyLettersAndSpaces(stateValue)) {
+            stateError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
+
+        if (!isOnlyLettersAndSpaces(countryValue)) {
+            countryError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
 
                 })
 
                 //  validation for edit address form
                 document.getElementById("editform").addEventListener("submit", function (event) {
 
-                    const shippingNameInput = document.querySelector("#shippingName");
+                    const editShippingNameInput = document.querySelector("#shippingName");
                     const shippingNameValue = shippingNameInput.value;
-                    const shippingNameError = document.querySelector("#shippingNameError");
+                    const editShippingNameError = document.querySelector("#shippingNameError");
 
 
                     const phoneInput = document.querySelector("#phone");
@@ -382,7 +407,7 @@ function limitDigits(input, maxLength) {
 
 
 
-                    if (isEmpty(editShippingNameInput)) {
+                    if (isEmpty(shippingNameValue)) {
                         editShippingNameError.textContent = "Shipping Name is required";
                         event.preventDefault();
                     }
@@ -406,6 +431,26 @@ function limitDigits(input, maxLength) {
                         pincodeError.textContent = "Pincode is required";
                         event.preventDefault();
                     }
+                    if (!isOnlyLettersAndSpaces(shippingNameValue )) {
+            editShippingNameError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
+
+        if (!isOnlyLettersAndSpaces(cityValue)) {
+            cityError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
+
+        if (!isOnlyLettersAndSpaces(stateValue)) {
+            stateError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
+
+        if (!isOnlyLettersAndSpaces(countryValue)) {
+            countryError.textContent = "Only characters are allowed as input";
+            event.preventDefault();
+        }
+                    
 
                 })
             </script>

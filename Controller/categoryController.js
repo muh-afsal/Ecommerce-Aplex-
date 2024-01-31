@@ -6,7 +6,7 @@ const category = require("../Model/collections/categoryModel");
 //Load manage category
 const LoadmanageCategory = async (req, res) => {
   try {
-    const category1 = await category.find({ Status: true }).sort({ date: 1 });
+    const category1 = await category.find({ Status: true }).sort({ date: -1 });
     res.render("../views/admin/ManageCategory", { category: category1 });
   } catch (error) {
     console.log(error.message);
@@ -28,7 +28,9 @@ const addCategory = async (req, res) => {
     const Name = req.body.name;
     const Description = req.body.description;
 
-    const categoryExist = await category.findOne({ name: Name });
+    const categoryExist = await category.findOne({
+      name: { $regex: new RegExp(`^${Name}$`, "i") },
+    });
 
     if (categoryExist) {
       res.render("../views/admin/AddCategory", {
@@ -50,50 +52,58 @@ const addCategory = async (req, res) => {
 };
 
 //edit category
-
 const LoadEditCategory = async (req, res) => {
   try {
     const id = req.query.id;
     const Category = await category.findById(id);
     if (Category) {
       res.render("../views/admin/editCategory", { Category });
-      // res.status(200).json({ product });
     } else {
       res.redirect("/admin/manageCategory");
-      // res.status(400).json({ error:  "something is wrong"});
     }
   } catch (error) {
     console.log(error.message);
   }
 };
 
-//update category
 const UpdateCategory = async (req, res) => {
   const id = req.query.id;
-  const Category = await category.findById(id);
+
   try {
-    const CategoryU = await category.findByIdAndUpdate(id, {
-      $set: {
-        name: req.body.name,
-        description: req.body.description,
-      },
+    const Category = await category.findById(id);
+
+    const newName = req.body.name;
+
+    const categoryExist = await category.findOne({
+      _id: { $ne: id },
+      name: { $regex: new RegExp(`^${newName}$`, "i") },
     });
 
-    if (CategoryU) {
-      res.redirect("/admin/manageCategory");
-    } else {
-      // If the update fails, render an error message
+    if (categoryExist) {
       res.render("../views/admin/EditCategory", {
-        errmessage: "Update failed",
+        errmessage: `A Category named "${newName}" already exists`,
         Category,
       });
+    } else {
+      const CategoryU = await category.findByIdAndUpdate(id, {
+        $set: {
+          name: newName,
+          description: req.body.description,
+        },
+      });
+
+      if (CategoryU) {
+        res.redirect("/admin/manageCategory");
+      } else {
+        res.render("../views/admin/EditCategory", {
+          errmessage: "Update failed",
+          Category,
+        });
+      }
     }
   } catch (error) {
     console.log(error.message);
-    res.render("../views/admin/EditCategory", {
-      errmessage: "Category Alread Exist!!!!",
-      Category,
-    });
+    
   }
 };
 
@@ -102,12 +112,15 @@ const UpdateCategory = async (req, res) => {
 const softDeleteCategory = async (req, res) => {
   try {
     const id = req.query.id;
+    const result = await category.deleteOne({ _id: id });
 
-    const Category = await category.findByIdAndUpdate(id, {
-      $set: { Status: false },
-    });
-
-    res.redirect("/admin/manageCategory");
+    if (result.deletedCount === 1) {
+      res.redirect("/admin/manageCategory");
+    } else {
+      res.render("../views/admin/EditCategory", {
+        errmessage: "Error during delete",
+      });
+    }
   } catch (error) {
     console.log(error.message);
   }

@@ -4,7 +4,7 @@ require('dotenv').config()
 
 const categoryOffers=new mongoose.Schema({
     CategoryName:{
-        type:String 
+        type: mongoose.Schema.Types.ObjectId, ref:process.env.CATEGORY_COLLECTION
     },
     OfferPersentage:{
         type:Number
