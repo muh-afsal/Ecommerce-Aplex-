@@ -10,7 +10,7 @@ const cartController = require("../controller/cartcontroller");
 const OrderController = require("../controller/ordercontroller");
 const userAuth = require("../auth/userauth");
 const couponController = require("../controller/couponcontroller");
-const wishlistController = require("../controller/wishlistcontroller");
+const wishlistController = require("../controller/wishlistController");
 // const {checkSession}=require('../auth/userandadmin')
 const { checkUserAuthentication } = require("../auth/userauth");
 
