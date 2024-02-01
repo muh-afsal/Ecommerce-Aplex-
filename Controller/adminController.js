@@ -1,9 +1,9 @@
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const User = require("../Model/collections/userModel");
-const Admin = require("../Model/collections/AdminModel");
-const order = require("../Model/collections/orderModel");
+const User = require("../model/collections/usermodel");
+const Admin = require("../model/collections/adminmodel");
+const order = require("../model/collections/ordermodel");
 const moment=require("moment")
 // Load admin login
 const loadAdminLogin = async (req, res) => {
@@ -19,7 +19,7 @@ const loadAdminLogin = async (req, res) => {
           res.redirect("/admin"); 
         }
       } else {
-        res.render("../views/admin/Adminlogin");
+        res.render("../views/admin/adminlogin");
       }
     }
   } catch (error) {
@@ -42,12 +42,12 @@ const loginAdmin = async (req, res) => {
         req.session.email = email;
         res.redirect("/admin/admin"); 
       } else {
-        res.render("../views/admin/Adminlogin", {
+        res.render("../views/admin/adminlogin", {
           message: "Incorrect Username or Password",
         });
       }
     } else {
-      res.render("../views/admin/Adminlogin", { message: "Admin not found" });
+      res.render("../views/admin/adminlogin", { message: "Admin not found" });
     }
   } catch (error) {
     console.log(error.message);
@@ -57,7 +57,7 @@ const loginAdmin = async (req, res) => {
 //Load admin dash
 const LoadAdminDash = async (req, res) => {
   try {
-    res.render("../views/admin/adminDash");
+    res.render("../views/admin/admindash");
   } catch (error) {
     console.log(error.message);
   }
@@ -68,7 +68,7 @@ const LoadAdminDash = async (req, res) => {
 const manageUser = async (req, res) => {
   try {
     const userData = await User.find({ isAdmin: false }).sort({ date: -1 });
-    res.render("../views/admin/ManageUser", { userData });
+    res.render("../views/admin/manageuser", { userData });
   } catch (error) {
     console.log(error.message);
   }
@@ -82,7 +82,7 @@ const blockUnblockUser = async (req, res) => {
     const result = await User.findByIdAndUpdate(id, { access });
 
     // Redirect back to the original page
-    res.redirect("/admin/manageUser");
+    res.redirect("/admin/manageuser");
   } catch (error) {
     console.error(`Error updating user access: ${error.message}`);
     res.status(500).json({ success: false, error: error.message });

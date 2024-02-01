@@ -1,10 +1,10 @@
-const Orders = require("../Model/collections/orderModel");
+const Orders = require("../model/collections/ordermodel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const category = require("../Model/collections/categoryModel");
-const User = require("../Model/collections/userModel");
-const Products = require("../Model/collections/ProductModel");
-const Cart = require("../Model/collections/CartModel");
+const category = require("../model/collections/categorymodel");
+const User = require("../model/collections/usermodel");
+const Products = require("../model/collections/productmodel");
+const Cart = require("../model/collections/cartmodel");
 
 
 const generateOrderNumber = () => {
@@ -23,7 +23,7 @@ const LoadOrders = async (req, res) => {
   const orderData = await Orders.find().sort({ OrderDate: -1 });;
 
   try {
-    res.render("../views/admin/ManageOrders", { orderData });
+    res.render("../views/admin/manageorders", { orderData });
   } catch (error) {
     console.log(error);
   }
@@ -40,7 +40,7 @@ const Orderdetails = async (req, res) => {
     );
     
 
-    res.render("../views/admin/AdminOrderDetails", { orderData });
+    res.render("../views/admin/adminorderdetails", { orderData });
   } catch (error) {
     console.error(error);
     
@@ -112,7 +112,7 @@ const LoadReturnreq=async(req,res)=>{
      const userData = await User.findOne({ email: req.session.email },{});
      
     const orderData = await Orders.find({returnRequestSend:true}).sort({ OrderDate: -1 });;
-      res.render("../views/admin/OrderReturns",{orderData})
+      res.render("../views/admin/orderreturns",{orderData})
   } catch (error) {
     console.log(error)
   }

@@ -1,17 +1,17 @@
 const multer = require("multer");
-const { checkAdminAuth } = require("../auth/adminAuth");
-const productStorage = require("../auth/fileUpload");
+const { checkAdminAuth } = require("../auth/adminauth");
+const productStorage = require("../auth/fileupload");
 const productUpload = multer({ storage: productStorage });
 const express = require("express");
 const router = express.Router();
-const adminController = require("../Controller/adminController");
-const productController = require("../Controller/productController");
-const categoryController = require("../Controller/categoryController");
-const orderController = require("../Controller/adminOrdersController");
-const couponController = require("../Controller/couponController");
-const OfferController = require("../Controller/OffersController");
+const adminController = require("../controller/admincontroller");
+const productController = require("../controller/productcontroller");
+const categoryController = require("../controller/categorycontroller");
+const orderController = require("../controller/adminorderscontroller");
+const couponController = require("../controller/couponcontroller");
+const OfferController = require("../controller/offerscontroller");
 
-const adminAuth = require("../auth/adminAuth");
+const adminAuth = require("../auth/adminauth");
 
 const uploadObj = [
   { name: "main-image", maxCount: 1 },

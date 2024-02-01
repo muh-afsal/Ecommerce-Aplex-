@@ -1,5 +1,5 @@
 const nodemailer = require("nodemailer");
-const otpmodel = require("../Model/collections/otpModel");
+const otpmodel = require("../model/collections/otpmodel");
 require("dotenv").config();
 const { AUTH_EMAIL } = process.env.AUTH_EMAIL;
 const sentmail = require("../utils/mail");

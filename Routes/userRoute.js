@@ -1,18 +1,18 @@
 const express = require("express");
 const multer = require("multer");
-const profileimageStorage = require("../auth/profilepicUpload");
+const profileimageStorage = require("../auth/profilepicupload");
 const profileimageUpload = multer({ storage: profileimageStorage });
 const router = express.Router();
-const userController = require("../Controller/userController");
-const productController = require("../Controller/productController");
-const OTPController = require("../Controller/OTPcontroller");
-const cartController = require("../Controller/CartController");
-const OrderController = require("../Controller/OrderController");
-const userAuth = require("../auth/userAuth");
-const couponController = require("../Controller/couponController");
-const wishlistController = require("../Controller/wishlistController");
+const userController = require("../controller/usercontroller");
+const productController = require("../controller/productcontroller");
+const OTPController = require("../controller/otpcontroller");
+const cartController = require("../controller/cartcontroller");
+const OrderController = require("../controller/ordercontroller");
+const userAuth = require("../auth/userauth");
+const couponController = require("../controller/couponcontroller");
+const wishlistController = require("../controller/wishlistcontroller");
 // const {checkSession}=require('../auth/userandadmin')
-const { checkUserAuthentication } = require("../auth/userAuth");
+const { checkUserAuthentication } = require("../auth/userauth");
 
 router.get("/", userController.landingload);
 router.get("/signup", userController.loadSignup);

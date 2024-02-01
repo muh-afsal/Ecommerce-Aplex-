@@ -1,13 +1,12 @@
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-// const products = require("../Model/collections/ProductModel");
-const category = require("../Model/collections/categoryModel");
+const category = require("../model/collections/categorymodel");
 
 //Load manage category
 const LoadmanageCategory = async (req, res) => {
   try {
     const category1 = await category.find({ Status: true }).sort({ date: -1 });
-    res.render("../views/admin/ManageCategory", { category: category1 });
+    res.render("../views/admin/managecategory", { category: category1 });
   } catch (error) {
     console.log(error.message);
   }
@@ -16,7 +15,7 @@ const LoadmanageCategory = async (req, res) => {
 //Load add category
 const LoadaddCategory = async (req, res) => {
   try {
-    res.render("../views/admin/AddCategory.ejs");
+    res.render("../views/admin/addcategory.ejs");
   } catch (error) {
     console.log(error.message);
   }
@@ -33,7 +32,7 @@ const addCategory = async (req, res) => {
     });
 
     if (categoryExist) {
-      res.render("../views/admin/AddCategory", {
+      res.render("../views/admin/addcategory", {
         errmessage: `A Category named "${Name}" alredy exists`,
       });
     } else {
@@ -57,7 +56,7 @@ const LoadEditCategory = async (req, res) => {
     const id = req.query.id;
     const Category = await category.findById(id);
     if (Category) {
-      res.render("../views/admin/editCategory", { Category });
+      res.render("../views/admin/editcategory", { Category });
     } else {
       res.redirect("/admin/manageCategory");
     }
@@ -80,7 +79,7 @@ const UpdateCategory = async (req, res) => {
     });
 
     if (categoryExist) {
-      res.render("../views/admin/EditCategory", {
+      res.render("../views/admin/editcategory", {
         errmessage: `A Category named "${newName}" already exists`,
         Category,
       });
@@ -95,7 +94,7 @@ const UpdateCategory = async (req, res) => {
       if (CategoryU) {
         res.redirect("/admin/manageCategory");
       } else {
-        res.render("../views/admin/EditCategory", {
+        res.render("../views/admin/editcategory", {
           errmessage: "Update failed",
           Category,
         });
@@ -117,7 +116,7 @@ const softDeleteCategory = async (req, res) => {
     if (result.deletedCount === 1) {
       res.redirect("/admin/manageCategory");
     } else {
-      res.render("../views/admin/EditCategory", {
+      res.render("../views/admin/editcategory", {
         errmessage: "Error during delete",
       });
     }

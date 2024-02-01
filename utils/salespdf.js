@@ -16,7 +16,7 @@ module.exports = {
         
       try {
         const totalAmount = parseInt(totalSales)
-        const template = fs.readFileSync('./utils/salesreportPDFtemplate.ejs', 'utf-8');
+        const template = fs.readFileSync('./utils/salesreportpdftemplate.ejs', 'utf-8');
         const html = ejs.render(template, { orders, startDate, endDate, totalAmount });
         if (format === 'pdf') {
           const browser = await puppeteer.launch();
@@ -26,7 +26,7 @@ module.exports = {
           
           const pdfOptions = {
               format: 'Letter',
-              path: `public/SRpdf/sales-report-${formattedStartDate}-${formattedEndDate}.pdf`,
+              path: `public/sr-pdf/sales-report-${formattedStartDate}-${formattedEndDate}.pdf`,
           };
           
           await page.pdf(pdfOptions);
@@ -62,7 +62,7 @@ module.exports = {
           
           worksheet.addRow({ totalamount: 'Total Sales Amount', paymentmethod: totalSalesAmount.toFixed(2) });
   
-          const excelFilePath = 'public/SRexcel/sales-report-${formattedStartDate}-${formattedEndDate}.xlsx';
+          const excelFilePath = 'public/sr-excel/sales-report-${formattedStartDate}-${formattedEndDate}.xlsx';
           await workbook.xlsx.writeFile(excelFilePath);
 
           await browser.close();  

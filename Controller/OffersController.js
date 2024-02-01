@@ -1,21 +1,21 @@
-const User = require("../Model/collections/userModel");
-const OTP = require("../Model/collections/otpModel");
+const User = require("../model/collections/usermodel");
+const OTP = require("../model/collections/otpmodel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const category = require("../Model/collections/categoryModel");
-const Cart = require("../Model/collections/CartModel");
-const Products = require("../Model/collections/ProductModel");
-const Wishlist = require("../Model/collections/wishlistModel");
-const ReferalOffers = require("../Model/collections/referalOfferModel");
-const CategoryOffers = require("../Model/collections/categoryofferModel");
-const ProductOffers = require("../Model/collections/productOfferModel");
-const Orders = require("../Model/collections/orderModel");
+const category = require("../model/collections/categorymodel");
+const Cart = require("../model/collections/cartmodel");
+const Products = require("../model/collections/productmodel");
+const Wishlist = require("../model/collections/wishlistmodel");
+const ReferalOffers = require("../model/collections/referaloffermodel");
+const CategoryOffers = require("../model/collections/categoryoffermodel");
+const ProductOffers = require("../model/collections/productoffermodel");
+const Orders = require("../model/collections/ordermodel");
 const srpdf=require("../utils/salespdf")
 var cron = require("node-cron");
 const {
   productAddtocart,
   calculateTotalPrice,
-} = require("../helper/cartHelper");
+} = require("../helper/carthelper");
 // const ExcelJS = require('exceljs');
 const PDFDocument = require('pdfkit');
 const { isValid, parseISO } = require('date-fns');
@@ -30,7 +30,7 @@ const LoadManageCategoryOffers = async (req, res) => {
   try {
     const Categorydata = await category.find();
     const Offerdata = await CategoryOffers.find().populate("CategoryName");
-    res.render("../views/admin/ManageCategoryOffers.ejs",{Categorydata,Offerdata})
+    res.render("../views/admin/managecategoryoffers.ejs",{Categorydata,Offerdata})
   } catch (error) {
     console.log(error)
   }
@@ -87,7 +87,7 @@ const LoadManageProductOffers = async (req, res) => {
   try {
     const ProductsData = await Products.find  ({isdeleted:false});
     const Offerdata = await ProductOffers.find();
-    res.render("../views/admin/ManageProductOffers.ejs",{Offerdata,ProductsData})
+    res.render("../views/admin/manageproductoffers.ejs",{Offerdata,ProductsData})
   } catch (error) {
     console.log(error)
   }
@@ -97,7 +97,7 @@ const LoadManageProductOffers = async (req, res) => {
 const LoadManageReferalOffers = async (req, res) => {
   try {   
     const Referaldata = await ReferalOffers.findOne();
-    res.render("../views/admin/ManageReferalOffers.ejs",{Referaldata})
+    res.render("../views/admin/managereferaloffers.ejs",{Referaldata})
   } catch (error) {
     console.log(error)
   }
@@ -148,7 +148,7 @@ const AddCategoryOffer = async (req, res) => {
     const existingCategoryOffer = await CategoryOffers.findOne({ CategoryName: categoryentered });
 
     if (existingCategoryOffer) {
-      return res.render('../views/admin/ManageCategoryOffers.ejs', {
+      return res.render('../views/admin/managecategoryoffers.ejs', {
         Categorydata,
         Offerdata,
         errorMessage: 'CategoryOffer with this name already exists.',
@@ -266,7 +266,7 @@ const EditCategoryOffer = async (req, res) => {
 
     const Categorydata = await category.find();
     const Offerdata = await CategoryOffers.find().populate("CategoryName")
-    res.render("../views/admin/ManageCategoryOffers.ejs", { Categorydata, Offerdata });
+    res.render("../views/admin/managecategoryoffers.ejs", { Categorydata, Offerdata });
   } catch (error) {
     console.log(error);
   }
@@ -283,7 +283,7 @@ const AddProductOffer = async (req, res) => {
     if (existingProductOffer) {
       const ProductsData = await Products.find  ({isdeleted:false});
       const Offerdata = await ProductOffers.find();
-      return res.render('../views/admin/ManageProductOffers.ejs', {ProductsData,Offerdata, errorMessage: 'Category with this name already exists.'});
+      return res.render('../views/admin/manageproductoffers.ejs', {ProductsData,Offerdata, errorMessage: 'Category with this name already exists.'});
     }
 
     const newProductOffer = new ProductOffers({

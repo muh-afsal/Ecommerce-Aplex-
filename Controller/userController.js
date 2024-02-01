@@ -1,15 +1,15 @@
-const User = require("../Model/collections/userModel");
+const User = require("../model/collections/usermodel");
 const bcrypt = require("bcrypt");
-const OTP = require("../Model/collections/otpModel");
+const OTP = require("../model/collections/otpmodel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const { sentOTP } = require("./OTPcontroller");
-const Product = require("../Model/collections/ProductModel");
-const Cart = require("../Model/collections/CartModel");
-const Referal = require("../Model/collections/referalOfferModel");
+const { sentOTP } = require("./otpcontroller");
+const Product = require("../model/collections/productmodel");
+const Cart = require("../model/collections/cartmodel");
+const Referal = require("../model/collections/referaloffermodel");
 
 const multer = require("multer");
-const storage = require("../auth/profilepicUpload");
+const storage = require("../auth/profilepicupload");
 
 const upload = multer({ storage: storage });
 
@@ -252,7 +252,7 @@ const LoadUserProfile = async (req, res) => {
   try {
     const email = req.session.email;
     const userData = await User.findOne({ email: email });
-    res.render("../views/user/UserProfile", { userData });
+    res.render("../views/user/userprofile", { userData });
   } catch (error) {
     console.log(error);
   }
@@ -261,7 +261,7 @@ const LoadeditProfile = async (req, res) => {
   const email = req.session.email;
   const userData = await User.findOne({ email: email });
   try {
-    res.render("../views/user/editUserProfile", { userData });
+    res.render("../views/user/edituserprofile", { userData });
   } catch (error) {
     console.log(error);
   }
@@ -309,7 +309,7 @@ const LoadAdress = async (req, res) => {
     );
     const userData = await User.findOne({ _id: userId });
 
-    res.render("../views/user/Address", { cartData, userData });
+    res.render("../views/user/address", { cartData, userData });
   } catch (error) {
     console.log(error);
   }

@@ -1,7 +1,7 @@
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const Coupon = require("../Model/collections/couponModel");
-const Cart = require("../Model/collections/CartModel");
+const Coupon = require("../model/collections/couponmodel");
+const Cart = require("../model/collections/cartmodel");
 var cron = require("node-cron");
 
 //generating coupon id --------------->
@@ -20,7 +20,7 @@ const LoadManageCoupons = async (req, res) => {
   try {
     const Coupons = await Coupon.find().sort({ createdAt: -1 });
 
-    res.render("../views/admin/ManageCoupon.ejs", { Coupons, err: null });
+    res.render("../views/admin/managecoupon.ejs", { Coupons, err: null });
   } catch (error) {
     console.log(error);
   }
@@ -45,7 +45,7 @@ const addCoupon = async (req, res) => {
 
     if (CouponExist) {
       const Coupons = await Coupon.find();
-      res.render("../views/admin/ManageCoupon", {
+      res.render("../views/admin/managecoupon", {
         Coupons,
         err: `A Coupon named "${couponName}" alredy exists`,
       });
@@ -106,7 +106,7 @@ const editCoupon = async (req, res) => {
 
     if (CouponExist) {
       const Coupons = await Coupon.find().sort({ createdAt: -1 });
-      res.render("../views/admin/ManageCoupon", {
+      res.render("../views/admin/managecoupon", {
         Coupons,
         err: `A Coupon named "${CouponName}" alredy exists`,
       });
@@ -127,7 +127,7 @@ const editCoupon = async (req, res) => {
         res.redirect("/admin/Managecoupon");
       } else {
         const Coupons = await Coupon.find().sort({ createdAt: -1 });
-        res.render("../views/admin/ManageCoupon", {
+        res.render("../views/admin/managecoupon", {
           err: "Update failed",
           Coupons,
         });
@@ -172,7 +172,7 @@ const LoadUserCoupons = async (req, res) => {
 
     const currentDate = new Date();
 
-    res.render("../views/user/Coupons.ejs", { couponData });
+    res.render("../views/user/coupons.ejs", { couponData });
   } catch (error) {
     console.log(error);
   }

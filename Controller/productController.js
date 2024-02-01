@@ -1,18 +1,18 @@
-const User = require("../Model/collections/userModel");
-const OTP = require("../Model/collections/otpModel");
+const User = require("../model/collections/usermodel");
+const OTP = require("../model/collections/otpmodel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const Product = require("../Model/collections/ProductModel");
-const category = require("../Model/collections/categoryModel");
-const cart = require("../Model/collections/CartModel");
-const Products = require("../Model/collections/ProductModel");
+const Product = require("../model/collections/productmodel");
+const category = require("../model/collections/categorymodel");
+const cart = require("../model/collections/cartmodel");
+const Products = require("../model/collections/productmodel");
 
 //load product detail
 const LoadproductDetail = async (req, res) => {
   try {
     const id = req.query.id;
     const products = await Product.findById(id).populate('Category');
-    res.render("../views/user/ProductDetail", { products });
+    res.render("../views/user/productdetail", { products });
   } catch (error) {
     console.log(error.message);
   }
@@ -24,7 +24,7 @@ const LoadproductDetailVerified = async (req, res) => {
     const id = req.query.id;
     const alreadyexist = await cart.findOne({ "Items.Products": id });
     const products = await Product.findById(id, { isdeleted: false }).populate('Category');
-    res.render("../views/user/ProductDetailesVerified", {
+    res.render("../views/user/productdetailesverified", {
       products: products,
       alreadyexist: alreadyexist,
     });
@@ -51,7 +51,7 @@ const ProductListing = async (req, res) => {
         .limit(perPage),
     ]);
     let i = (pageNum - 1) * perPage;
-    res.render("../views/user/ProductListing", {
+    res.render("../views/user/productlisting", {
       products,
       i,
       dataCount,
@@ -78,7 +78,7 @@ const ProductListingverified = async (req, res) => {
         .limit(perPage),
     ]);
     let i = (pageNum - 1) * perPage;
-    res.render("../views/user/ProductListingVerified", {
+    res.render("../views/user/productlistingverified", {
       products,
       i,
       dataCount,
@@ -93,7 +93,7 @@ const ProductListingverified = async (req, res) => {
 const LoadmanageProduct = async (req, res) => {
   try {
     const productsData = await Product.find({ isdeleted: false }).sort({ date: 1 }).populate('Category');
-    res.render("../views/admin/manageProduct", { productsData });
+    res.render("../views/admin/manageproduct", { productsData });
   } catch (error) {
     console.log(error.message);
   }
@@ -102,7 +102,7 @@ const LoadmanageProduct = async (req, res) => {
 const LoadaddProduct = async (req, res) => {
   try {
     const Category = await category.find({ Status: true }).sort({ date: -1 });
-    res.render("../views/admin/AddProduct", { Category });
+    res.render("../views/admin/addproduct", { Category });
   } catch (error) {
     console.log(error.message);
   }
@@ -128,7 +128,7 @@ const addProduct = async (req, res) => {
     const productexist = await Product.findOne({ Name: Name });
 
     if (productexist) {
-      res.render("../views/admin/AddProduct", {
+      res.render("../views/admin/addproduct", {
         errmessage: `A product named "${Name}" alredy exists`,
       });
     } else {
@@ -159,7 +159,7 @@ const editProductLoad = async (req, res) => {
     const id = req.query.id;
     const productdata = await Product.findById({ _id: id }).populate('Category');
     if (productdata) {
-      res.render("../views/admin/EditProduct.ejs", { productdata, Category });
+      res.render("../views/admin/editproduct.ejs", { productdata, Category });
     } else {
       res.redirect("/admin/manageProduct");
     }
@@ -216,7 +216,7 @@ const UpdateProduct = async (req, res) => {
     if (Products) {
       res.redirect("/admin/manageProduct");
     } else {
-      res.render("../views/admin/EditProduct", {
+      res.render("../views/admin/editproduct", {
         message: "Update failed",
         productdata,
       });

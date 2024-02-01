@@ -1,15 +1,15 @@
-const Order = require("../Model/collections/orderModel");
+const Order = require("../model/collections/ordermodel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const category = require("../Model/collections/categoryModel");
-const Coupon = require("../Model/collections/couponModel");
-const User = require("../Model/collections/userModel");
+const category = require("../model/collections/categorymodel");
+const Coupon = require("../model/collections/couponmodel");
+const User = require("../model/collections/usermodel");
 const {
   productAddtocart,
   calculateTotalPrice,
-} = require("../helper/cartHelper");
-const Products = require("../Model/collections/ProductModel");
-const Cart = require("../Model/collections/CartModel");
+} = require("../helper/carthelper");
+const Products = require("../model/collections/productmodel");
+const Cart = require("../model/collections/cartmodel");
 const Razorpay = require("razorpay");
 const { RAZORPAY_KEY_ID, RAZORPAY_SECRET_ID } = process.env;
 const { createRazorpayOrder } = require("../service/razorpay");
@@ -335,7 +335,7 @@ const LoadorderPlaced = async (req, res) => {
 
     req.session.orderplaced = true;
 
-    res.render("../views/user/orderPlaced");
+    res.render("../views/user/orderplaced");
   } catch (error) {
     console.log(error);
   }

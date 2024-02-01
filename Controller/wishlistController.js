@@ -1,16 +1,16 @@
-const User = require("../Model/collections/userModel");
-const OTP = require("../Model/collections/otpModel");
+const User = require("../model/collections/usermodel");
+const OTP = require("../model/collections/otpmodel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const Product = require("../Model/collections/ProductModel");
-const category = require("../Model/collections/categoryModel");
-const Cart = require("../Model/collections/CartModel");
-const Products = require("../Model/collections/ProductModel");
-const Wishlist = require("../Model/collections/wishlistModel");
+const Product = require("../model/collections/productmodel");
+const category = require("../model/collections/categorymodel");
+const Cart = require("../model/collections/cartmodel");
+const Products = require("../model/collections/productmodel");
+const Wishlist = require("../model/collections/wishlistmodel");
 const {
   productAddtocart,
   calculateTotalPrice,
-} = require("../helper/cartHelper");
+} = require("../helper/carthelper");
 
 const LoadWishlist = async (req, res) => {
   try {

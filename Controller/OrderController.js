@@ -1,14 +1,14 @@
-const Order = require("../Model/collections/orderModel");
+const Order = require("../model/collections/ordermodel");
 const session = require("express-session");
 const { ObjectId } = require("mongodb");
-const category = require("../Model/collections/categoryModel");
-const User = require("../Model/collections/userModel");
+const category = require("../model/collections/categorymodel");
+const User = require("../model/collections/usermodel");
 const {
   productAddtocart,
   calculateTotalPrice,
-} = require("../helper/cartHelper");
-const Products = require("../Model/collections/ProductModel");
-const Cart = require("../Model/collections/CartModel");
+} = require("../helper/carthelper");
+const Products = require("../model/collections/productmodel");
+const Cart = require("../model/collections/cartmodel");
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
@@ -34,7 +34,7 @@ const LoadOrderDetails = async (req, res) => {
       "Items.productId"
     );
     if (orderData) {
-      res.render("../views/user/orderDetails", { orderData });
+      res.render("../views/user/orderdetails", { orderData });
     } else {
       res.send("404");
     }

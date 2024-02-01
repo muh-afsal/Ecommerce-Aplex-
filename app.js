@@ -1,15 +1,14 @@
 const express = require("express");
 const session=require("express-session")
 const app = express();
-const userRoute=require("./Routes/userRoute")
-const adminRoute=require("./Routes/adminRoute")
+const userRoute=require("./routes/userroute")
+const adminRoute=require("./routes/adminroute")
 const mongoose = require("mongoose");
 const securekey=process.env.secretkey
 const connectdb=require('./config/connection')
 require('dotenv').config()
 const bcrypt=require("bcrypt")
-const Admin = require("./Model/collections/AdminModel");
-const ReferalOffer = require("./Model/collections/referalOfferModel");
+const Admin = require("./model/collections/adminmodel");
 const morgan = require('morgan')
 
 
